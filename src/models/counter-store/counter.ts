@@ -4,25 +4,27 @@ import { immer } from "zustand/middleware/immer"
 type ICounter = {
 	count: number
 	interval: number
-	add: (qty: number) => void
-	subtract: (qty: number) => void
-	setInterval: (qty: number) => void
+	add: () => void
+	subtract: () => void
+	setInterval: (qty: number | string) => void
 }
 
 export const useCounterStore = create(
 	immer<ICounter>((set) => ({
 		count: 0,
 		interval: 1,
-		add: (qty) =>
+		add: () =>
 			set((state) => {
-				state.count += qty
+				state.count += state.interval
 			}),
-		subtract: (qty) =>
+		subtract: () =>
 			set((state) => {
-				state.count -= qty
+				state.count -= state.interval
 			}),
 		setInterval: (qty) =>
 			set((state) => {
+				qty = typeof qty === "string" ? parseInt(qty) : qty
+				qty = isNaN(qty) ? 1 : qty
 				state.interval = qty
 			}),
 	}))

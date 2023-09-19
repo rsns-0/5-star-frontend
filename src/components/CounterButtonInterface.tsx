@@ -2,7 +2,8 @@ import { Button } from "@mui/material"
 import { useCounterStore } from "../models/counter-store/counter"
 import Grid from "@mui/material/Unstable_Grid2" // Grid version 2
 export default function CounterButtonInterface() {
-	const { add, subtract, interval } = useCounterStore()
+	const add = useCounterStore((s) => s.add)
+	const subtract = useCounterStore((s) => s.subtract)
 
 	return (
 		<>
@@ -12,7 +13,7 @@ export default function CounterButtonInterface() {
 						type="button"
 						variant="contained"
 						title="Increment Button"
-						onClick={() => add(interval)}
+						onClick={add}
 					>
 						Increment
 					</Button>
@@ -22,7 +23,7 @@ export default function CounterButtonInterface() {
 						type="button"
 						title="Decrement Button"
 						variant="contained"
-						onClick={() => subtract(interval)}
+						onClick={() => subtract()}
 					>
 						Decrement
 					</Button>

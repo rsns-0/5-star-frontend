@@ -1,7 +1,8 @@
 import { useCounterStore } from "../models/counter-store/counter"
 
 export default function IntervalInput() {
-	const { interval, setInterval } = useCounterStore()
+	const interval = useCounterStore((s) => s.interval)
+	const setInterval = useCounterStore((s) => s.setInterval)
 
 	return (
 		<>
