@@ -1,8 +1,10 @@
 import SuperJSON from "superjson"
 import { api } from "../utils/api"
 
+
+
 export default function Hello() {
-	const { data } = api.example.getReminders.useQuery(undefined)
+	const { data } = api.example.getReminders.useQuery()
 	const html = data?.map((reminder) => {
 		return (
 			<div key={reminder.id.toString()}>

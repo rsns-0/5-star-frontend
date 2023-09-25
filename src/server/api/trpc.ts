@@ -16,6 +16,9 @@ import { ZodError } from "zod";
 import { getServerAuthSession } from "~/server/auth";
 import { db } from "~/server/db";
 
+import { withProviderRLS, withReminderRLS } from "../extensions/provider-rls"
+import { type Providers } from "../../types/auth"
+
 /**
  * 1. CONTEXT
  *
@@ -25,7 +28,7 @@ import { db } from "~/server/db";
  */
 
 interface CreateContextOptions {
-  session: Session | null;
+	session: Session | null
 }
 
 /**
@@ -39,11 +42,11 @@ interface CreateContextOptions {
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
-  return {
-    session: opts.session,
-    db,
-  };
-};
+	return {
+		session: opts.session,
+		db,
+	}
+}
 
 /**
  * This is the actual context you will use in your router. It will be used to process every request
@@ -52,15 +55,15 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-  const { req, res } = opts;
+	const { req, res } = opts
 
-  // Get the session from the server using the getServerSession wrapper function
-  const session = await getServerAuthSession({ req, res });
+	// Get the session from the server using the getServerSession wrapper function
+	const session = await getServerAuthSession({ req, res })
 
-  return createInnerTRPCContext({
-    session,
-  });
-};
+	return createInnerTRPCContext({
+		session,
+	})
+}
 
 /**
  * 2. INITIALIZATION
@@ -71,18 +74,17 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
  */
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
-  transformer: superjson,
-  errorFormatter({ shape, error }) {
-    return {
-      ...shape,
-      data: {
-        ...shape.data,
-        zodError:
-          error.cause instanceof ZodError ? error.cause.flatten() : null,
-      },
-    };
-  },
-});
+	transformer: superjson,
+	errorFormatter({ shape, error }) {
+		return {
+			...shape,
+			data: {
+				...shape.data,
+				zodError: error.cause instanceof ZodError ? error.cause.flatten() : null,
+			},
+		}
+	},
+})
 
 /**
  * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)
@@ -96,7 +98,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  *
  * @see https://trpc.io/docs/router
  */
-export const createTRPCRouter = t.router;
+export const createTRPCRouter = t.router
 
 /**
  * Public (unauthenticated) procedure
@@ -105,20 +107,20 @@ export const createTRPCRouter = t.router;
  * guarantee that a user querying is authorized, but you can still access user session data if they
  * are logged in.
  */
-export const publicProcedure = t.procedure;
+export const publicProcedure = t.procedure
 
 /** Reusable middleware that enforces users are logged in before running the procedure. */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-  if (!ctx.session?.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
-  }
-  return next({
-    ctx: {
-      // infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session.user },
-    },
-  });
-});
+	if (!ctx.session?.user) {
+		throw new TRPCError({ code: "UNAUTHORIZED" })
+	}
+	return next({
+		ctx: {
+			// infers the `session` as non-nullable
+			session: { ...ctx.session, user: ctx.session.user },
+		},
+	})
+})
 
 /**
  * Protected (authenticated) procedure
@@ -128,4 +130,25 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+export const protectedProcedure = t.procedure.use(enforceUserIsAuthed)
+
+export const selectProtectedProviderProcedure = (provider: Providers) => {
+	const providerProcedure = enforceUserIsAuthed.unstable_pipe(({ ctx: { db }, next }) => {
+		return next({
+			ctx: {
+				db: db.$extends(withProviderRLS(provider)),
+			},
+		})
+	})
+	return t.procedure.use(providerProcedure)
+}
+
+const enforceUserRLS = enforceUserIsAuthed.unstable_pipe(({ ctx: { db, session }, next }) => {
+	return next({
+		ctx: {
+			db: db.$extends(withReminderRLS(session.user.id)),
+		},
+	})
+})
+
+export const reminderRLSProcedure = t.procedure.use(enforceUserRLS)
