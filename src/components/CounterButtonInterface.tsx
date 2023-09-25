@@ -12,6 +12,7 @@ export default function CounterButtonInterface() {
 					<Button
 						type="button"
 						variant="contained"
+						data-testid="increment-button"
 						title="Increment Button"
 						onClick={add}
 					>
@@ -21,6 +22,7 @@ export default function CounterButtonInterface() {
 				<Grid>
 					<Button
 						type="button"
+						data-testid="decrement-button"
 						title="Decrement Button"
 						variant="contained"
 						onClick={() => subtract()}

@@ -1,16 +1,19 @@
-import { type Locator, type Page } from "@playwright/test"
+import { type Locator, type Page, expect } from "@playwright/test"
 
 export class CounterExamplePage {
 	readonly page: Page
 	readonly addButton: Locator
 	readonly subtractButton: Locator
 	readonly intervalInput: Locator
+	readonly displayedCounters: Locator
 
 	constructor(page: Page) {
 		this.page = page
-		this.addButton = page.getByText("Increment")
-		this.subtractButton = page.getByText("Decrement")
-		this.intervalInput = page.getByTitle("Interval Input")
+
+		this.addButton = page.getByTestId("increment-button")
+		this.subtractButton = page.getByTestId("decrement-button")
+		this.intervalInput = page.getByTestId("interval-input")
+		this.displayedCounters = page.getByTestId("count")
 	}
 
 	async goto() {
@@ -26,7 +29,7 @@ export class CounterExamplePage {
 	}
 
 	async getDisplayedCounterValues() {
-		return await this.page.getByTestId("count").allInnerTexts()
+		return await this.displayedCounters.allInnerTexts()
 	}
 
 	async getIntervalInputValue() {
@@ -35,5 +38,14 @@ export class CounterExamplePage {
 
 	async setIntervalInputValue(value: number) {
 		await this.intervalInput.fill(value.toString())
+	}
+
+	async expectDisplayValuesToBe(value: number) {
+		const displays = await this.getDisplayedCounterValues()
+		expect(displays.length).toBe(2)
+
+		for (const result of displays) {
+			expect(result).toBe(value.toString())
+		}
 	}
 }
