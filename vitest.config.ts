@@ -5,6 +5,7 @@ export default defineConfig({
 		globals: true,
 		outputFile: { json: "testLogs/testResults.json" },
 		reporters: ["json", "default"],
+		dir: "tests",
 	},
 	resolve: {
 		alias: {
