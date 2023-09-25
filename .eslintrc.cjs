@@ -4,7 +4,7 @@ const config = {
 	parserOptions: {
 		project: true,
 	},
-	ignorePatterns: ["node_modules", ".next", "out", "public", "*.json", "**/prismaZod/*"],
+	ignorePatterns: ["node_modules", ".next", "out", "public", "*.json", "**/prismaZod/*", ".env"],
 	plugins: ["@typescript-eslint"],
 	extends: [
 		"next/core-web-vitals",
