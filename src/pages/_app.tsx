@@ -1,15 +1,21 @@
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
-import { ThemeProvider, createTheme } from "@mui/material/styles"
-import { api } from "~/utils/api"
 
+import { api } from "~/utils/api"
 import "~/styles/globals.css"
-const darkTheme = createTheme({
-	palette: {
-		mode: "dark",
+import MuiProvider from "../providers/mui-provider"
+import SuperJSON from "superjson"
+import { DateTime } from "luxon"
+
+SuperJSON.registerCustom<DateTime, string>(
+	{
+		isApplicable: (v): v is DateTime => DateTime.isDateTime(v),
+		serialize: (v) => v.toJSON() ?? "",
+		deserialize: (v) => DateTime.fromISO(v),
 	},
-})
+	"DateTime"
+)
 
 const MyApp: AppType<{ session: Session | null }> = ({
 	Component,
@@ -17,9 +23,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
 	return (
 		<SessionProvider session={session}>
-			<ThemeProvider theme={darkTheme}>
+			<MuiProvider>
 				<Component {...pageProps} />
-			</ThemeProvider>
+			</MuiProvider>
 		</SessionProvider>
 	)
 }
