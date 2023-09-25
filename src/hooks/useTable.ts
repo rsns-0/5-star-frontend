@@ -4,7 +4,10 @@ import { type RefObject, type Dispatch, type SetStateAction } from "react"
 
 import { useReminder } from "./useReminder"
 
-import { type IReminderFrontendData } from "../models/reminder-frontend"
+import {
+	type IReminderFrontendData,
+	reminderFrontendToBackendPipeline,
+} from "../models/reminder-frontend"
 
 export const useTable = (gridRef: RefObject<AgGridReact<IReminderFrontendData>>) => {
 	// const [deletedItems, setDeletedItems] = useState<DeletedItemsTracker[]>([]);
@@ -30,8 +33,9 @@ export const useTable = (gridRef: RefObject<AgGridReact<IReminderFrontendData>>)
 
 	const handleCellChange = (e: CellValueChangedEvent<IReminderFrontendData>) => {
 		const { data } = e
+		const convertedData = reminderFrontendToBackendPipeline.parse(data)
 
-		model.updateReminder(data)
+		model.updateReminder(convertedData)
 	}
 
 	const handleFetchData = async () => {

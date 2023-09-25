@@ -1,7 +1,3 @@
-import {
-	type IReminderFrontendData,
-	reminderFrontendToBackendPipeline,
-} from "./../models/reminder-frontend"
 import { api } from "../utils/api"
 import { remindersFrontEndSchemaCoerceArray } from "../models/reminder-frontend"
 
@@ -18,16 +14,11 @@ export const useReminder = () => {
 				void utils.reminders.getReminders.invalidate()
 			},
 		}).mutate,
-		updateReminder(data: IReminderFrontendData) {
-			const convertedData = reminderFrontendToBackendPipeline.parse(data)
-			api.reminders.updateReminder
-				.useMutation({
-					onSuccess() {
-						void utils.reminders.getReminders.invalidate()
-					},
-				})
-				.mutate(convertedData)
-		},
+		updateReminder: api.reminders.updateReminder.useMutation({
+			onSuccess() {
+				void utils.reminders.getReminders.invalidate()
+			},
+		}).mutate,
 		deleteReminder: api.reminders.deleteReminder.useMutation({
 			onSuccess() {
 				void utils.reminders.getReminders.invalidate()
