@@ -7,10 +7,11 @@ const config = {
 	ignorePatterns: ["node_modules", ".next", "out", "public", "*.json", "**/prismaZod/*", ".env"],
 	plugins: ["@typescript-eslint"],
 	extends: [
-		"next/core-web-vitals",
-		"plugin:@typescript-eslint/recommended-type-checked",
-		"plugin:@typescript-eslint/stylistic-type-checked",
-	],
+        "next/core-web-vitals",
+        "plugin:@typescript-eslint/recommended-type-checked",
+        "plugin:@typescript-eslint/stylistic-type-checked",
+        "plugin:storybook/recommended"
+    ],
 	rules: {
 		// These opinionated rules are enabled in stylistic-type-checked above.
 		// Feel free to reconfigure them to your own preference.
@@ -23,6 +24,8 @@ const config = {
 		"@typescript-eslint/no-unsafe-argument": "off",
 		"@typescript-eslint/no-explicit-any": "off",
 		"@typescript-eslint/no-misused-promises": "off",
+
+		"@next/next/no-img-element": "off",
 		"@typescript-eslint/consistent-type-imports": [
 			"warn",
 			{

@@ -1,5 +1,5 @@
 import Card from "@mui/material/Card"
-import { useCounterStore } from "../models/counter-store/counter"
+import { useCounterStore } from "../../models/counterStore/counter"
 import Typography from "@mui/material/Typography"
 export default function CounterDisplay() {
 	const count = useCounterStore((s) => s.count)

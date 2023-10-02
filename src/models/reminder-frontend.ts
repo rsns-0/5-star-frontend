@@ -24,29 +24,31 @@ export const coerceDateSchema = luxonOrDateSchema.transform((val) => {
 	return val.toJSDate()
 })
 
-const coerceStringIdSchema = z.union([z.string(), z.bigint()]).transform((val) => {
+const coerceNumberIdSchema = z.union([z.string(), z.bigint(), z.number()]).transform((val) => {
 	if (typeof val === "bigint") {
-		return val.toString()
+		return parseInt(val.toString())
+	}
+	if (typeof val === "string") {
+		return parseInt(val)
 	}
 	return val
 })
 
 export const remindersFrontendSchema = remindersSchema.extend({
-	id: coerceStringIdSchema,
-	time: coerceLuxonSchema,
+	id: coerceNumberIdSchema,
+	time: coerceDateSchema,
+	channel_name: z.string(),
 })
 
 export const reminderFrontendToBackendPipeline = remindersFrontendSchema.transform((val) => {
 	return {
 		...val,
-		time: val.time.toJSDate(),
-		id: BigInt(val.id),
+		// time: val.time.toJSDate(),
 	}
 })
-
-export const remindersFrontEndSchemaCoerceArray = z
-	.undefined()
-	.or(z.array(remindersFrontendSchema))
+const _remindersFrontEndSchemaCoerceArray = remindersFrontendSchema
+	.strict()
+	.array()
 	.transform((val) => {
 		if (val === undefined) {
 			return []
@@ -54,4 +56,41 @@ export const remindersFrontEndSchemaCoerceArray = z
 		return val
 	})
 
+export const remindersFrontEndSchemaCoerceArray = z.preprocess((val) => {
+	if (val === undefined) {
+		return []
+	}
+	return val
+}, _remindersFrontEndSchemaCoerceArray)
+
+export const remindersUpdateFormSchema = z.object({
+	time: z
+		.date()
+		.max(new Date(99_999, 1, 1))
+		.min(new Date(1, 0, 1)),
+	reminder_message: z.string().transform((val, ctx) => {
+		if (val.length > 500) {
+			ctx.addIssue({
+				code: z.ZodIssueCode.custom,
+				message: "Message must be less than 500 characters.",
+			})
+		}
+		if (val.length <= 0) {
+			return "Ping!"
+		}
+		return val
+	}),
+})
+
+export const remindersUpdateSchema = remindersSchema
+	.pick({
+		time: true,
+		reminder_message: true,
+		id: true,
+		channel_id: true,
+	})
+	.refine((val) => remindersUpdateFormSchema.safeParse(val).success)
+
+
+	
 export type IReminderFrontendData = z.infer<typeof remindersFrontendSchema>

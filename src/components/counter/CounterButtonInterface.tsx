@@ -1,5 +1,5 @@
 import { Button } from "@mui/material"
-import { useCounterStore } from "../models/counter-store/counter"
+import { useCounterStore } from "../../models/counterStore/counter"
 import Grid from "@mui/material/Unstable_Grid2" // Grid version 2
 export default function CounterButtonInterface() {
 	const add = useCounterStore((s) => s.add)

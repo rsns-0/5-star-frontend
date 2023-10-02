@@ -2,11 +2,14 @@ import { PrismaClient } from "@prisma/client";
 
 import { env } from "~/env.mjs";
 import extendUser from "./extensions/extendUser"
+import guildsAndChannels from "./extensions/guildsAndChannels"
 
 const prismaClientSingleton = () => {
 	return new PrismaClient({
 		log: env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
-	}).$extends(extendUser)
+	})
+		.$extends(extendUser)
+		.$extends(guildsAndChannels)
 }
 
 type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>

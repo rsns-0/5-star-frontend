@@ -18,6 +18,7 @@ import { db } from "~/server/db";
 
 import { withProviderRLS, withReminderRLS } from "../extensions/provider-rls"
 import { type Providers } from "../../types/auth"
+import extendUser from "../extensions/extendUser"
 
 /**
  * 1. CONTEXT
@@ -143,12 +144,42 @@ export const selectProtectedProviderProcedure = (provider: Providers) => {
 	return t.procedure.use(providerProcedure)
 }
 
-const enforceUserRLS = enforceUserIsAuthed.unstable_pipe(({ ctx: { db, session }, next }) => {
+const enforceUserRLS = enforceUserIsAuthed.unstable_pipe(async ({ ctx: { db, session }, next }) => {
+	const { getUserProviderAccountId } = db.$extends(extendUser).account
+	const maybeUserDiscordProviderId = await getUserProviderAccountId(session.user.id, "discord")
+	if (maybeUserDiscordProviderId instanceof Error) {
+		throw maybeUserDiscordProviderId
+	}
 	return next({
 		ctx: {
-			db: db.$extends(withReminderRLS(session.user.id)),
+			userDiscordProviderId: maybeUserDiscordProviderId,
+			db: db.$extends(withReminderRLS(maybeUserDiscordProviderId)),
 		},
 	})
 })
 
 export const reminderRLSProcedure = t.procedure.use(enforceUserRLS)
+
+const withUserContext = enforceUserIsAuthed.unstable_pipe(
+	async ({ ctx: { db, session }, next }) => {
+		const res = await db.account.findFirst({
+			where: {
+				userId: session.user.id,
+				provider: "discord",
+			},
+		})
+		if (!res) {
+			throw new TRPCError({
+				code: "NOT_FOUND",
+				message: "User does not have a discord account linked.",
+			})
+		}
+		return next({
+			ctx: {
+				userProviderId: res.providerAccountId,
+			},
+		})
+	}
+)
+
+export const discordUserProcedure = t.procedure.use(withUserContext)

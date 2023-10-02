@@ -1,6 +1,5 @@
-import ReminderTable from "../components/reminders/ReminderTable"
+import ReminderDataView from "../components/reminders/ReminderDataView"
 
 export default function Reminders() {
-	return <ReminderTable />
-	// return <ReminderEditForm />
+	return <ReminderDataView />
 }

@@ -1,7 +1,7 @@
 import Typography from "@mui/material/Typography"
-import CounterButtonInterface from "../components/CounterButtonInterface"
-import CounterDisplay from "../components/CounterDisplay"
-import IntervalInput from "../components/IntervalInput"
+import CounterButtonInterface from "../components/counter/CounterButtonInterface"
+import CounterDisplay from "../components/counter/CounterDisplay"
+import IntervalInput from "../components/counter/IntervalInput"
 import Grid from "@mui/material/Unstable_Grid2"
 
 export default function CounterExample() {
@@ -14,6 +14,7 @@ export default function CounterExample() {
 					</Typography>
 					<IntervalInput />
 				</Grid>
+
 				<Grid>
 					<Typography className="mb-5" variant="h4">
 						Buttons

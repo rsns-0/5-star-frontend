@@ -8,6 +8,12 @@ import MuiProvider from "../providers/mui-provider"
 import SuperJSON from "superjson"
 import { DateTime } from "luxon"
 
+
+import "@fontsource/roboto/300.css"
+import "@fontsource/roboto/400.css"
+import "@fontsource/roboto/500.css"
+import "@fontsource/roboto/700.css"
+
 SuperJSON.registerCustom<DateTime, string>(
 	{
 		isApplicable: (v): v is DateTime => DateTime.isDateTime(v),

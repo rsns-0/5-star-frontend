@@ -1,4 +1,4 @@
-import { useCounterStore } from "../models/counter-store/counter"
+import { useCounterStore } from "../../models/counterStore/counter"
 
 export default function IntervalInput() {
 	const interval = useCounterStore((s) => s.interval)

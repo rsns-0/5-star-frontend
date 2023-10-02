@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { dateConverter } from "../src/models/date-converter"
+import { dateConverter } from "../src/services/dateService"
 
 describe("DateConverter", () => {
 	it("should format date as MM/DD/YYYY hh:mm A ", () => {

@@ -7,7 +7,7 @@ export const remindersSchema = z.object({
   channel_id: z.string(),
   reminder_message: z.string(),
   webhook_id: z.string(),
-  id: z.bigint(),
+  id: z.number().int(),
   time: z.date(),
 })
 

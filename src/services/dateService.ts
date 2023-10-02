@@ -6,7 +6,7 @@ type AcceptableDateInputs = Date | DateTime | null | undefined
 /**
  * Utility class for handling date conversions.
  */
-class DateConverter {
+class DateConverterService {
 	constructor(private impl: typeof DateTime) {}
 
 	public convertDate(date: AcceptableDateInputs) {
@@ -35,4 +35,4 @@ class DateConverter {
 	}
 }
 
-export const dateConverter = new DateConverter(DateTime)
+export const dateConverter = new DateConverterService(DateTime)

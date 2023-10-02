@@ -3,9 +3,9 @@ import { CompleteUser, relatedUserSchema } from "./index"
 
 export const sessionSchema = z.object({
   id: z.string(),
-  sessionToken: z.string(),
   userId: z.string(),
   expires: z.date(),
+  sessionToken: z.string(),
 })
 
 export interface CompleteSession extends z.infer<typeof sessionSchema> {

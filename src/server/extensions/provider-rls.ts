@@ -1,6 +1,6 @@
 import { type Providers } from "./../../types/auth"
 import { Prisma } from "@prisma/client"
-import extendUser from "./extendUser"
+
 
 export function bypassRLS() {
 	return Prisma.defineExtension((prisma) =>
@@ -40,18 +40,13 @@ export function withProviderRLS(provider: Providers) {
 
 export function withReminderRLS(userId: string) {
 	return Prisma.defineExtension((prisma) => {
-		const { getUserProviderAccountId } = prisma.$extends(extendUser).account
+		
 		return prisma.$extends({
 			query: {
 				reminders: {
-					async findMany({ args, query }) {
-						// enforces that the user can only access their own reminders
+					async $allOperations({ args, query }) {
 						if ("where" in args && args.where) {
-							const result = await getUserProviderAccountId(userId, "discord")
-							if (result instanceof Error) {
-								throw result
-							}
-							args.where.user_id = result
+							args.where.user_id = userId
 						}
 
 						return query(args)
