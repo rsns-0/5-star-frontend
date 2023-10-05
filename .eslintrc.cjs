@@ -4,14 +4,24 @@ const config = {
 	parserOptions: {
 		project: true,
 	},
-	ignorePatterns: ["node_modules", ".next", "out", "public", "*.json", "**/prismaZod/*", ".env"],
+	ignorePatterns: [
+		"node_modules",
+		".next",
+		"out",
+		"public",
+		"*.json",
+		"**/prismaZod/*",
+		".env",
+		".history",
+		"**/*.json",
+	],
 	plugins: ["@typescript-eslint"],
 	extends: [
-        "next/core-web-vitals",
-        "plugin:@typescript-eslint/recommended-type-checked",
-        "plugin:@typescript-eslint/stylistic-type-checked",
-        "plugin:storybook/recommended"
-    ],
+		"next/core-web-vitals",
+		"plugin:@typescript-eslint/recommended-type-checked",
+		"plugin:@typescript-eslint/stylistic-type-checked",
+		"plugin:storybook/recommended",
+	],
 	rules: {
 		// These opinionated rules are enabled in stylistic-type-checked above.
 		// Feel free to reconfigure them to your own preference.

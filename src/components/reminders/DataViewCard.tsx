@@ -1,10 +1,8 @@
 import { Typography } from "@mui/material"
-import { useContext } from "react"
-import { reminderDataContext } from "../../contexts/reminderDataContext"
 
-export function DataViewCard() {
-	const data = useContext(reminderDataContext)!
+import { type GetReminderOutput } from "../../types/router"
 
+export function DataViewCard({ data }: { data: GetReminderOutput }) {
 	return (
 		<Typography variant="h6" component="h6">
 			{JSON.stringify(data)}

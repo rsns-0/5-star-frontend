@@ -1,9 +1,11 @@
-import { Button as Mb1 } from "@mui/material"
 import React from "react"
+import "./button.css"
 
 interface ButtonProps {
-	color?: "primary" | "secondary" | "success" | "inherit" | "error" | "info" | "warning"
-
+	/**
+	 * Is this the principal call to action on the page?
+	 */
+	primary?: boolean
 	/**
 	 * What background color to use
 	 */
@@ -16,8 +18,6 @@ interface ButtonProps {
 	 * Button contents
 	 */
 	label: string
-	variant?: "contained" | "outlined" | "text"
-
 	/**
 	 * Optional click handler
 	 */
@@ -27,10 +27,26 @@ interface ButtonProps {
 /**
  * Primary UI component for user interaction
  */
-export const Button = ({ label, ...props }: ButtonProps) => {
+export const Button = ({
+	primary = false,
+	size = "medium",
+	backgroundColor,
+	label,
+	...props
+}: ButtonProps) => {
+	const mode = primary ? "storybook-button--primary" : "storybook-button--secondary"
 	return (
-		<Mb1 type="button" {...props}>
+		<button
+			type="button"
+			className={["storybook-button", `storybook-button--${size}`, mode].join(" ")}
+			{...props}
+		>
 			{label}
-		</Mb1>
+			<style jsx>{`
+				button {
+					background-color: ${backgroundColor};
+				}
+			`}</style>
+		</button>
 	)
 }

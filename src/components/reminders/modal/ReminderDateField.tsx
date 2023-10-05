@@ -1,18 +1,24 @@
 import { DateTimePicker } from "@mui/x-date-pickers"
-import { useReminderModalContext } from "~/contexts/reminderDataContext"
 
-export function ReminderDateField() {
-	const { timeField } = useReminderModalContext()
+import { useController } from "react-hook-form"
+import { type ReminderUpdateFormData } from "../../../models/reminder-frontend"
+
+export default function ReminderDateField() {
+	const controller = useController<ReminderUpdateFormData>({
+		name: "time",
+	})
+	const { field } = controller
+
 	return (
 		<DateTimePicker
-			{...timeField}
 			label="Time"
 			sx={{
 				maxHeight: 200,
 				pb: 2,
 			}}
-			inputRef={timeField.ref}
-			defaultValue={timeField.value}
+			inputRef={field.ref}
+			defaultValue={field.value}
+			onChange={field.onChange}
 		/>
 	)
 }

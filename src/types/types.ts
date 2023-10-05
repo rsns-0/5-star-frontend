@@ -1,8 +1,8 @@
-import { type useReminderDatabaseService } from "../hooks/useReminderDatabaseService"
+import { type UseAutocompleteProps } from "@mui/material"
 
-export type DataContext =
-	| (NonNullable<ReturnType<typeof useReminderDatabaseService>["data"]>[0] & {
-			open: boolean
-			setOpen: (open: boolean) => void
-	  })
-	| null
+export type DefaultUseAutocompleteProps<T> = UseAutocompleteProps<
+	T,
+	undefined,
+	undefined,
+	undefined
+>

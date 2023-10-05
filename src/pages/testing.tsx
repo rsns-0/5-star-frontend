@@ -1,11 +1,11 @@
 import { DataViewListItem } from "../components/reminders/DataViewListItem"
 
-import { type GetRemindersOutput } from "../types/router"
+import { type GetReminderOutput } from "../types/router"
 import { useReminderModel } from "../hooks/useReminderModel"
 import { Typography } from "@mui/material"
 
 export default function Testing() {
-	const mockData: GetRemindersOutput = {
+	const mockData: GetReminderOutput = {
 		channel_name: "libraries",
 		guild_name: "5-star-tasker",
 		id: 303,

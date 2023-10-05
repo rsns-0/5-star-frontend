@@ -10,8 +10,8 @@ import "primeflex/primeflex.css"
 import "primeicons/primeicons.css"
 import { withThemeByClassName, withThemeFromJSXProvider } from "@storybook/addon-styling"
 import { blueGrey, cyan, pink } from "@mui/material/colors"
-import { api } from "../src/utils/api"
-const _api = api as any
+
+
 
 const lightTheme = createTheme({
 	palette: {
@@ -66,36 +66,33 @@ const preview: Preview = {
 		},
 	},
 }
-const settings2 = [
-	withThemeFromJSXProvider({
-		themes: {
-			dark: darkTheme,
-			light: lightTheme,
-		},
-		defaultTheme: "dark",
-		Provider: ThemeProvider,
-		GlobalStyles: CssBaseline,
-	}),
-	withThemeByClassName({
-		themes: {
-			light: "light",
-			dark: "dark",
-		},
-		defaultTheme: "dark",
-	}),
-] as const
+// const settings2 = [
+// 	withThemeFromJSXProvider({
+// 		themes: {
+// 			dark: darkTheme,
+// 			light: lightTheme,
+// 		},
+// 		defaultTheme: "dark",
+// 		Provider: ThemeProvider,
+// 		GlobalStyles: CssBaseline,
+// 	}),
+// 	withThemeByClassName({
+// 		themes: {
+// 			light: "light",
+// 			dark: "dark",
+// 		},
+// 		defaultTheme: "dark",
+// 	}),
+// ] as const
 
 export default preview
 export const decorators = [
 	(Story: any) => {
-		Story = _api.withTRPC(Story)
 		return (
 			<>
-				<PrimeReactProvider>
-					<MuiProvider>
-						<Story />
-					</MuiProvider>
-				</PrimeReactProvider>
+				<MuiProvider>
+					<Story />
+				</MuiProvider>
 			</>
 		)
 	},

@@ -80,7 +80,10 @@ export const remindersUpdateFormSchema = z.object({
 		}
 		return val
 	}),
+	channel_id: z.string().max(500),
 })
+
+export type ReminderUpdateFormData = z.infer<typeof remindersUpdateFormSchema>
 
 export const remindersUpdateSchema = remindersSchema
 	.pick({
@@ -93,4 +96,4 @@ export const remindersUpdateSchema = remindersSchema
 
 
 	
-export type IReminderFrontendData = z.infer<typeof remindersFrontendSchema>
+

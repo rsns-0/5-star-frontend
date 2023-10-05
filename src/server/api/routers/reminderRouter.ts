@@ -2,29 +2,46 @@ import { createTRPCRouter, reminderRLSProcedure } from "~/server/api/trpc"
 import { remindersSchema } from "../../../models/prismaZod"
 import { z } from "zod"
 import { remindersUpdateSchema } from "../../../models/reminder-frontend"
+import { type Prisma } from "@prisma/client"
 
-export const reminderRouter = createTRPCRouter({
-	getReminders: reminderRLSProcedure.query(async ({ ctx }) => {
-		const res = await ctx.db.reminders.findMany({
-			select: {
-				id: true,
-				user_id: true,
-				created_at: true,
-				reminder_message: true,
-				time: true,
-				webhook_id: true,
-				channel_id: true,
-				discord_channels: {
-					select: {
-						name: true,
-						discord_guilds: {
-							select: {
-								name: true,
-							},
-						},
-					},
+const DEFAULT_SELECT = {
+	id: true,
+	reminder_message: true,
+	time: true,
+	channel_id: true,
+	discord_channels: {
+		select: {
+			id: true,
+			name: true,
+			discord_guilds: {
+				select: {
+					name: true,
 				},
 			},
+		},
+	},
+} satisfies Prisma.remindersSelect
+
+const get = createTRPCRouter({
+	getReminder: reminderRLSProcedure.input(z.number()).query(async ({ ctx, input }) => {
+		return await ctx.db.reminders.findUnique({
+			select: DEFAULT_SELECT,
+			where: {
+				id: input,
+			},
+		})
+	}),
+	getReminders: reminderRLSProcedure.input(z.number().array()).query(async ({ ctx, input }) => {
+		return await ctx.db.reminders.findMany({
+			select: DEFAULT_SELECT,
+			where: {
+				id: { in: input },
+			},
+		})
+	}),
+	getAllReminders: reminderRLSProcedure.query(async ({ ctx }) => {
+		const res = await ctx.db.reminders.findMany({
+			select: DEFAULT_SELECT,
 			where: {
 				user_id: ctx.session.user.id,
 			},
@@ -38,15 +55,9 @@ export const reminderRouter = createTRPCRouter({
 			}
 		})
 	}),
-	createReminder: reminderRLSProcedure.input(remindersSchema).mutation(async ({ ctx, input }) => {
-		await ctx.db.reminders.create({
-			data: {
-				...input,
-			},
-		})
+})
 
-		return true
-	}),
+const patch = createTRPCRouter({
 	updateReminder: reminderRLSProcedure
 		.input(remindersUpdateSchema)
 		.mutation(async ({ ctx, input: { id, reminder_message, time, channel_id } }) => {
@@ -62,6 +73,9 @@ export const reminderRouter = createTRPCRouter({
 			})
 			return true
 		}),
+})
+
+const deleteRouter = createTRPCRouter({
 	deleteReminder: reminderRLSProcedure.input(z.number()).mutation(async ({ ctx, input }) => {
 		await ctx.db.reminders.delete({
 			where: {
@@ -81,4 +95,23 @@ export const reminderRouter = createTRPCRouter({
 			})
 			return true
 		}),
+})
+
+const post = createTRPCRouter({
+	createReminder: reminderRLSProcedure.input(remindersSchema).mutation(async ({ ctx, input }) => {
+		await ctx.db.reminders.create({
+			data: {
+				...input,
+			},
+		})
+
+		return true
+	}),
+})
+
+export const reminderRouter = createTRPCRouter({
+	get,
+	patch,
+	delete: deleteRouter,
+	post,
 })

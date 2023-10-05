@@ -13,6 +13,7 @@ const config: StorybookConfig = {
 			options: {},
 		},
 	],
+
 	framework: {
 		name: "@storybook/nextjs",
 		options: {},

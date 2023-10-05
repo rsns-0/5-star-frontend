@@ -1,35 +1,49 @@
 import { api } from "../utils/api"
 
-export const useReminderDatabaseService = () => {
-	const utils = api.useContext()
-	const query = api.reminders.getReminders.useQuery(undefined, {
-		refetchOnWindowFocus: false,
-	})
+const refetchOnWindowFocus = false
 
-	const channels = api.discordRouter.getGuildsAndTextBasedChannelsOfUser.useQuery(undefined, {
-		refetchOnWindowFocus: false,
-		initialData: [],
-	}).data
+export const useReminderMutations = () => {
+	const utils = api.useContext()
 
 	const onSuccess = () => {
-		void utils.reminders.getReminders.invalidate()
+		void utils.reminders.invalidate()
 	}
 
 	return {
-		createReminder: api.reminders.createReminder.useMutation({
+		createReminder: api.reminders.post.createReminder.useMutation({
 			onSuccess,
-		}).mutate,
-		updateReminder: api.reminders.updateReminder.useMutation({
+		}),
+		updateReminder: api.reminders.patch.updateReminder.useMutation({
 			onSuccess,
-		}).mutate,
-		deleteReminder: api.reminders.deleteReminder.useMutation({
+		}),
+		deleteReminder: api.reminders.delete.deleteReminder.useMutation({
 			onSuccess,
-		}).mutate,
-		deleteReminders: api.reminders.deleteReminders.useMutation({
+		}),
+		deleteReminders: api.reminders.delete.deleteReminders.useMutation({
 			onSuccess,
-		}).mutate,
-		channels,
-
-		data: query.data,
+		}),
 	}
+}
+
+export function useGetChannels() {
+	return api.discordRouter.getGuildsAndTextBasedChannelsOfUser.useQuery(undefined, {
+		refetchOnWindowFocus,
+		initialData: [],
+	}).data
+}
+
+export function useGetReminders(id: number[]) {
+	return api.reminders.get.getReminders.useQuery(id, {
+		refetchOnWindowFocus,
+	})
+}
+
+export function useGetReminder(id: number) {
+	return api.reminders.get.getReminder.useQuery(id, {
+		refetchOnWindowFocus,
+	})
+}
+
+export function useGetReminderFormDefaults(id: number) {
+	return useGetReminder(id)
 }

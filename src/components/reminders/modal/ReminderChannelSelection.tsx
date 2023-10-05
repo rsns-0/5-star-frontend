@@ -1,8 +1,10 @@
 import { TextField, Autocomplete, Typography } from "@mui/material"
-import { useReminderModalContext } from "~/contexts/reminderDataContext"
 
-export function ReminderChannelSelection() {
-	const { dropdownProps } = useReminderModalContext()
+import useChannelSelection from "../../../hooks/useChannelSelection"
+
+export default function ReminderChannelSelection({ label = "Channels" }) {
+	const dropdownProps = useChannelSelection()
+
 	return (
 		<Autocomplete
 			{...dropdownProps}
@@ -10,7 +12,7 @@ export function ReminderChannelSelection() {
 				return <Typography>{params.group}</Typography>
 			}}
 			renderInput={(params) => {
-				return <TextField {...params} label="Channels" />
+				return <TextField {...params} label={label} />
 			}}
 		/>
 	)

@@ -2,7 +2,7 @@ import React, { useState } from "react"
 
 import { DataView } from "primereact/dataview"
 
-import { useReminderDatabaseService } from "../../hooks/useReminderDatabaseService"
+import { useReminderMutations } from "../../hooks/useReminderDatabaseService"
 
 import { Dropdown, type DropdownChangeEvent } from "primereact/dropdown"
 
@@ -21,7 +21,7 @@ type ReminderDataViewProps = {
 }
 
 export default function ReminderDataView({ itemTemplate }: ReminderDataViewProps) {
-	const { data } = useReminderDatabaseService()
+	const { data } = 
 	const [sortKey, setSortKey] = useState("")
 	const [sortOrder, setSortOrder] = useState<0 | 1 | -1>(0)
 	const [sortField, setSortField] = useState("")
