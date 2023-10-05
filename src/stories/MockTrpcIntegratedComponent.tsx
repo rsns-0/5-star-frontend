@@ -1,4 +1,4 @@
-import { Typography, Paper, Grid, Divider, Box } from "@mui/material"
+import { Typography, Paper, Grid, Divider } from "@mui/material"
 import { Fragment } from "react"
 import { mockedTrpc } from "../utils/storyApi"
 import { indigo } from "@mui/material/colors"
