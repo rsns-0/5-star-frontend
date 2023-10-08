@@ -1,5 +1,6 @@
 import { exec } from "child_process"
 import { endsWithSeparator, makeTitleCase, writeToFile } from "./util"
+import { generateStorybookFile } from "./tsMorphCodegen"
 
 type StringEndsWithSeparator = `${string}/` | `${string}\\`
 
@@ -48,7 +49,7 @@ export class FileCreator {
 	}
 }
 
-class StorybookCreator extends FileCreator {
+export class StorybookCreator extends FileCreator {
 	constructor() {
 		super("src/stories/", ".stories.tsx")
 	}
@@ -86,4 +87,9 @@ export const Primary: Story = {
 	}
 }
 
-export const storybookCreator = new StorybookCreator()
+export class TrpcStorybookCreator extends StorybookCreator {
+	override createFile(componentName: string) {
+		void generateStorybookFile(componentName)
+		return this
+	}
+}

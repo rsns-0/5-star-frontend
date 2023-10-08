@@ -4,15 +4,15 @@ import { type AppType } from "next/app";
 
 import { api } from "~/utils/api"
 import "~/styles/globals.css"
-import MuiProvider from "../providers/mui-provider"
+
 import SuperJSON from "superjson"
 import { DateTime } from "luxon"
-
 
 import "@fontsource/roboto/300.css"
 import "@fontsource/roboto/400.css"
 import "@fontsource/roboto/500.css"
 import "@fontsource/roboto/700.css"
+import AppProvider from "../providers/AppProvider"
 
 SuperJSON.registerCustom<DateTime, string>(
 	{
@@ -29,9 +29,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
 	return (
 		<SessionProvider session={session}>
-			<MuiProvider>
+			<AppProvider>
 				<Component {...pageProps} />
-			</MuiProvider>
+			</AppProvider>
 		</SessionProvider>
 	)
 }

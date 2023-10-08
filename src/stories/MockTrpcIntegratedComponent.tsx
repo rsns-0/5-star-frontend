@@ -1,5 +1,4 @@
 import { Typography, Paper, Grid, Divider } from "@mui/material"
-import { Fragment } from "react"
 import { mockedTrpc } from "../utils/storyApi"
 import { indigo } from "@mui/material/colors"
 
@@ -72,7 +71,7 @@ function useData(input?: string) {
 	}
 	const query = mockedTrpc.example.hello.useQuery({ text: "johnny" })
 	const query2 = mockedTrpc.reminders.get.getAllReminders.useQuery()
-	const query3 = mockedTrpc.example.getReminders.useQuery()
+	const query3 = mockedTrpc.example.TESTGETALLREMINDERS.useQuery()
 
 	const data: DataForComponent[] = [
 		{

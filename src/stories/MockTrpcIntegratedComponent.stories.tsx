@@ -27,7 +27,6 @@ type Story = StoryObj<typeof meta>
 export const ExampleTrpc1: Story = {
 	decorators: [
 		withTrpcContext((ctx) => {
-			// reference: https://stackoverflow.com/questions/75464909/how-to-use-storybook-with-trpc
 			// define mock data for trpc here
 
 			ctx.example.hello.setData({ text: "johnny" }, () => {
@@ -37,8 +36,14 @@ export const ExampleTrpc1: Story = {
 			})
 			ctx.reminders.get.getAllReminders.setData(undefined, () => {
 				const result: RouterOutputs["reminders"]["get"]["getAllReminders"][0] = {
-					channel_name: "channel 1",
-					guild_name: "guild 1",
+					discord_channels: {
+						discord_guilds: {
+							name: "guild 1",
+						},
+						id: "123",
+						name: "channel 1",
+					},
+
 					id: 44,
 					channel_id: "456",
 					reminder_message: "reminder msg",

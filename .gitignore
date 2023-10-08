@@ -150,7 +150,8 @@ typings/
 
 # nuxt.js build output
 .nuxt
-
+.auth.json
+auth.json
 # vuepress build output
 .vuepress/dist
 
@@ -184,3 +185,4 @@ internal_scripts
 /test-results/
 /playwright-report/
 /playwright/.cache/
+playwright/.auth

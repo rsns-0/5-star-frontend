@@ -40,19 +40,11 @@ const get = createTRPCRouter({
 		})
 	}),
 	getAllReminders: reminderRLSProcedure.query(async ({ ctx }) => {
-		const res = await ctx.db.reminders.findMany({
+		return await ctx.db.reminders.findMany({
 			select: DEFAULT_SELECT,
 			where: {
 				user_id: ctx.session.user.id,
 			},
-		})
-		return res.map((r) => {
-			const { discord_channels, ...rest } = r
-			return {
-				...rest,
-				channel_name: discord_channels.name,
-				guild_name: discord_channels.discord_guilds?.name,
-			}
 		})
 	}),
 })

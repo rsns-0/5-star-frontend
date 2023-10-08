@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { Completediscord_guilds, relateddiscord_guildsSchema, Completediscord_messages, relateddiscord_messagesSchema, Completereminders, relatedremindersSchema, Completewebhooks, relatedwebhooksSchema } from "./index"
+import { Completediscord_guilds, relateddiscord_guildsSchema, Completediscord_messages, relateddiscord_messagesSchema, Completereminders, relatedremindersSchema, Completereminders_duplicate, relatedreminders_duplicateSchema, Completewebhooks, relatedwebhooksSchema } from "./index"
 
 export const discord_channelsSchema = z.object({
   id: z.string(),
@@ -12,6 +12,7 @@ export interface Completediscord_channels extends z.infer<typeof discord_channel
   discord_guilds?: Completediscord_guilds | null
   discord_messages: Completediscord_messages[]
   reminders: Completereminders[]
+  reminders_duplicate: Completereminders_duplicate[]
   webhooks: Completewebhooks[]
 }
 
@@ -24,5 +25,6 @@ export const relateddiscord_channelsSchema: z.ZodSchema<Completediscord_channels
   discord_guilds: relateddiscord_guildsSchema.nullish(),
   discord_messages: relateddiscord_messagesSchema.array(),
   reminders: relatedremindersSchema.array(),
+  reminders_duplicate: relatedreminders_duplicateSchema.array(),
   webhooks: relatedwebhooksSchema.array(),
 }))

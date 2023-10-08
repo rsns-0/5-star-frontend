@@ -1,4 +1,5 @@
 import { serverRouter } from "../src/utils/serverApi"
+import { describe, expect, it } from "vitest"
 
 describe("tests", () => {
 	it("should work", () => {

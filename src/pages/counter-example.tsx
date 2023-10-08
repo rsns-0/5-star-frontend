@@ -4,6 +4,8 @@ import CounterDisplay from "../components/counter/CounterDisplay"
 import IntervalInput from "../components/counter/IntervalInput"
 import Grid from "@mui/material/Unstable_Grid2"
 
+
+
 export default function CounterExample() {
 	return (
 		<>

@@ -28,6 +28,18 @@ const defaultComponentProps: Components = {
 			margin: "dense",
 		},
 	},
+	MuiButton: {
+		variants: [
+			{
+				props: { variant: "delete" },
+				style: {
+					color: "#fff",
+					backgroundColor: "#f44336",
+					outline: "none",
+				},
+			},
+		],
+	},
 }
 
 let darkTheme = createTheme({
@@ -38,11 +50,15 @@ let darkTheme = createTheme({
 })
 darkTheme = responsiveFontSizes(darkTheme)
 
-export default function MuiProvider({ children }: { children: ReactNode }) {
+function MuiProvider({ children }: { children: ReactNode }) {
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<CssBaseline />
 			<LocalizationProvider dateAdapter={AdapterDateFns}>{children}</LocalizationProvider>
 		</ThemeProvider>
 	)
+}
+
+export default function AppProvider({ children }: { children: ReactNode }) {
+	return <MuiProvider>{children}</MuiProvider>
 }

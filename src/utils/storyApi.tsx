@@ -7,16 +7,21 @@ import superjson from "superjson"
 
 import { type AppRouter } from "~/server/api/root"
 
+// reference: https://stackoverflow.com/questions/75464909/how-to-use-storybook-with-trpc
+
 const getBaseUrl = () => {
 	if (typeof window !== "undefined") return "" // browser should use relative url
 	if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}` // SSR should use vercel url
 	return `http://localhost:${process.env.PORT ?? 3000}` // dev SSR should use localhost
 }
 
+
+
 export const mockedTrpc = createTRPCReact<AppRouter>()
 export const StorybookTrpcProvider = ({ children }: PropsWithChildren) => {
+	const reactQueryClient = new QueryClient({ defaultOptions: { queries: { staleTime: Infinity } } })
 	const [queryClient] = useState(
-		new QueryClient({ defaultOptions: { queries: { staleTime: Infinity } } })
+		reactQueryClient
 	)
 	const [trpcClient] = useState(() =>
 		mockedTrpc.createClient({
