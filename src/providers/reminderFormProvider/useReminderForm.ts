@@ -28,34 +28,12 @@ export function useReminderForm() {
 		dispatch("OPEN")
 	}
 
-	const {
-		closeAndCreate,
-		closeAndDeleteEntryInDatabase,
-		closeAndResetFormFields,
-		closeAndSyncFormFieldsWithEntryInDatabase,
-		closeAndUpdate,
-	} = useReminderSubmissionService()
-
-	const getSubmitAction = (type: "update" | "create") => {
-		switch (type) {
-			case "update":
-				return closeAndUpdate
-			case "create":
-				return closeAndCreate
-			default:
-				throw new Error("Invalid type")
-		}
-	}
+	const submissionService = useReminderSubmissionService()
 
 	return {
 		modalIsOpen,
 		channels,
 		openModal,
-		closeAndResetFormFields,
-		closeAndSyncFormFieldsWithEntryInDatabase,
-		closeAndDeleteEntryInDatabase,
-		closeAndUpdate,
-		closeAndCreate,
-		getSubmitAction,
+		submissionService,
 	}
 }

@@ -44,6 +44,12 @@ export function useGetReminder(id: number) {
 	})
 }
 
+export function useGetAllReminders() {
+	return api.reminders.get.getAllReminders.useQuery(undefined, {
+		refetchOnWindowFocus,
+	})
+}
+
 export function useGetReminderFormDefaults(id: number) {
 	return useGetReminder(id)
 }

@@ -4,7 +4,9 @@ import { FileDownload } from "@mui/icons-material"
 import { useReminderForm } from "~/providers/reminderFormProvider/useReminderForm"
 
 export default function ReminderSubmitButton({ type }: { type: "update" | "create" }) {
-	const { getSubmitAction } = useReminderForm()
+	const {
+		submissionService: { getSubmitAction },
+	} = useReminderForm()
 	const action = getSubmitAction(type)
 
 	return (

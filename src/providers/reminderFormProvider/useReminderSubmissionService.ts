@@ -1,49 +1,60 @@
 import { useSyncForm } from "./useSyncForm"
 
 import { useSetAtom } from "jotai"
-import { useCallback } from "react"
+
 import { useFormContext } from "react-hook-form"
-import { useReminderDataContext } from "../../contexts/reminderDataContext"
+
 import { useReminderMutations } from "../../hooks/useReminderDatabaseService"
 import { modalOpenAtom } from "../../models/modalOpenAtom"
 import { type ReminderUpdateFormData } from "../../models/reminder-frontend"
+import { useReminderDataAtom } from "../../contexts/reminderDataContext"
 
 export function useReminderSubmissionService() {
 	//* initialize dependencies
-	const form = useFormContext<ReminderUpdateFormData>()
+	const { reset, handleSubmit } = useFormContext<ReminderUpdateFormData>()
 	const dispatch = useSetAtom(modalOpenAtom)
 
-	const { reset } = form
-	const reminderData = useReminderDataContext()
+	const reminderData = useReminderDataAtom()
 	const { deleteReminder, updateReminder, createReminder } = useReminderMutations()
 	const syncForm = useSyncForm()
 
 	//* methods
 
-	const closeAndSyncFormFieldsWithEntryInDatabase = useCallback(() => {
+	const closeAndSyncFormFieldsWithEntryInDatabase = () => {
 		dispatch("CLOSE")
 		syncForm()
-	}, [dispatch, syncForm])
+	}
 
-	const closeAndResetFormFields = useCallback(() => {
+	const closeAndResetFormFields = () => {
 		dispatch("CLOSE")
 		reset()
-	}, [reset, dispatch])
+	}
 
-	const closeAndDeleteEntryInDatabase = useCallback(() => {
+	const closeAndDeleteEntryInDatabase = () => {
 		deleteReminder.mutate(reminderData.id)
 		dispatch("CLOSE")
-	}, [dispatch, reminderData.id, deleteReminder])
+	}
 
-	const closeAndUpdate = form.handleSubmit((data) => {
+	const closeAndUpdate = handleSubmit((data) => {
 		dispatch("CLOSE")
 		updateReminder.mutate({ ...data, id: reminderData.id })
 	})
 
-	const closeAndCreate = form.handleSubmit((data) => {
+	const closeAndCreate = handleSubmit((data) => {
 		dispatch("CLOSE")
 		createReminder.mutate(data)
 	})
+
+	const getSubmitAction = (type: "update" | "create") => {
+		switch (type) {
+			case "update":
+				return closeAndUpdate
+			case "create":
+				return closeAndCreate
+			default:
+				throw new Error("Invalid type")
+		}
+	}
 
 	return {
 		closeAndSyncFormFieldsWithEntryInDatabase,
@@ -51,5 +62,6 @@ export function useReminderSubmissionService() {
 		closeAndDeleteEntryInDatabase,
 		closeAndUpdate,
 		closeAndCreate,
+		getSubmitAction,
 	}
 }

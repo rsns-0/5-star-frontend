@@ -48,6 +48,7 @@ const get = createTRPCRouter({
 			orderBy: {
 				id: "asc",
 			},
+			take: 20,
 		})
 	}),
 })

@@ -7,7 +7,9 @@ import { Delete } from "@mui/icons-material"
 import { useReminderForm } from "~/providers/reminderFormProvider/useReminderForm"
 
 export default function ReminderDeleteButton() {
-	const { closeAndDeleteEntryInDatabase } = useReminderForm()
+	const {
+		submissionService: { closeAndDeleteEntryInDatabase },
+	} = useReminderForm()
 
 	return (
 		<Button

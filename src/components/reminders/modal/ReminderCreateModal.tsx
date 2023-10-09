@@ -2,14 +2,17 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material
 
 import ReminderSubmitButton from "./ReminderSubmitButton"
 
-import ReminderChannelSelection from "./ReminderChannelSelection"
+
 import ReminderDateField from "./ReminderDateField"
 import ReminderMessageField from "./ReminderMessageField"
 
 import { useReminderForm } from "~/providers/reminderFormProvider/useReminderForm"
 
 export default function ReminderCreateModal() {
-	const { modalIsOpen, closeAndResetFormFields } = useReminderForm()
+	const {
+		modalIsOpen,
+		submissionService: { closeAndResetFormFields },
+	} = useReminderForm()
 
 	return (
 		<>
@@ -18,7 +21,7 @@ export default function ReminderCreateModal() {
 				<DialogContent>
 					<ReminderMessageField />
 					<ReminderDateField />
-					<ReminderChannelSelection />
+					{/* <ReminderChannelSelection /> */}
 				</DialogContent>
 				<DialogActions>
 					<ReminderSubmitButton type="create" />

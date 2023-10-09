@@ -1,8 +1,5 @@
-import { type ReminderFormProvider } from "./ReminderFormProvider"
-
 import { pick } from "lodash"
 import { type GetReminderOutputNotNull } from "../../types/router"
-import { type ParametersO } from "../../types/types"
 
 /**
  * Creates default reminder field values based on the given data.
@@ -12,9 +9,7 @@ import { type ParametersO } from "../../types/types"
  * @returns Default reminder field values.
  */
 
-export function createDefaultReminderFieldValues(
-	data?: GetReminderOutputNotNull
-): ParametersO<typeof ReminderFormProvider>["defaultValues"] {
+export function createDefaultReminderFieldValues(data?: GetReminderOutputNotNull) {
 	const formFields = ["channel_id", "reminder_message", "time"] as const
 	if (data) {
 		return pick(data, formFields)

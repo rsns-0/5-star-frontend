@@ -1,5 +1,9 @@
-import ReminderDataView from "../components/reminders/ReminderDataView"
+import { DataViewListItem } from "../components/reminders/DataViewListItem"
+
+import { useGetAllReminders } from "../hooks/useReminderDatabaseService"
 
 export default function Reminders() {
-	return <ReminderDataView />
+	const { data } = useGetAllReminders()
+	return data?.map((res) => <DataViewListItem data={res} />)
+	// return data && <ReminderDataView itemTemplate={DataViewListItem} data={data} />
 }

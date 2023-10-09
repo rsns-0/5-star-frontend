@@ -4,13 +4,15 @@ import {
 	type ReminderUpdateFormData,
 	remindersUpdateFormSchema,
 } from "../../models/reminder-frontend"
-import { Provider as ModalAtomProvider } from "jotai"
-import { ReminderDataContextProvider } from "../../contexts/reminderDataContext"
+
+
 import { type GetReminderOutputNotNull } from "../../types/router"
 
 import { createDefaultReminderFieldValues } from "./createDefaultReminderFieldValues"
 
-export function ReminderFormProvider({
+import { ReminderDataContextProvider } from "../../contexts/reminderDataContext"
+
+function ReminderFormProvider({
 	children,
 	defaultValues,
 }: {
@@ -37,12 +39,8 @@ export function ReminderDialogFormProvider({
 	data: GetReminderOutputNotNull
 }) {
 	return (
-		<ReminderDataContextProvider value={data}>
-			<ModalAtomProvider>
-				<ReminderFormProvider defaultValues={defaultValues}>
-					{children}
-				</ReminderFormProvider>
-			</ModalAtomProvider>
+		<ReminderDataContextProvider initialValues={data}>
+			<ReminderFormProvider defaultValues={defaultValues}>{children}</ReminderFormProvider>
 		</ReminderDataContextProvider>
 	)
 }
