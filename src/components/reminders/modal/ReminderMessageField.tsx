@@ -1,13 +1,10 @@
-import { TextField } from "@mui/material"
-import { useController } from "react-hook-form"
-
 import { type ReminderUpdateFormData } from "../../../models/reminder-frontend"
+import { TextFieldElement } from "react-hook-form-mui"
 
 export default function ReminderMessageField() {
-	const control = useController<ReminderUpdateFormData>({ name: "reminder_message" })
-
 	return (
-		<TextField
+		<TextFieldElement<ReminderUpdateFormData>
+			name="reminder_message"
 			label="Message"
 			sx={{
 				width: 400,
@@ -17,12 +14,8 @@ export default function ReminderMessageField() {
 			FormHelperTextProps={{
 				sx: { textOverflow: "ellipsis", maxWidth: "100%" },
 			}}
-			onChange={control.field.onChange}
-			value={control.field.value}
 			minRows={3}
 			maxRows={3}
-			error={control.fieldState.error !== undefined}
-			helperText={control.fieldState.error?.message ?? " "}
 		/>
 	)
 }

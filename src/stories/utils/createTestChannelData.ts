@@ -1,10 +1,12 @@
 import { faker } from "@faker-js/faker"
 import { times } from "lodash"
 
-function makeData(): { id: string; name: string; guildName: string } {
+function makeData() {
+	const name = faker.animal.bear()
 	return {
 		id: faker.database.mongodbObjectId(),
-		name: faker.animal.bear(),
+		name,
+		label: name,
 		guildName: faker.commerce.product(),
 	}
 }

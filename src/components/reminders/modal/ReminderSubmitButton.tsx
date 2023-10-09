@@ -1,30 +1,15 @@
 import { Button } from "@mui/material"
-import { useFormContext } from "react-hook-form"
-import { useReminderMutations } from "../../../hooks/useReminderDatabaseService"
-import { type ReminderUpdateFormData } from "../../../models/reminder-frontend"
-import { useReminderDataContext } from "../../../contexts/reminderDataContext"
-
 
 import { FileDownload } from "@mui/icons-material"
-import { useSetAtom } from "jotai"
-import { modalOpenAtom } from "../../../models/modalOpenAtom"
+import { useReminderForm } from "~/providers/reminderFormProvider/useReminderForm"
 
-export default function ReminderSubmitButton() {
-	const onSubmit = useReminderSubmit()
+export default function ReminderSubmitButton({ type }: { type: "update" | "create" }) {
+	const { getSubmitAction } = useReminderForm()
+	const action = getSubmitAction(type)
+
 	return (
-		<Button type="button" onClick={onSubmit} startIcon={<FileDownload />} variant="outlined">
+		<Button type="button" onClick={action} startIcon={<FileDownload />} variant="outlined">
 			SUBMIT
 		</Button>
 	)
-}
-
-function useReminderSubmit() {
-	const updateReminder = useReminderMutations().updateReminder
-	const { id } = useReminderDataContext()
-	const dispatch = useSetAtom(modalOpenAtom)
-
-	return useFormContext<ReminderUpdateFormData>().handleSubmit((data) => {
-		dispatch("CLOSE")
-		updateReminder.mutate({ ...data, id })
-	})
 }

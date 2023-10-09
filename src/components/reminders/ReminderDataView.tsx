@@ -2,7 +2,7 @@ import React, { useState } from "react"
 
 import { DataView } from "primereact/dataview"
 
-import { useReminderMutations } from "../../hooks/useReminderDatabaseService"
+
 
 import { Dropdown, type DropdownChangeEvent } from "primereact/dropdown"
 
@@ -11,6 +11,7 @@ import "primereact/resources/primereact.min.css"
 import "primeflex/primeflex.css"
 import "primeicons/primeicons.css"
 import { PrimeReactProvider } from "primereact/api"
+import { type GetReminderOutputNotNull } from "../../types/router"
 const sortOptions = [
 	{ label: "id descending", value: "!id" },
 	{ label: "id ascending", value: "id" },
@@ -18,10 +19,10 @@ const sortOptions = [
 
 type ReminderDataViewProps = {
 	itemTemplate: React.ComponentProps<typeof DataView>["itemTemplate"]
+	data: GetReminderOutputNotNull[]
 }
 
-export default function ReminderDataView({ itemTemplate }: ReminderDataViewProps) {
-	const { data } = 
+export default function ReminderDataView({ itemTemplate, data }: ReminderDataViewProps) {
 	const [sortKey, setSortKey] = useState("")
 	const [sortOrder, setSortOrder] = useState<0 | 1 | -1>(0)
 	const [sortField, setSortField] = useState("")

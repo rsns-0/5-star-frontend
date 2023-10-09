@@ -4,10 +4,9 @@ import { useController } from "react-hook-form"
 import { type ReminderUpdateFormData } from "../../../models/reminder-frontend"
 
 export default function ReminderDateField() {
-	const controller = useController<ReminderUpdateFormData>({
+	const { field } = useController<ReminderUpdateFormData>({
 		name: "time",
 	})
-	const { field } = controller
 
 	return (
 		<DateTimePicker
@@ -16,9 +15,7 @@ export default function ReminderDateField() {
 				maxHeight: 200,
 				pb: 2,
 			}}
-			inputRef={field.ref}
-			defaultValue={field.value}
-			onChange={field.onChange}
+			{...field}
 		/>
 	)
 }

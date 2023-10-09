@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react"
 
-export const contextFactory = <T>() => {
-	const ctx = createContext<T | null>(null)
+export const contextFactory = <T>(initialValue?: T) => {
+	const ctx = createContext<T | null>(initialValue ?? null)
 	const useHook = () => {
 		const ctxValue = useContext(ctx)
 		if (!ctxValue) {

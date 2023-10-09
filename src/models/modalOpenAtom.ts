@@ -8,4 +8,4 @@ const openReducer = (_state: boolean, type: "OPEN" | "CLOSE") => {
 	}
 }
 
-export const modalOpenAtom = atomWithReducer(false, openReducer)
+export const modalOpenAtom = atomWithReducer(false as Readonly<boolean>, openReducer)

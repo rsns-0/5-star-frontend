@@ -1,21 +1,18 @@
 import { Button } from "@mui/material"
 
-import { useReminderMutations } from "../../../hooks/useReminderDatabaseService"
-import { useReminderDataContext } from "../../../contexts/reminderDataContext"
 
 
 
 import { Delete } from "@mui/icons-material"
-import { useSetAtom } from "jotai"
-import { modalOpenAtom } from "../../../models/modalOpenAtom"
+import { useReminderForm } from "~/providers/reminderFormProvider/useReminderForm"
 
 export default function ReminderDeleteButton() {
-	const deleteReminderAction = useReminderDelete()
+	const { closeAndDeleteEntryInDatabase } = useReminderForm()
 
 	return (
 		<Button
 			title="delete"
-			onClick={deleteReminderAction}
+			onClick={closeAndDeleteEntryInDatabase}
 			variant="outlined"
 			color="error"
 			startIcon={<Delete />}
@@ -23,15 +20,4 @@ export default function ReminderDeleteButton() {
 			Delete
 		</Button>
 	)
-}
-
-function useReminderDelete() {
-	const reminderId = useReminderDataContext().id
-	const dispatch = useSetAtom(modalOpenAtom)
-
-	const { deleteReminder } = useReminderMutations()
-	return () => {
-		deleteReminder.mutate(reminderId)
-		dispatch("CLOSE")
-	}
 }

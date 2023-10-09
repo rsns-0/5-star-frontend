@@ -1,7 +1,7 @@
 import { createStore } from "@udecode/zustood"
 import { createContext, useContext, useRef } from "react"
 
-export const exampStoreFactory = () => {
+const exampStoreFactory = () => {
 	const store = createStore(Math.random().toString())({
 		count: 1,
 	}).extendActions((set, get) => ({

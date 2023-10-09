@@ -5,11 +5,11 @@ export const discord_channels_duplicateSchema = z.object({
   id: z.string(),
   name: z.string(),
   created_at: z.date(),
-  discord_guild_id: z.string().nullish(),
+  discord_guild_id: z.string(),
 })
 
 export interface Completediscord_channels_duplicate extends z.infer<typeof discord_channels_duplicateSchema> {
-  discord_guilds?: Completediscord_guilds | null
+  discord_guilds: Completediscord_guilds
 }
 
 /**
@@ -18,5 +18,5 @@ export interface Completediscord_channels_duplicate extends z.infer<typeof disco
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
 export const relateddiscord_channels_duplicateSchema: z.ZodSchema<Completediscord_channels_duplicate> = z.lazy(() => discord_channels_duplicateSchema.extend({
-  discord_guilds: relateddiscord_guildsSchema.nullish(),
+  discord_guilds: relateddiscord_guildsSchema,
 }))

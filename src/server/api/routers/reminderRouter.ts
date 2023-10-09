@@ -1,7 +1,7 @@
 import { createTRPCRouter, reminderRLSProcedure } from "~/server/api/trpc"
-import { remindersSchema } from "../../../models/prismaZod"
+
 import { z } from "zod"
-import { remindersUpdateSchema } from "../../../models/reminder-frontend"
+import { remindersCreateSchema, remindersUpdateSchema } from "../../../models/reminder-frontend"
 import { type Prisma } from "@prisma/client"
 
 const DEFAULT_SELECT = {
@@ -20,7 +20,7 @@ const DEFAULT_SELECT = {
 			},
 		},
 	},
-} satisfies Prisma.remindersSelect
+} as const satisfies Prisma.remindersSelect
 
 const get = createTRPCRouter({
 	getReminder: reminderRLSProcedure.input(z.number()).query(async ({ ctx, input }) => {
@@ -44,6 +44,9 @@ const get = createTRPCRouter({
 			select: DEFAULT_SELECT,
 			where: {
 				user_id: ctx.session.user.id,
+			},
+			orderBy: {
+				id: "asc",
 			},
 		})
 	}),
@@ -90,15 +93,32 @@ const deleteRouter = createTRPCRouter({
 })
 
 const post = createTRPCRouter({
-	createReminder: reminderRLSProcedure.input(remindersSchema).mutation(async ({ ctx, input }) => {
-		await ctx.db.reminders.create({
-			data: {
-				...input,
-			},
-		})
+	createReminder: reminderRLSProcedure
+		.input(remindersCreateSchema)
+		.mutation(async ({ ctx, input }) => {
+			const { id: webhookId } = await ctx.db.webhooks.findFirstOrThrow({
+				select: {
+					id: true,
+				},
+				where: {
+					discord_channel_id: input.channel_id,
+				},
+			})
+			const { id: reminderId } = await ctx.db.reminders.create({
+				data: {
+					time: input.time,
+					reminder_message: input.reminder_message,
+					channel_id: input.channel_id,
+					user_id: ctx.userDiscordProviderId,
+					webhook_id: webhookId,
+				},
+				select: {
+					id: true,
+				},
+			})
 
-		return true
-	}),
+			return reminderId
+		}),
 })
 
 export const reminderRouter = createTRPCRouter({

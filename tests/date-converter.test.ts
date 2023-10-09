@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { dateConverter } from "../src/services/dateService"
+import { dateConverter } from "../src/lib/dateService"
 import { describe, expect, it } from "vitest"
 
 describe("DateConverter", () => {

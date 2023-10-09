@@ -4,9 +4,11 @@ import { within } from "@storybook/testing-library"
 import { expect } from "@storybook/jest"
 import ReminderMessageField from "../components/reminders/modal/ReminderMessageField"
 import ReminderEditModal from "../components/reminders/modal/ReminderEditModal"
-import { ReminderFormProvider } from "~/providers/ReminderFormProvider"
+
+import { createDefaultReminderFieldValues } from "~/providers/reminderFormProvider/createDefaultReminderFieldValues"
 import { type GetReminderOutputNotNull } from "../types/router"
 import { createChannelData } from "./utils/createTestChannelData"
+import { ReminderDialogFormProvider } from "~/providers/reminderFormProvider"
 
 const formMockData = {
 	reminder_message: "hello",
@@ -43,10 +45,13 @@ const meta: Meta<typeof ReminderEditModal> = {
 	tags: ["autodocs"],
 	component: ReminderEditModal,
 	decorators: [
-		(Story, ctx) => (
-			<ReminderFormProvider defaultValues={ctx.args.data} data={getReminderMockData}>
+		(Story) => (
+			<ReminderDialogFormProvider
+				defaultValues={createDefaultReminderFieldValues()}
+				data={getReminderMockData}
+			>
 				<StorybookTrpcProvider>{<Story />}</StorybookTrpcProvider>
-			</ReminderFormProvider>
+			</ReminderDialogFormProvider>
 		),
 	],
 }
@@ -68,8 +73,8 @@ export const MessageField: Story = {
 }
 
 export const Primary: Story = {
-	render: (args) => {
-		return <ReminderEditModal data={args.data} />
+	render: () => {
+		return <ReminderEditModal />
 	},
 	play: async (ctx) => {
 		const editButton = within(ctx.canvasElement).getByTitle("EDIT")

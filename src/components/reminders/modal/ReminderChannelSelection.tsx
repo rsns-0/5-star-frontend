@@ -1,20 +1,22 @@
-import { TextField, Autocomplete } from "@mui/material"
-
-import useChannelSelection from "../../../hooks/useChannelSelection"
-import { useReminderDataContext } from "../../../contexts/reminderDataContext"
+import { AutocompleteElement } from "react-hook-form-mui"
+import { type ReminderUpdateFormData } from "../../../models/reminder-frontend"
+import { useReminderForm } from "~/providers/reminderFormProvider/useReminderForm"
 
 export default function ReminderChannelSelection({ label = "Channels" }) {
-	const {
-		discord_channels: { id },
-	} = useReminderDataContext()
-	const dropdownProps = useChannelSelection(id)
+	const { channels } = useReminderForm()
 
 	return (
-		<Autocomplete
-			{...dropdownProps}
-			renderInput={(params) => {
-				return <TextField {...params} label={label} />
-			}}
-		/>
+		<>
+			<AutocompleteElement<ReminderUpdateFormData>
+				name="channel_id"
+				options={channels}
+				matchId
+				label={label}
+				autocompleteProps={{
+					groupBy: (opt: (typeof channels)[0]) =>
+						channels.find((channel) => channel.id === opt.id)?.guildName ?? "",
+				}}
+			/>
+		</>
 	)
 }

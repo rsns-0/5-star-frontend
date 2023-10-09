@@ -3,20 +3,59 @@ import { type GetReminderOutputNotNull } from "../../types/router"
 import ReminderEditModal from "./modal/ReminderEditModal"
 import { DataViewCard } from "./DataViewCard"
 
-import EditButton from "../interactions/EditButton"
-import { useSetAtom } from "jotai"
-import { modalOpenAtom } from "../../models/modalOpenAtom"
+
+import ReminderCreateModal from "./modal/ReminderCreateModal"
+
+import { ReminderDialogFormProvider } from "../../providers/reminderFormProvider/ReminderFormProvider"
+import { createDefaultReminderFieldValues } from "~/providers/reminderFormProvider/createDefaultReminderFieldValues"
+import { useReminderForm } from "~/providers/reminderFormProvider/useReminderForm"
+
+import { AddCircle, ModeEdit } from "@mui/icons-material"
+import { Button } from "@mui/material"
 
 export function DataViewListItem({ data }: { data: GetReminderOutputNotNull }) {
-	const dispatch = useSetAtom(modalOpenAtom)
+	const filledValues = createDefaultReminderFieldValues(data)
+
+	const OpenButtonForCreate = withModalOpen(Button)
+	const OpenButtonForEdit = withModalOpen(Button)
 
 	return (
 		<>
 			<div className="col-12 gap-4">
 				<DataViewCard data={data} />
-				<EditButton onClick={() => dispatch("OPEN")} />
-				<ReminderEditModal data={data} />
+
+				<ReminderDialogFormProvider data={data}>
+					<OpenButtonForCreate
+						variant="outlined"
+						title="CREATE"
+						name="CREATE"
+						startIcon={<AddCircle />}
+					>
+						CREATE
+					</OpenButtonForCreate>
+
+					<ReminderCreateModal />
+				</ReminderDialogFormProvider>
+				<ReminderDialogFormProvider defaultValues={filledValues} data={data}>
+					<OpenButtonForEdit
+						variant="outlined"
+						title="EDIT"
+						name="EDIT"
+						startIcon={<ModeEdit />}
+					>
+						EDIT
+					</OpenButtonForEdit>
+					<ReminderEditModal />
+				</ReminderDialogFormProvider>
 			</div>
 		</>
 	)
+}
+
+function withModalOpen<T>(WrappedButton: React.ComponentType<T>) {
+	function WithModalOpen(props: T) {
+		const { openModal } = useReminderForm()
+		return <WrappedButton onClick={openModal} {...props} />
+	}
+	return WithModalOpen
 }
