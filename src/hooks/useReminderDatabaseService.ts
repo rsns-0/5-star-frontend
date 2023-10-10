@@ -6,8 +6,9 @@ export const useReminderMutations = () => {
 	const utils = api.useContext()
 
 	const onSuccess = () => {
-		void utils.reminders.invalidate()
+		void utils.reminders.get.invalidate()
 	}
+	
 
 	return {
 		createReminder: api.reminders.post.createReminder.useMutation({

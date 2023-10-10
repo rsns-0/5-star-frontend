@@ -1,8 +1,8 @@
 import { useReminderSubmissionService } from "./useReminderSubmissionService"
 
-import { useAtom } from "jotai"
+
 import { useGetChannels } from "../../hooks/useReminderDatabaseService"
-import { modalOpenAtom } from "../../models/modalOpenAtom"
+import { useReminderModalOpenStateContext } from "../../contexts/modalOpenContext"
 
 /**
  * A custom hook that provides access to the form context of the ReminderFormProvider component.
@@ -19,16 +19,14 @@ import { modalOpenAtom } from "../../models/modalOpenAtom"
 
 export function useReminderForm() {
 	// * initialize dependencies
-	const [modalIsOpen, dispatch] = useAtom(modalOpenAtom)
-
+	const [modalIsOpen, dispatch] = useReminderModalOpenStateContext()
+	const submissionService = useReminderSubmissionService()
 	const channels = useGetChannels()
 
 	// * Methods
 	const openModal = () => {
 		dispatch("OPEN")
 	}
-
-	const submissionService = useReminderSubmissionService()
 
 	return {
 		modalIsOpen,

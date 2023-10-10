@@ -1,10 +1,8 @@
-import { z } from "zod";
+import { DEFAULT_SELECT } from "./reminderRouter"
 
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "~/server/api/trpc";
+import { z } from "zod"
+
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc"
 
 export const exampleRouter = createTRPCRouter({
 	hello: publicProcedure.input(z.object({ text: z.string() })).query(({ input }) => {
@@ -18,6 +16,9 @@ export const exampleRouter = createTRPCRouter({
 	}),
 
 	TESTGETALLREMINDERS: publicProcedure.query(async ({ ctx }) => {
-		return await ctx.db.reminders.findMany()
+		return await ctx.db.reminders.findMany({
+			select: DEFAULT_SELECT,
+			take: 20,
+		})
 	}),
 })

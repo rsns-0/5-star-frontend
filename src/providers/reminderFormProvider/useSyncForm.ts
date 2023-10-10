@@ -4,10 +4,10 @@ import { useFormContext } from "react-hook-form"
 
 import { useSetFormValues } from "../../hooks/useSetFormValues"
 import { type ReminderUpdateFormData } from "../../models/reminder-frontend"
-import { useReminderDataAtom } from "../../contexts/reminderDataContext"
+import { useReminderDataContext } from "../../contexts/reminderDataContext"
 
 export function useSyncForm() {
 	const form = useFormContext<ReminderUpdateFormData>()
-	const data = useReminderDataAtom()
+	const data = useReminderDataContext()
 	return useSetFormValues(createDefaultReminderFieldValues(data), form)
 }

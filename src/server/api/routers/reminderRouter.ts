@@ -4,7 +4,7 @@ import { z } from "zod"
 import { remindersCreateSchema, remindersUpdateSchema } from "../../../models/reminder-frontend"
 import { type Prisma } from "@prisma/client"
 
-const DEFAULT_SELECT = {
+export const DEFAULT_SELECT = {
 	id: true,
 	reminder_message: true,
 	time: true,
@@ -48,7 +48,6 @@ const get = createTRPCRouter({
 			orderBy: {
 				id: "asc",
 			},
-			take: 20,
 		})
 	}),
 })

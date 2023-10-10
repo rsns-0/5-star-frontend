@@ -1,28 +1,22 @@
-import { atom, useAtomValue } from "jotai"
-import { type GetReminderOutputNotNull, type GetReminderOutput } from "../types/router"
-import { useHydrateAtoms } from "jotai/utils"
+import { type GetReminderOutputNotNull } from "../types/router"
 
-const reminderDataAtom = atom<GetReminderOutput>(null)
+import { contextFactory } from "./contextFactory"
 
-export const useReminderDataAtom = () => {
-	const reminderData = useAtomValue(reminderDataAtom)
-	if (!reminderData) {
-		throw new Error("useReminderDataAtom must be used within a ReminderDataContextProvider")
-	}
-	return reminderData
+const initial: GetReminderOutputNotNull = {
+	discord_channels: {
+		discord_guilds: { name: "" },
+		id: "",
+		name: "",
+	},
+	id: 0,
+	channel_id: "",
+	reminder_message: "",
+	time: new Date(),
 }
 
-const HydrateAtoms = ({
-	initialValues,
-	children,
-}: {
-	initialValues: GetReminderOutputNotNull
-	children: React.ReactNode
-}) => {
-	// initialising on state with prop on render here
-	useHydrateAtoms([[reminderDataAtom, initialValues]])
-	return children
-}
+const ctx = contextFactory<GetReminderOutputNotNull>(initial)
+
+export const useReminderDataContext = ctx.useHook
 
 export const ReminderDataContextProvider = ({
 	initialValues,
@@ -33,8 +27,7 @@ export const ReminderDataContextProvider = ({
 }) => {
 	return (
 		<>
-			{/* <Provider atoms={[reminderDataAtom]}>{children}</Provider> */}
-			<HydrateAtoms initialValues={initialValues}>{children}</HydrateAtoms>
+			<ctx.Provider value={initialValues}>{children}</ctx.Provider>
 		</>
 	)
 }

@@ -1,20 +1,21 @@
 import { useSyncForm } from "./useSyncForm"
 
-import { useSetAtom } from "jotai"
+
 
 import { useFormContext } from "react-hook-form"
 
 import { useReminderMutations } from "../../hooks/useReminderDatabaseService"
-import { modalOpenAtom } from "../../models/modalOpenAtom"
+
 import { type ReminderUpdateFormData } from "../../models/reminder-frontend"
-import { useReminderDataAtom } from "../../contexts/reminderDataContext"
+import { useReminderDataContext } from "../../contexts/reminderDataContext"
+import { useReminderModalOpenStateContext } from "../../contexts/modalOpenContext"
 
 export function useReminderSubmissionService() {
 	//* initialize dependencies
 	const { reset, handleSubmit } = useFormContext<ReminderUpdateFormData>()
-	const dispatch = useSetAtom(modalOpenAtom)
+	const [, dispatch] = useReminderModalOpenStateContext()
 
-	const reminderData = useReminderDataAtom()
+	const reminderData = useReminderDataContext()
 	const { deleteReminder, updateReminder, createReminder } = useReminderMutations()
 	const syncForm = useSyncForm()
 

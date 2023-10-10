@@ -68,7 +68,8 @@ describe("${fileName}", () => {
 				new TrpcStorybookCreator().createFile(componentName)
 				return
 			}
-			new StorybookCreator().createFile(componentName)
+			new TrpcStorybookCreator().createFile(componentName)
+			// new StorybookCreator().createFile(componentName)
 		})
 
 	return program

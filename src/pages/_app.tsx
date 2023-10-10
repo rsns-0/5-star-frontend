@@ -3,16 +3,17 @@ import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
 
 import { api } from "~/utils/api"
-import "~/styles/globals.css"
 
 import SuperJSON from "superjson"
 import { DateTime } from "luxon"
 
+import AppProvider from "../providers/AppProvider"
+
+import "~/styles/globals.css"
 import "@fontsource/roboto/300.css"
 import "@fontsource/roboto/400.css"
 import "@fontsource/roboto/500.css"
 import "@fontsource/roboto/700.css"
-import AppProvider from "../providers/AppProvider"
 
 SuperJSON.registerCustom<DateTime, string>(
 	{

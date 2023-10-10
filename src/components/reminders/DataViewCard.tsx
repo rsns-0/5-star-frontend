@@ -1,11 +1,22 @@
 import { Typography } from "@mui/material"
 
-import { type GetReminderOutput } from "../../types/router"
+import { type GetReminderOutputNotNull } from "../../types/router"
 
-export function DataViewCard({ data }: { data: GetReminderOutput }) {
+export function DataViewCard({
+	data,
+	children,
+}: {
+	data: GetReminderOutputNotNull
+	children: React.ReactNode
+}) {
 	return (
-		<Typography variant="h6" component="h6">
-			{JSON.stringify(data)}
-		</Typography>
+		<>
+			<Typography variant="h6" component="h6">
+				{JSON.stringify(data)}
+			</Typography>
+			{children}
+		</>
 	)
 }
+
+function transformProps(data: GetReminderOutputNotNull) {}

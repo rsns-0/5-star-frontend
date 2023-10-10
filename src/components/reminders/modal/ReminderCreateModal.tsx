@@ -7,6 +7,7 @@ import ReminderDateField from "./ReminderDateField"
 import ReminderMessageField from "./ReminderMessageField"
 
 import { useReminderForm } from "~/providers/reminderFormProvider/useReminderForm"
+import ReminderChannelSelection from "./ReminderChannelSelection"
 
 export default function ReminderCreateModal() {
 	const {
@@ -21,7 +22,7 @@ export default function ReminderCreateModal() {
 				<DialogContent>
 					<ReminderMessageField />
 					<ReminderDateField />
-					{/* <ReminderChannelSelection /> */}
+					<ReminderChannelSelection />
 				</DialogContent>
 				<DialogActions>
 					<ReminderSubmitButton type="create" />
