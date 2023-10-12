@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, Typography } from "@mui/material"
+import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material"
 
 import { useFormContext } from "react-hook-form"
 import { DevTool } from "@hookform/devtools"
@@ -12,10 +12,15 @@ import { useGetChannels, useReminderMutations } from "../../hooks/useReminderDat
 
 import { useReminderDataContext } from "../../contexts/reminderDataContext"
 
-import { useCallback, useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import DeleteButton from "../interactions/DeleteButton"
 import SubmitButton from "../interactions/SubmitButton"
 import LoadingBackdrop from "../loading/LoadingBackdrop"
+
+const DevToolWrapper = () => {
+	const { control } = useFormContext()
+	return <DevTool control={control} placement="top-right" />
+}
 
 interface ReminderEditModalProps {
 	type: "create" | "update"
@@ -99,13 +104,19 @@ function useModalAction(onClose: () => void) {
 	const { handleSubmit, reset } = useFormContext<ReminderUpdateFormData>()
 	const { id } = useReminderDataContext()
 
-	const statuses = {
-		delete: deleteReminder.status,
-		create: createReminder.status,
-		update: updateReminder.status,
-	}
+	const statuses = useMemo(
+		() => ({
+			delete: deleteReminder.status,
+			create: createReminder.status,
+			update: updateReminder.status,
+		}),
+		[deleteReminder.status, createReminder.status, updateReminder.status]
+	)
 
-	const anyLoading = Object.values(statuses).some((status) => status === "loading")
+	const anyLoading = useMemo(
+		() => Object.values(statuses).some((status) => status === "loading"),
+		[statuses]
+	)
 
 	const onDelete = () => {
 		onClose()
@@ -161,8 +172,4 @@ const useFormResetEffect = (
 			time,
 		})
 	}, [channel_id, reminder_message, time, reset, type])
-}
-const DevToolWrapper = () => {
-	const { control } = useFormContext()
-	return <DevTool control={control} placement="top-right" />
 }

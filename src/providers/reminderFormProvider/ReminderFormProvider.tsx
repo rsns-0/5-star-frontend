@@ -12,6 +12,7 @@ import { type GetReminderOutputNotNull } from "../../types/router"
 import { createDefaultReminderFieldValues } from "../../lib/createDefaultReminderFieldValues"
 
 import { ReminderDataContextProvider } from "../../contexts/reminderDataContext"
+import { reminderFormConfigs } from "../../hooks/useReminderForm"
 
 function ReminderFormProvider({
 	children,
@@ -19,14 +20,7 @@ function ReminderFormProvider({
 	children: React.ReactNode
 	defaultValues: ReminderUpdateFormData
 }) {
-	return (
-		<FormContainer
-			resolver={zodResolver(remindersUpdateFormSchema)}
-			defaultValues={createDefaultReminderFieldValues()}
-		>
-			{children}
-		</FormContainer>
-	)
+	return <FormContainer {...reminderFormConfigs}>{children}</FormContainer>
 }
 
 export type ReminderDialogFormProviderProps = {

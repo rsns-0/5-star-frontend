@@ -1,9 +1,9 @@
 import { ReminderCrudApp } from "../components/reminders/ReminderCrudApp"
+import ReminderTable from "~/components/reminders/table/ReminderTable"
 
 import { api } from "../utils/api"
 
 export default function Reminders() {
-	const { data } = api.reminders.get.getAllReminders.useQuery()
-
+	return <ReminderTable />
 	// return data && <ReminderDataView itemTemplate={DataViewListItem} data={data} />
 }
