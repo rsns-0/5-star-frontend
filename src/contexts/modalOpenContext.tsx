@@ -3,18 +3,18 @@ import { contextFactory } from "./contextFactory"
 import { useReducer } from "react"
 type StateSetter = (value: "OPEN" | "CLOSE") => void
 
-function useStateReducer(initialValue: boolean): [boolean, StateSetter] {
-	const reducer = (state: boolean, action: "OPEN" | "CLOSE"): boolean => {
-		switch (action) {
-			case "OPEN":
-				return true
-			case "CLOSE":
-				return false
-			default:
-				return state
-		}
+const reducer = (state: boolean, action: "OPEN" | "CLOSE"): boolean => {
+	switch (action) {
+		case "OPEN":
+			return true
+		case "CLOSE":
+			return false
+		default:
+			return state
 	}
+}
 
+function useStateReducer(initialValue: boolean): [boolean, StateSetter] {
 	const [state, dispatch] = useReducer(reducer, initialValue)
 
 	const setState: StateSetter = (value: "OPEN" | "CLOSE") => {

@@ -1,5 +1,7 @@
 import { createStore } from "@udecode/zustood"
-import { createContext, useContext, useRef } from "react"
+import { makeAutoObservable } from "mobx"
+import { observer } from "mobx-react"
+import { createContext, useContext, useRef, useState } from "react"
 
 const exampStoreFactory = () => {
 	const store = createStore(Math.random().toString())({
@@ -37,11 +39,101 @@ const useStoreContext = () => {
 	return store
 }
 
+import { proxy, useSnapshot } from "valtio"
+
+class Store {
+	count = 1
+	prop2 = 4
+	multiplier = 1
+
+	getCountAsMultiplier() {
+		return this.count * this.multiplier
+	}
+
+	setMultiplier(n: number) {
+		this.multiplier = n
+	}
+
+	add() {
+		this.count++
+	}
+
+	decrease() {
+		this.count--
+	}
+}
+
+// const store = proxy(new Store())
+
+class Model {
+	count = 1
+	prop2 = 4
+	multiplier = 1
+	internal = {
+		count: 3,
+	}
+
+	constructor() {
+		makeAutoObservable(this)
+	}
+
+	getCountAsMultiplier() {
+		return this.internal.count * this.multiplier
+	}
+
+	setMultiplier(n: number | string) {
+		if (typeof n === "string") {
+			n = parseInt(n)
+		}
+		this.multiplier = n
+	}
+
+	add() {
+		this.internal.count++
+	}
+
+	decrease() {
+		this.internal.count--
+	}
+}
+const store = new Model()
+
+const useStore = () => {
+	const state1 = useState(true)
+
+	return {
+		store,
+		state1,
+	}
+}
+
 function Test2() {
+	// const snap = useSnapshot(store)
+	const {
+		state1: [state, setState],
+		store,
+	} = useStore()
+
 	return (
 		<>
-			<Ctx1Comp />
-			<Ctx2Comp />
+			<input
+				value={store.multiplier}
+				onChange={(event) => {
+					setState(() => !state)
+					store.multiplier = parseInt(event.target.value)
+					// store.setMultiplier(Number(event.target.value))
+				}}
+			></input>
+
+			<div>{`${state}`}</div>
+
+			<div>{store.count}</div>
+			<div>{store.getCountAsMultiplier()}</div>
+			<button onClick={() => store.add()}>add</button>
+			<>
+				<Ctx1Comp />
+				<Ctx2Comp />
+			</>
 		</>
 	)
 }
@@ -72,4 +164,4 @@ function Ctx2Comp() {
 	)
 }
 
-export default Test2
+export default observer(Test2)

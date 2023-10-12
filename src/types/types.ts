@@ -11,3 +11,4 @@ export type DefaultUseAutocompleteProps<T> = UseAutocompleteProps<
 export type GetArrayItem<T> = T extends Array<infer U> ? U : never
 
 export type ParametersO<T> = T extends (...args: infer U) => any ? U[0] : never
+

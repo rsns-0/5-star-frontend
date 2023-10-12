@@ -1,5 +1,5 @@
 import { pick } from "lodash"
-import { type GetReminderOutputNotNull } from "../../types/router"
+import { type GetReminderOutputNotNull } from "../types/router"
 
 /**
  * Creates default reminder field values based on the given data.

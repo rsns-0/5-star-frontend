@@ -65,14 +65,21 @@ function ListSnippet() {
 			{people.map((person) => (
 				<>
 					<li key={person.email} className="flex justify-between gap-x-6 py-5">
-						<Stack spacing={0} direction={"row"} className="flex min-w-0 gap-x-4">
-							<Stack spacing={1} className="min-w-0 flex-auto">
-								<Typography className="text-sm font-semibold leading-6">
-									{person.name}
-								</Typography>
-								<Typography className="mt-2 truncate text-xs leading-5">
-									{person.email}
-								</Typography>
+						<Stack direction="row">
+							<img
+								className="h-12 w-12 flex-none rounded-full bg-gray-50"
+								src={person.imageUrl}
+								alt=""
+							/>
+							<Stack spacing={0} direction={"row"} className="flex min-w-0 gap-x-4">
+								<Stack spacing={1} className="min-w-0 flex-auto">
+									<Typography className="text-sm font-semibold leading-6">
+										{person.name}
+									</Typography>
+									<Typography className="mt-2 truncate text-xs leading-5">
+										{person.email}
+									</Typography>
+								</Stack>
 							</Stack>
 						</Stack>
 						<Stack

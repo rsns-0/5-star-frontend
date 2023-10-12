@@ -1,3 +1,4 @@
+"use client"
 import {
 	type Components,
 	ThemeProvider,
@@ -60,5 +61,9 @@ function MuiProvider({ children }: { children: ReactNode }) {
 }
 
 export default function AppProvider({ children }: { children: ReactNode }) {
-	return <MuiProvider>{children}</MuiProvider>
+	return (
+		<>
+			<MuiProvider>{children}</MuiProvider>
+		</>
+	)
 }

@@ -26,10 +26,11 @@ export const useReminderMutations = () => {
 	}
 }
 
+
+
 export function useGetChannels() {
 	return api.discordRouter.getGuildsAndTextBasedChannelsOfUser.useQuery(undefined, {
 		refetchOnWindowFocus,
-		initialData: [],
 	}).data
 }
 

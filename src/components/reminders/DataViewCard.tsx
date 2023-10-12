@@ -19,4 +19,3 @@ export function DataViewCard({
 	)
 }
 
-function transformProps(data: GetReminderOutputNotNull) {}
