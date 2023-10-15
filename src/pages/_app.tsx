@@ -14,6 +14,8 @@ import "@fontsource/roboto/300.css"
 import "@fontsource/roboto/400.css"
 import "@fontsource/roboto/500.css"
 import "@fontsource/roboto/700.css"
+import { Provider } from "react-redux"
+import { store } from "../models/reduxStore/store"
 
 SuperJSON.registerCustom<DateTime, string>(
 	{
@@ -29,11 +31,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
 	pageProps: { session, ...pageProps },
 }) => {
 	return (
-		<SessionProvider session={session}>
-			<AppProvider>
-				<Component {...pageProps} />
-			</AppProvider>
-		</SessionProvider>
+		<Provider store={store}>
+			<SessionProvider session={session}>
+				<AppProvider>
+					<Component {...pageProps} />
+				</AppProvider>
+			</SessionProvider>
+		</Provider>
 	)
 }
 

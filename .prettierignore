@@ -9,3 +9,5 @@ internal_scripts/
 combined.log
 *.json
 .env
+**/*.json
+**.*.hbs

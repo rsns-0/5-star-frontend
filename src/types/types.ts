@@ -17,3 +17,16 @@ export type ReminderTableProps = {
 	modalEditingTitle?: string
 }
 
+export type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }
+
+export type PropsAreEqual<P> = (prevProps: Readonly<P>, nextProps: Readonly<P>) => boolean
+
+export type WrappedComponent<P> = {
+	(props: P): Exclude<React.ReactNode, undefined>
+	displayName?: string
+}
+
+export type HocReturn<P> = {
+	(props: P): React.JSX.Element
+	displayName: string
+}

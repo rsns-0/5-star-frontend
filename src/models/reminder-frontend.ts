@@ -99,5 +99,12 @@ export const remindersCreateSchema = remindersSchema.pick({
 	reminder_message: true,
 	channel_id: true,
 })
-	
 
+export const reminderFormKeySchema = remindersUpdateFormSchema.keyof()
+
+export const getGuildsAndTextBasedChannelsOfUserOutputSingleSchema = z.object({
+	id: z.string(),
+	name: z.string(),
+	label: z.string(),
+	guildName: z.string(),
+})

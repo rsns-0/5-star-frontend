@@ -14,6 +14,7 @@ const config = {
 		".env",
 		".history",
 		"**/*.json",
+		"**.*.hbs",
 	],
 	plugins: ["@typescript-eslint"],
 	extends: [

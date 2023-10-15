@@ -1,10 +1,37 @@
-interface TableState {
-	title: string
-	initialize: () => void
-	openDialog: () => void
-	closeDialog: () => void
-}
+import { makeAutoObservable } from "mobx"
+import { mockData } from "../../../../tests/resources/mockData"
+import { type GetReminderOutputNotNull } from "../../../types/router"
 
-interface Dialog {
-	write: () => void
+class TableState {
+	products: GetReminderOutputNotNull[] = []
+	productDialog = false
+	deleteProductDialog = false
+	deleteProductsDialog = false
+	product: GetReminderOutputNotNull = mockData
+	selectedProducts: GetReminderOutputNotNull[] = []
+	submitted = false
+	globalFilter = ""
+
+	constructor() {
+		makeAutoObservable(this)
+	}
+
+	openNew() {
+		this.product = mockData
+		this.submitted = false
+		this.productDialog = true
+	}
+
+	hideDialog() {
+		this.submitted = false
+		this.productDialog = false
+	}
+
+	hideDeleteProductDialog() {
+		this.deleteProductDialog = false
+	}
+
+	hideDeleteProductsDialog() {
+		this.deleteProductsDialog = false
+	}
 }

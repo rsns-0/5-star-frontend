@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form"
+import { type UseControllerProps, useController, useForm, useFormContext } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { createDefaultReminderFieldValues } from "../lib/createDefaultReminderFieldValues"
 import { type ReminderUpdateFormData, remindersUpdateFormSchema } from "../models/reminder-frontend"
@@ -8,8 +8,20 @@ export const reminderFormConfigs = {
 	defaultValues: createDefaultReminderFieldValues(),
 }
 
-export const useReminderForm = () => {
-	const formMethods = useForm<ReminderUpdateFormData>(reminderFormConfigs)
+export const useReminderForm = ({
+	resolver = reminderFormConfigs.resolver,
+	defaultValues = reminderFormConfigs.defaultValues,
+} = {}) => {
+	return useForm<ReminderUpdateFormData>({
+		resolver,
+		defaultValues,
+	})
+}
 
-	return formMethods
+export const useReminderFormContext = () => {
+	return useFormContext<ReminderUpdateFormData>()
+}
+
+export const useReminderFormController = (props: UseControllerProps<ReminderUpdateFormData>) => {
+	return useController(props)
 }

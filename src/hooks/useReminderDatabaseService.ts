@@ -2,13 +2,15 @@ import { api } from "../utils/api"
 
 const refetchOnWindowFocus = false
 
-export const useReminderMutations = () => {
+const useReminderInvalidate = () => {
 	const utils = api.useContext()
-
-	const onSuccess = () => {
+	return () => {
 		void utils.reminders.get.invalidate()
 	}
-	
+}
+
+export const useReminderMutations = () => {
+	const onSuccess = useReminderInvalidate()
 
 	return {
 		createReminder: api.reminders.post.createReminder.useMutation({
@@ -25,8 +27,6 @@ export const useReminderMutations = () => {
 		}),
 	}
 }
-
-
 
 export function useGetChannels() {
 	return api.discordRouter.getGuildsAndTextBasedChannelsOfUser.useQuery(undefined, {

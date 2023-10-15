@@ -1,8 +1,10 @@
 "use client"
-import { SessionProvider } from "next-auth/react"
+import { SessionProvider, useSession } from "next-auth/react"
 import AppProvider from "../providers/AppProvider"
+import SuperJSON from "superjson"
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout(props: { children: React.ReactNode; session: any }) {
+	const { children } = props
 	return (
 		<SessionProvider>
 			<AppProvider>

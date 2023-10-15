@@ -6,16 +6,15 @@ import {
 	type GetReminderOutputNotNull,
 	type GetGuildsAndTextBasedChannelsOfUserOutputSingle,
 } from "../../types/router"
-import { AutocompleteElement, DateTimePickerElement, TextFieldElement } from "react-hook-form-mui"
+import { AutocompleteElement, TextFieldElement } from "react-hook-form-mui"
 import { type ReminderUpdateFormData } from "../../models/reminder-frontend"
-import { useGetChannels, useReminderMutations } from "../../hooks/useReminderDatabaseService"
+import { useGetChannels } from "../../hooks/useReminderDatabaseService"
 
-import { useReminderDataContext } from "../../contexts/reminderDataContext"
-
-import { useEffect, useMemo } from "react"
 import DeleteButton from "../interactions/DeleteButton"
 import SubmitButton from "../interactions/SubmitButton"
 import LoadingBackdrop from "../loading/LoadingBackdrop"
+import { useModalAction } from "../../hooks/useModalAction"
+import { ReminderDateTimePicker } from "./ReminderDateTimePicker"
 
 const DevToolWrapper = () => {
 	const { control } = useFormContext()
@@ -30,9 +29,8 @@ interface ReminderEditModalProps {
 }
 
 export default function ReminderEditModal({ type, open, onClose, data }: ReminderEditModalProps) {
-	useFormResetEffect(data, type)
 	const { channels, findChannel } = useFindChannel()
-	const { onCancel, onDelete, getSubmitAction, anyLoading } = useModalAction(onClose)
+	const { onCancel, onDelete, getSubmitAction, anyLoading } = useModalAction(onClose, data.id)
 	const onSubmit = getSubmitAction(type)
 	const groupBy = (opt: GetGuildsAndTextBasedChannelsOfUserOutputSingle) => {
 		return findChannel(opt.id) ?? ""
@@ -60,14 +58,7 @@ export default function ReminderEditModal({ type, open, onClose, data }: Reminde
 						minRows={3}
 						maxRows={3}
 					/>
-					<DateTimePickerElement<ReminderUpdateFormData>
-						name="time"
-						label="Time"
-						sx={{
-							maxHeight: 200,
-							pb: 2,
-						}}
-					/>
+					<ReminderDateTimePicker />
 					<AutocompleteElement<ReminderUpdateFormData>
 						name="channel_id"
 						label="Channels"
@@ -99,77 +90,3 @@ const useFindChannel = () => {
 	}
 }
 
-function useModalAction(onClose: () => void) {
-	const { deleteReminder, createReminder, updateReminder } = useReminderMutations()
-	const { handleSubmit, reset } = useFormContext<ReminderUpdateFormData>()
-	const { id } = useReminderDataContext()
-
-	const statuses = useMemo(
-		() => ({
-			delete: deleteReminder.status,
-			create: createReminder.status,
-			update: updateReminder.status,
-		}),
-		[deleteReminder.status, createReminder.status, updateReminder.status]
-	)
-
-	const anyLoading = useMemo(
-		() => Object.values(statuses).some((status) => status === "loading"),
-		[statuses]
-	)
-
-	const onDelete = () => {
-		onClose()
-		deleteReminder.mutate(id)
-	}
-
-	const onEdit = handleSubmit((data: ReminderUpdateFormData) => {
-		onClose()
-		updateReminder.mutate({
-			...data,
-			id,
-		})
-	})
-
-	const onCreate = handleSubmit((data: ReminderUpdateFormData) => {
-		onClose()
-		createReminder.mutate(data)
-	})
-
-	const onCancel = () => {
-		onClose()
-		reset()
-	}
-
-	const getSubmitAction = (type: "create" | "update") => {
-		return type === "create" ? onCreate : onEdit
-	}
-
-	return {
-		anyLoading,
-		statuses,
-		onDelete,
-		onEdit,
-		onCreate,
-		onCancel,
-		getSubmitAction,
-	}
-}
-
-const useFormResetEffect = (
-	{ reminder_message, time, channel_id }: GetReminderOutputNotNull,
-	type: "update" | "create"
-) => {
-	const { reset } = useFormContext<ReminderUpdateFormData>()
-	useEffect(() => {
-		if (type === "create") {
-			reset()
-			return
-		}
-		reset({
-			reminder_message,
-			channel_id,
-			time,
-		})
-	}, [channel_id, reminder_message, time, reset, type])
-}
