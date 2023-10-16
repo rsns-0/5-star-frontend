@@ -1,0 +1,27 @@
+.button {
+	display: flex;
+	border-radius: 40px;
+	justify-content: space-between;
+	background: rgb(65, 80, 192);
+	border: 0;
+	margin: 0;
+	transition: background 0.3s;
+	&:hover {
+		background: rgb(17, 34, 165);
+	}
+}
+
+.content {
+	display: flex;
+	padding: 7px 10px;
+	margin: 2px;
+	align-items: center;
+}
+
+.icon {
+	padding: 0;
+	margin-right: 13px;
+	align-items: center;
+	width: 20px;
+	height: 25px;
+}
