@@ -55,10 +55,12 @@ darkTheme = responsiveFontSizes(darkTheme)
 // 	)
 // }
 
+
+
 export default function AppProvider({ children }: { children: ReactNode }) {
 	return (
 		<>
-			<MantineProvider>{children}</MantineProvider>
+			<MantineProvider defaultColorScheme="dark">{children}</MantineProvider>
 		</>
 	)
 }
