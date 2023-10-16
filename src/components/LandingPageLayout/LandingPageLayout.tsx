@@ -7,7 +7,7 @@ import InviteDiscordButton from "../InviteDiscordButton/InviteDiscordButton"
 const LandingPageLayout = () => {
 	return (
 		<>
-			<Header links={[...defaultLinks, { label: "About", link: "/about" }]}></Header>
+			<Header links={[...defaultLinks]}></Header>
 			<Stack align="center">
 				<MainSection>
 					<Group justify="end">

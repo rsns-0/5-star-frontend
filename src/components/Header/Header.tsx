@@ -9,9 +9,10 @@ type HeaderProps = {
 }
 
 export const defaultLinks = [
-	{ label: "Home", link: "/home" },
-	{ label: "Github", link: "/github" },
+	{ label: "Home", link: "/" },
+	{ label: "Github", link: "https://github.com/rsns-0/5-star-backend" },
 	{ label: "Developers", link: "/developers" },
+	{ label: "About", link: "/about" },
 ]
 
 export function Header({ links = defaultLinks }: HeaderProps) {
