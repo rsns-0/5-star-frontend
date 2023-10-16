@@ -1,8 +1,8 @@
-import { Group, Burger } from "@mantine/core"
-import { useDisclosure } from "@mantine/hooks"
+import { Group } from "@mantine/core"
 import { AiFillStar } from "react-icons/ai"
 import classes from "./HeaderSearch.module.css"
 import InviteDiscordButton from "../InviteDiscordButton/InviteDiscordButton"
+import Link from "next/link"
 
 type HeaderProps = {
 	links?: { label: string; link: string }[]
@@ -15,24 +15,16 @@ export const defaultLinks = [
 ]
 
 export function Header({ links = defaultLinks }: HeaderProps) {
-	const [opened, { toggle }] = useDisclosure(false)
-
 	const items = links.map((link) => (
-		<a
-			key={link.label}
-			href={link.link}
-			className={classes.link}
-			onClick={(event) => event.preventDefault()}
-		>
+		<Link key={link.label} href={link.link} className={classes.link}>
 			{link.label}
-		</a>
+		</Link>
 	))
 
 	return (
 		<header className={classes.header}>
 			<div className={classes.inner}>
 				<Group>
-					<Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
 					<AiFillStar size={25} />
 					<h2>5 Star Bot</h2>
 				</Group>

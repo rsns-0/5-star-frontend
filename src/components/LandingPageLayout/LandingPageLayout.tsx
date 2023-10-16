@@ -1,13 +1,13 @@
 import React from "react"
 import MainSection from "../mainSection/MainSection"
-import { Button, Group, Stack } from "@mantine/core"
-import { Header } from "../Header/Header"
+import { Group, Stack } from "@mantine/core"
+import { Header, defaultLinks } from "../Header/Header"
 import InviteDiscordButton from "../InviteDiscordButton/InviteDiscordButton"
 
 const LandingPageLayout = () => {
 	return (
 		<>
-			<Header />
+			<Header links={[...defaultLinks, { label: "About", link: "/about" }]}></Header>
 			<Stack align="center">
 				<MainSection>
 					<Group justify="end">
