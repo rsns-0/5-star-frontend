@@ -4,7 +4,7 @@ import "primereact/resources/primereact.min.css"
 import "primereact/resources/themes/arya-blue/theme.css"
 import "primeflex/primeflex.css"
 import "primeicons/primeicons.css"
-import { useRef, type ComponentType } from "react"
+import { useRef } from "react"
 import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
 import { Toast } from "primereact/toast"
@@ -15,22 +15,15 @@ import { withReminderFormProvider } from "../../../providers/reminderFormProvide
 
 import { type GetReminderOutputNotNull } from "../../../types/router"
 import { useGetAllReminders } from "../../../hooks/useReminderDatabaseService"
-import { useAtom } from "jotai"
-import { atomWithImmer } from "jotai-immer"
 import { useAppSelector } from "../../../models/reduxStore/store"
 import { LeftToolbar } from "./ActionBody"
 
 import { TableHeader } from "./TableHeader"
 import { ExportCSVButton } from "./ExportCSVButton"
-import {
-	useOnSelectionChange,
-	useSelectedEditItem,
-	useSelectedRow,
-} from "../../../hooks/tableHooks"
+import { useOnSelectionChange, useSelectedRow } from "../../../hooks/tableHooks"
 import RowActionTemplate from "./RowActionTemplate"
 import { DeleteDialog } from "./DeleteDialog"
 import { DeleteMultipleDialog } from "./DeleteMultipleDialog"
-import { api } from "../../../utils/api"
 
 export default function ReminderTable() {
 	const { data } = useGetAllReminders()
@@ -48,24 +41,6 @@ const Wrapped = withReminderFormProvider(ReminderTable_)
 
 type Props = {
 	data: GetReminderOutputNotNull[]
-}
-
-const selectedAtom = atomWithImmer<GetReminderOutputNotNull>(
-	null as any as GetReminderOutputNotNull
-)
-
-export function useSelectedAtom() {
-	if (!selectedAtom) {
-		throw new Error("selectedAtom was not initialized with an initial value before using it.")
-	}
-	const [selected, setSelected] = useAtom(selectedAtom)
-	return [selected, setSelected] as const
-}
-
-export function useSelectedAtomWithInit(initialValue: GetReminderOutputNotNull) {
-	const [selected, setSelected] = useSelectedAtom()
-	setSelected(initialValue)
-	return [selected, setSelected] as const
 }
 
 function ReminderTable_({ data }: Props) {

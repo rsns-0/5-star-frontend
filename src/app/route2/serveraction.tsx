@@ -2,7 +2,7 @@
 import { Button, Typography } from "@mui/material"
 import { useState } from "react"
 import SuperJSON from "superjson"
-import { getReminders } from "./p1"
+import { getHello, getReminders } from "../../serverActions/p1"
 import { useSession } from "next-auth/react"
 
 export const ServerActionPage = () => {
@@ -12,7 +12,8 @@ export const ServerActionPage = () => {
 
 	const onClick = async () => {
 		const res = await getReminders(r2)
-		state[1](res)
+		const res2 = await getHello()
+		state[1]([res, res2])
 	}
 
 	return (

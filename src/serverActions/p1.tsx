@@ -1,7 +1,7 @@
 "use server"
 
 import SuperJSON from "superjson"
-import { serverRouter } from "../../utils/serverApi"
+import { serverRouter } from "../utils/serverApi"
 
 export async function getReminders(req55: any) {
 	const res1 = req55
@@ -19,9 +19,18 @@ export async function getReminders(req55: any) {
 	}
 }
 
+export async function getHello() {
+	const result = await serverRouter.example.hello({
+		text: "SDJFIOSDJFOIMWEFOIWEJKOKQEOKWE948r9489rq3jr98j9j",
+	})
+	return {
+		resamdoismdoiqwkepoqkpaosdkoasdksdfjiuwejiuojfwei: result,
+	}
+}
+
 import { cookies, headers } from "next/headers"
 import { getServerSession as originalGetServerSession } from "next-auth"
-import { authOptions } from "../../server/auth"
+import { authOptions } from "../server/auth"
 
 const getServerSessionInServerAction = async () => {
 	const req = {
