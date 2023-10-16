@@ -1,7 +1,7 @@
 import * as z from "zod"
 import { Completediscord_channels, relateddiscord_channelsSchema, Completediscord_user, relateddiscord_userSchema, Completewebhooks, relatedwebhooksSchema } from "./index"
 
-export const remindersSchema = z.object({
+export const reminders_duplicateSchema = z.object({
   created_at: z.date(),
   user_id: z.string(),
   channel_id: z.string(),
@@ -11,19 +11,19 @@ export const remindersSchema = z.object({
   time: z.date(),
 })
 
-export interface Completereminders extends z.infer<typeof remindersSchema> {
+export interface Completereminders_duplicate extends z.infer<typeof reminders_duplicateSchema> {
   discord_channels: Completediscord_channels
   discord_user: Completediscord_user
-  webhook: Completewebhooks
+  webhooks: Completewebhooks
 }
 
 /**
- * relatedremindersSchema contains all relations on your model in addition to the scalars
+ * relatedreminders_duplicateSchema contains all relations on your model in addition to the scalars
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const relatedremindersSchema: z.ZodSchema<Completereminders> = z.lazy(() => remindersSchema.extend({
+export const relatedreminders_duplicateSchema: z.ZodSchema<Completereminders_duplicate> = z.lazy(() => reminders_duplicateSchema.extend({
   discord_channels: relateddiscord_channelsSchema,
   discord_user: relateddiscord_userSchema,
-  webhook: relatedwebhooksSchema,
+  webhooks: relatedwebhooksSchema,
 }))
