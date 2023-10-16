@@ -1,9 +1,9 @@
-import { Header, defaultLinks } from "~/components/Header/Header"
+import LandingPageLayout from "../components/LandingPageLayout/LandingPageLayout"
 
 export default function Home() {
 	return (
 		<>
-			<Header links={[...defaultLinks, { label: "About", link: "/about" }]}></Header>
+			<LandingPageLayout />
 		</>
 	)
 }
