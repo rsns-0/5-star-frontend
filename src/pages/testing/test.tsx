@@ -1,5 +1,5 @@
 import MainSection from "../../components/mainSection/MainSection"
 
-export function Test() {
-	return <MainSection />
+export default function Test() {
+	return <MainSection></MainSection>
 }
