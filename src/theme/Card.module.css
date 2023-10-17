@@ -1,0 +1,13 @@
+.root {
+	&[data-variant="blue-border"] {
+		border-radius:0.75rem;
+		padding:var(--mantine-spacing-md);
+        box-shadow: var(--mantine-spacing-md);
+		border-width: 1px;
+		border-style: solid;
+		border-color: #000ed1;
+		
+		
+        
+	}
+}
