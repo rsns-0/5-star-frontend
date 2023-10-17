@@ -1,5 +1,5 @@
 import MainContent from "../../components/MainContent/MainContent"
-import { Group, Stack } from "@mantine/core"
+import { Button, Group, Stack } from "@mantine/core"
 import { Header, defaultLinks } from "../../components/Header/Header"
 import InviteDiscordButton from "../../components/InviteDiscordButton/InviteDiscordButton"
 import FeatureGrid from "../../components/FeatureGrid/FeatureGrid"
@@ -26,12 +26,20 @@ const LandingPageLayout = () => {
 						title="React to Translate"
 						description="React to any message with a flag matching your preferred language and the bot will automatically detect the message's original language and translate it to your preferred language."
 						icon={IconWorld}
-					/>
+					>
+						<Group justify="end">
+							<Button>Show</Button>
+						</Group>
+					</FeatureItem>
 					<FeatureItem
 						title="Reminders"
 						description="Set reminders through the discord interface or through our feature-packed table in the web browser."
 						icon={IconCalendarCheck}
-					/>
+					>
+						<Group justify="end" align="end">
+							<Button>Show</Button>
+						</Group>
+					</FeatureItem>
 				</FeatureGrid>
 			</Stack>
 		</>

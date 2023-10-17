@@ -1,12 +1,12 @@
 import { Title, type TitleProps } from "@mantine/core"
 import classes from "./TitleText.module.css"
-type TitleTextProps = {
+interface TitleTextProps extends TitleProps {
 	text: string
-} & TitleProps
+}
 
-export const TitleText = ({ text }: TitleTextProps) => {
+export const TitleText = ({ text, ...rest }: TitleTextProps) => {
 	return (
-		<Title className={classes.title} order={2}>
+		<Title className={classes.title} order={2} {...rest}>
 			{text}
 		</Title>
 	)
