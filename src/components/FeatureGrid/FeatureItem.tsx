@@ -3,6 +3,7 @@ import React from "react"
 import { Text, ThemeIcon, rem } from "@mantine/core"
 import { IconSquareCheckFilled, type TablerIconsProps } from "@tabler/icons-react"
 
+
 export type FeatureItemProps = {
 	title: string
 	description: string
@@ -20,7 +21,7 @@ export const FeatureItem = ({
 	icon: Icon = IconSquareCheckFilled,
 }: FeatureItemProps) => {
 	return (
-		<Card>
+		<Card variant="blue-border">
 			<Box key={title}>
 				{Icon && (
 					<ThemeIcon
@@ -32,6 +33,7 @@ export const FeatureItem = ({
 						<Icon {...iconProps} />
 					</ThemeIcon>
 				)}
+
 				<Text fz="lg" mt="sm" fw={500}>
 					{title}
 				</Text>

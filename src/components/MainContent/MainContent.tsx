@@ -11,7 +11,7 @@ type MainSectionProps = {
 /** Children are rendered below the body text. */
 const MainSection = ({ titleText, bodyText, children }: MainSectionProps) => {
 	return (
-		<Card shadow="sm" padding="lg" radius="md" withBorder>
+		<Card shadow="sm" padding="lg" variant="blue-border">
 			<Stack>
 				<Title className={styles.title}>{titleText}</Title>
 				<Text size="lg">{bodyText}</Text>
