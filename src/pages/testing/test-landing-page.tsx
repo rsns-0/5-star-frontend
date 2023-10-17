@@ -1,6 +1,6 @@
 import React from "react"
-import MainSection from "../../components/mainSection/MainSection"
-import LandingPageLayout from "../../components/LandingPageLayout/LandingPageLayout"
+
+import LandingPageLayout from "../../features/LandingPage/LandingPage"
 
 const testLandingPage = () => {
 	return <LandingPageLayout />

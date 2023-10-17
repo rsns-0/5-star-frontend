@@ -1,4 +1,4 @@
-import LandingPageLayout from "../components/LandingPageLayout/LandingPageLayout"
+import LandingPageLayout from "../features/LandingPage/LandingPage"
 
 export default function Home() {
 	return (

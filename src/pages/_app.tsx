@@ -7,17 +7,27 @@ import { api } from "~/utils/api"
 import "~/styles/globals.css"
 import "@mantine/core/styles.css"
 import AppProvider from "../providers/AppProvider"
+import Head from "next/head"
 
 const MyApp: AppType<{ session: Session | null }> = ({
 	Component,
 	pageProps: { session, ...pageProps },
 }) => {
 	return (
-		<SessionProvider session={session}>
-			<AppProvider>
-				<Component {...pageProps} />
-			</AppProvider>
-		</SessionProvider>
+		<>
+			<Head>
+				<meta
+					name="description"
+					content="Ease your life with the 5 Stars Discord bot for automating tasks."
+				/>
+				<title>5 Stars</title>
+			</Head>
+			<SessionProvider session={session}>
+				<AppProvider>
+					<Component {...pageProps} />
+				</AppProvider>
+			</SessionProvider>
+		</>
 	)
 }
 
