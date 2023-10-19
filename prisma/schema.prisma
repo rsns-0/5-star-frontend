@@ -6,11 +6,11 @@ generator client {
 generator zod {
   provider              = "zod-prisma"
   output                = "../src/models/prismaZod"
+  modelCase             = "camelCase"
+  modelSuffix           = "Schema"
   relationModel         = "true"
   useDecimalJs          = "true"
-  modelCase             = "camelCase"
   prismaJsonNullability = "true"
-  modelSuffix           = "Schema"
 }
 
 datasource db {
@@ -112,16 +112,6 @@ model discord_messages {
   discord_user       discord_user?     @relation(fields: [owner_id], references: [id], onUpdate: NoAction)
 }
 
-model languages {
-  id                     BigInt                @id @default(autoincrement())
-  created_at             DateTime              @default(now()) @db.Timestamptz(6)
-  name                   String                @unique
-  iso_639_1              String                @unique
-  iso_639_2              String                @unique
-  is_supported_by_deep_l Boolean?              @default(false)
-  discord_flag_emojis    discord_flag_emojis[]
-}
-
 model test_countries {
   id         BigInt  @id(map: "countries_pkey") @default(autoincrement())
   name       String?
@@ -205,14 +195,6 @@ model rest_countries_api_data {
   demonyms     Json?
 }
 
-model discord_flag_emojis {
-  id          BigInt     @id @default(autoincrement())
-  created_at  DateTime   @default(now()) @db.Timestamptz(6)
-  value       String     @unique
-  languagesId BigInt?
-  language    languages? @relation(fields: [languagesId], references: [id], onDelete: Restrict, onUpdate: NoAction)
-}
-
 model test_pagination {
   id         BigInt   @id @default(autoincrement())
   created_at DateTime @default(now()) @db.Timestamptz(6)
@@ -293,6 +275,38 @@ model reminders_duplicate {
   discord_channels discord_channels @relation(fields: [channel_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   discord_user     discord_user     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   webhooks         webhooks         @relation(fields: [webhook_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model rest_countries_api_data_languages {
+  id           Int    @id @default(autoincrement())
+  name         String @unique
+  abbreviation String @unique
+}
+
+model deep_l_supported_languages {
+  id           Int    @id @default(autoincrement())
+  name         String
+  abbreviation String @unique
+}
+
+model discord_flag_emojis {
+  id          BigInt     @id @default(autoincrement())
+  created_at  DateTime   @default(now()) @db.Timestamptz(6)
+  value       String     @unique
+  languagesId BigInt?
+  language   languages? @relation(fields: [languagesId], references: [id], onDelete: Restrict, onUpdate: NoAction)
+}
+
+model languages {
+  id                     BigInt                @id @default(autoincrement())
+  created_at             DateTime              @default(now()) @db.Timestamptz(6)
+  name                   String                @unique
+  iso_639_1              String                @unique
+  iso_639_2              String                @unique
+  is_supported_by_deep_l Boolean?              @default(false)
+  discord_flag_emojis    discord_flag_emojis[]
+
+  @@map("language")
 }
 
 enum continents {
