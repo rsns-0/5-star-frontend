@@ -1,3 +1,4 @@
+"use client"
 import { Card, Divider, createTheme } from "@mantine/core"
 
 import cardClasses from "./Card.module.css"

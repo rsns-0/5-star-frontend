@@ -9,6 +9,10 @@
 	&:hover {
 		background: rgb(17, 34, 165);
 	}
+	&:active {
+		transform: translateY(2px);
+		
+	  }
 }
 
 .content {

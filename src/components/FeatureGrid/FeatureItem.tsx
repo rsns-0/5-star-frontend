@@ -1,10 +1,14 @@
-import { Box, Card } from "@mantine/core"
+"use client"
+import { Box, Card, Group } from "@mantine/core"
 import React, { type ReactNode } from "react"
 import { Text, ThemeIcon, rem } from "@mantine/core"
 import { IconSquareCheckFilled, type TablerIconsProps } from "@tabler/icons-react"
 
+import styles from "./FeaturesTitle.module.css"
+import { TitleText } from "../typography/TitleText"
+
 export type FeatureItemProps = {
-	title: string | ReactNode
+	title: string
 	description: string
 	children?: ReactNode
 	icon?: React.ComponentType<TablerIconsProps> | null
@@ -14,7 +18,7 @@ const iconProps: TablerIconsProps = {
 	stroke: 1.5,
 }
 
-/** Leave icon undefined to use default. Set icon to null to have no icon. */
+/** Leave icon undefined to use default. Set icon to null to have no icon. Children are aligned on right side. */
 export const FeatureItem = ({
 	title,
 	children,
@@ -22,7 +26,7 @@ export const FeatureItem = ({
 	icon: Icon = IconSquareCheckFilled,
 }: FeatureItemProps) => {
 	return (
-		<Card className="bg-red-800 text-red-600" variant="blue-border">
+		<Card className={styles.card} variant="blue-border">
 			<Box>
 				{Icon && (
 					<ThemeIcon
@@ -38,19 +42,17 @@ export const FeatureItem = ({
 
 			<Box>
 				{typeof title === "string" ? (
-					<Text fz="lg" mt="sm" fw={500}>
+					<TitleText fz="xl" mt="sm" fw={500}>
 						{title}
-					</Text>
+					</TitleText>
 				) : (
 					title
 				)}
 			</Box>
 			<Box>
-				<Text c="dimmed" fz="sm">
-					{description}
-				</Text>
+				<Text fz="sm">{description}</Text>
 			</Box>
-			{children}
+			<Group justify="end">{children}</Group>
 		</Card>
 	)
 }

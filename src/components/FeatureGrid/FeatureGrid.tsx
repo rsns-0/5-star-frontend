@@ -1,3 +1,4 @@
+"use client"
 import { Box } from "@mantine/core"
 import { type ReactNode } from "react"
 import { SimpleGrid, Grid } from "@mantine/core"
