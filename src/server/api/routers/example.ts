@@ -13,17 +13,7 @@ export const exampleRouter = createTRPCRouter({
 		}
 	}),
 
-	getAll: publicProcedure.query(({ ctx }) => {
-		ctx
-		return ""
-		// return ctx.db.example.findMany();
-	}),
-
 	getSecretMessage: protectedProcedure.query(() => {
 		return "you can now see this secret message!"
-	}),
-
-	getReminders: publicProcedure.query(({ ctx }) => {
-		return ctx.db.reminders.findMany()
 	}),
 })
