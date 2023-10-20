@@ -37,3 +37,12 @@ export function asyncLog<TMethod extends (...args: any[]) => any>({
 		}
 	}
 }
+
+
+export function getValueForFirstKeyOfObject<T>(obj: Record<string, T>) {
+	const index = Object.keys(obj)[0]
+	if (!index) {
+		return
+	}
+	return obj[index]
+}

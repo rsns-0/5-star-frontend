@@ -2,19 +2,20 @@ import { z } from "zod"
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc"
 
-export const landingRouter = createTRPCRouter({
+export const languagesRouter = createTRPCRouter({
 	getSupportedLanguages: publicProcedure.query(async ({ ctx }) => {
 		const res = await ctx.db.discord_flag_emojis.findMany({
 			select: {
-				language: true,
+				language: {
+					select: {
+						name: true,
+					},
+				},
 				value: true,
 			},
-			where: {
-				languagesId: {
-					not: null,
-				},
-			},
+
 			orderBy: {
+				languagesId: "asc",
 				language: {
 					name: "asc",
 				},

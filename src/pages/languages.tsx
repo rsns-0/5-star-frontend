@@ -1,5 +1,5 @@
 import { api } from "../utils/api"
 
-export default function Page() {
-	return
+export default function Languages() {
+	return <></>
 }

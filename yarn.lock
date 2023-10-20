@@ -9,6 +9,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "5-star-frontend@workspace:."
   dependencies:
+    "@discordjs/collection": ^1.5.3
     "@emotion/react": ^11.11.1
     "@emotion/styled": ^11.11.0
     "@mantine/core": ^7.1.3
@@ -358,6 +359,13 @@ __metadata:
     "@babel/helper-validator-identifier": ^7.22.20
     to-fast-properties: ^2.0.0
   checksum: 215fe04bd7feef79eeb4d33374b39909ce9cad1611c4135a4f7fdf41fe3280594105af6d7094354751514625ea92d0875aba355f53e86a92600f290e77b0e604
+  languageName: node
+  linkType: hard
+
+"@discordjs/collection@npm:^1.5.3":
+  version: 1.5.3
+  resolution: "@discordjs/collection@npm:1.5.3"
+  checksum: fefed19bea0f69053d195f9d9dc8af07ca5d8c9b1064581e0aa14bda2b70e632b93c164d5ef3e4910f5442369612ff4eec8d52a700aec562510c19b223f67023
   languageName: node
   linkType: hard
 

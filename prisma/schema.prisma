@@ -6,10 +6,10 @@ generator client {
 generator zod {
   provider              = "zod-prisma"
   output                = "../src/models/prismaZod"
-  modelCase             = "camelCase"
-  modelSuffix           = "Schema"
-  relationModel         = "true"
   useDecimalJs          = "true"
+  modelSuffix           = "Schema"
+  modelCase             = "camelCase"
+  relationModel         = "true"
   prismaJsonNullability = "true"
 }
 
@@ -195,6 +195,55 @@ model rest_countries_api_data {
   demonyms     Json?
 }
 
+model rest_countries_api_new_data {
+  id           Int                                 @id @default(autoincrement())
+  cca2         String
+  ccn3         String?
+  cca3         String
+  cioc         String?
+  independent  Boolean?
+  unMember     Boolean
+  capital      String[]
+  altSpellings String[]
+  subregion    String?
+  translations Json
+  latlng       Float[]
+  landlocked   Boolean
+  borders      String[]
+  area         Float
+  flag         String
+  population   Int
+  gini         Json?
+  fifa         String?
+  timezones    String[]
+  capitalInfo  Json
+  car          Json
+  coatOfArms   Json
+  flags        Json
+  idd          Json
+  maps         Json
+  rest_countries_api_data_names rest_countries_api_data_names @relation(fields: [rest_countries_api_data_names_id], references: [id])
+  rest_countries_api_data_names_id Int @unique
+  name         String
+  postalCode   Json?
+  status       String
+  region       String
+  continents   String[]
+  startOfWeek  Json
+  currencies   Json?
+  demonyms     Json?
+  languages    rest_countries_api_data_languages[] @relation("rest_countries_api_data_languagesTorest_countries_api_new_data")
+}
+
+model rest_countries_api_data_names {
+  id                         Int                           @id @default(autoincrement())
+  common                    String                        @unique
+  official                 String                        @unique
+  nativeName               Json
+  rest_countries_api_new_data rest_countries_api_new_data? 
+  
+}
+
 model test_pagination {
   id         BigInt   @id @default(autoincrement())
   created_at DateTime @default(now()) @db.Timestamptz(6)
@@ -235,6 +284,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  role          roles     @default(user)
   accounts      Account[]
   sessions      Session[]
 }
@@ -278,9 +328,10 @@ model reminders_duplicate {
 }
 
 model rest_countries_api_data_languages {
-  id           Int    @id @default(autoincrement())
-  name         String @unique
-  abbreviation String @unique
+  id                          Int                           @id @default(autoincrement())
+  name                        String                        @unique
+  abbreviation                String                        @unique
+  rest_countries_api_new_data rest_countries_api_new_data[] @relation("rest_countries_api_data_languagesTorest_countries_api_new_data")
 }
 
 model deep_l_supported_languages {
@@ -294,7 +345,7 @@ model discord_flag_emojis {
   created_at  DateTime   @default(now()) @db.Timestamptz(6)
   value       String     @unique
   languagesId BigInt?
-  language   languages? @relation(fields: [languagesId], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  language    languages? @relation(fields: [languagesId], references: [id], onDelete: Restrict, onUpdate: NoAction)
 }
 
 model languages {
@@ -306,7 +357,13 @@ model languages {
   is_supported_by_deep_l Boolean?              @default(false)
   discord_flag_emojis    discord_flag_emojis[]
 
-  @@map("language")
+  @@map("languages")
+}
+
+
+enum roles {
+  developer
+  user
 }
 
 enum continents {

@@ -2,9 +2,87 @@ import { type Prisma, PrismaClient } from "@prisma/client"
 
 import { asyncLog } from "../utils"
 import { type LanguageData, findDuplicates, languagesSchema, nameSchema } from "./util"
+import { readFileSync } from "fs"
+import { query1, query1Schema } from "./rawQuery"
+import SuperJSON from "superjson"
+import { PrimaryLanguageScoringAlgorithm } from "../scoringAlgorithm/primaryLanguageScoringAlgorithm"
+
+const algorithm = new PrimaryLanguageScoringAlgorithm()
 
 class Main {
 	constructor(public db: PrismaClient = new PrismaClient()) {}
+
+	public async getData() {
+		const res = await this.db.$queryRaw(query1)
+
+		const res2 = query1Schema.array().parse(res)
+	}
+
+	public async cleanRestCountryData() {
+		const res = await this.db.rest_countries_api_data.findMany()
+		const res2 = res.map((item) => {
+			// const capitalInfo = item.capitalInfo as
+			// 	| { latlng: [number, number] }
+			// 	| Record<string, never>
+			// const car = item.car as { side: "left" | "right"; signs: string[] }
+			// const coatOfArms = item.coatOfArms as { png: string; svg: string }
+			// const idd = item.idd as { root: string; suffixes: string[] }
+			// const maps = item.maps as { googleMaps: string }
+			// const name = (
+			// 	item.name as {
+			// 		common: string
+			// 		official: string
+			// 		native: Record<string, { official: string; common: string }>
+			// 	}
+			// ).official
+			// const postalCode = item.postalCode as { regex: string; format: string } | null
+			// const status = item.status as "officially-signed" | "user-assigned"
+			// const continents = item.continents as string[]
+			// const startOfWeek = item.startOfWeek as "monday" | "sunday"
+			// const currencies = item.currencies as Record<
+			// 	string,
+			// 	{ name: string; symbol: string }
+			// > | null
+			// const demonyms = item.demonyms as {
+			// 	eng: { f: string; m: string }
+			// 	fra: { f: string; m: string }
+			// } | null
+			// const languages = item.languages as Record<string, string> | null
+			return {
+				...item,
+				//@ts-expect-error all are json objects
+				name: item.name?.official ?? "",
+			}
+		})
+
+		const res3 = res2.map((item) => {
+			return this.db.rest_countries_api_new_data.create({
+				//@ts-expect-error JsonNull should accept null
+				data: {
+					...item,
+					languages: {
+						connect: item.languages
+							? { name: Object.values(item.languages)[0] }
+							: undefined,
+					},
+				},
+			})
+		})
+		await this.db.$transaction(res3)
+	}
+
+	public async createRestCountryNamesTable() {
+		const result: any[] = JSON.parse(
+			readFileSync("scripts/langDataCleanup/countriesV3.json", "utf-8")
+		)
+		const result2 = result.map((res) => {
+			return res.name
+		})
+
+		const f = await this.db.rest_countries_api_data_names.createMany({
+			data: result2,
+		})
+	}
 
 	@asyncLog<Main["updateData"]>({
 		logStrategy: (res) => {
@@ -504,6 +582,6 @@ class Main {
 const main = new Main()
 
 const run = async () => {
-	await main.insertFlags()
+	await main.createRestCountryNamesTable()
 }
 void run()

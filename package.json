@@ -42,6 +42,7 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "@discordjs/collection": "^1.5.3",
     "@playwright/test": "^1.38.0",
     "@testing-library/react": "^14.0.0",
     "@types/eslint": "^8.44.2",
