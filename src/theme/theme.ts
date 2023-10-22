@@ -19,5 +19,10 @@ export const theme = createTheme({
 		Card: Card.extend({
 			classNames: cardClasses,
 		}),
+		Text: {
+			defaultProps: {
+				c: "white",
+			},
+		},
 	},
 })
