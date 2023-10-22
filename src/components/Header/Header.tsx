@@ -1,21 +1,19 @@
+import { defaultLinks } from "../../resources/links"
 import { Group } from "@mantine/core"
-import { AiFillStar } from "react-icons/ai"
 import classes from "./HeaderSearch.module.css"
 import InviteDiscordButton from "../InviteDiscordButton/InviteDiscordButton"
 import Link from "next/link"
+import { observer } from "mobx-react"
+
+import NavbarControls from "../Navbar/NavbarControls"
 
 type HeaderProps = {
 	links?: { label: string; link: string }[]
 }
 
-export const defaultLinks = [
-	{ label: "Home", link: "/" },
-	{ label: "Github", link: "https://github.com/rsns-0/5-star-backend" },
-	{ label: "Developers", link: "/developers" },
-	{ label: "About", link: "/about" },
-]
+export { defaultLinks }
 
-export function Header({ links = defaultLinks }: HeaderProps) {
+export const Header = observer(({ links = defaultLinks }: HeaderProps) => {
 	const items = links.map((link) => (
 		<Link key={link.label} href={link.link} className={classes.link}>
 			{link.label}
@@ -25,10 +23,7 @@ export function Header({ links = defaultLinks }: HeaderProps) {
 	return (
 		<header className={classes.header}>
 			<div className={classes.inner}>
-				<Group>
-					<AiFillStar size={25} />
-					<h2>5 Star Bot</h2>
-				</Group>
+				<NavbarControls />
 				<Group>
 					<Group ml={50} gap={7} className={classes.links} visibleFrom="sm">
 						{items}
@@ -38,4 +33,4 @@ export function Header({ links = defaultLinks }: HeaderProps) {
 			</div>
 		</header>
 	)
-}
+})
