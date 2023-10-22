@@ -1,42 +1,21 @@
-import { Avatar } from "@mantine/core"
+import { Avatar, Text } from "@mantine/core"
 import classes from "./DevProfileContainer.module.css"
-import { api } from "~/utils/api"
 
 type DevProfileContainerProps = {
-	dev: string
+	src?: string | null
+	name: string
+	role: string
 }
 
-export default function DevProfileContainer({ dev }: DevProfileContainerProps) {
-	const user = getDev(dev)
+export default function DevProfileContainer({ src, name, role }: DevProfileContainerProps) {
 	return (
-		<>
-			<div className={classes.devBox}>
-				<Avatar
-					alt="developer discord avatar"
-					src={user ? user.image : "null"}
-					size={100}
-				/>
-				<div className={classes.devInfo}>
-					<div className={classes.devName}>{user ? `@${user.name}` : "......."}</div>
-					{user ? `${user.role}` : "......."}
-				</div>
-			</div>
-		</>
-	)
-}
+		<div className={classes.devBox}>
+			<Avatar alt="Discord Developer Avatar" src={src} size={100} />
 
-const getDev = (dev: string) => {
-	const content = api.developerInfo.getDeveloperInfo.useQuery({ content: dev })
-	if (content.data && content.data.length > 0) {
-		return content.data[0]
-	} else {
-		return {
-			id: "null",
-			name: "null",
-			email: "null",
-			emailVerified: "null",
-			image: "null",
-			role: "null",
-		}
-	}
+			<div className={classes.devInfo}>
+				<Text className={classes.devName}>{`@${name}`}</Text>
+				<Text>{role}</Text>
+			</div>
+		</div>
+	)
 }

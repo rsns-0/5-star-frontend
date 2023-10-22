@@ -1,9 +1,14 @@
 import { Title } from "@mantine/core"
-import DevProfileContainer from "~/components/DevProfileContainer/DevProfileContainer"
 import { Header, defaultLinks } from "~/components/Header/Header"
 import classes from "./DevelopersPage.module.css"
+import { type GetAllDevelopersOutput } from "../../types/types"
+import DevProfileContainer from "../../components/DevProfileContainer/DevProfileContainer"
 
-const DevelopersPageLayout = () => {
+type DevelopersPageProps = {
+	developers: GetAllDevelopersOutput
+}
+
+const DevelopersPage = ({ developers }: DevelopersPageProps) => {
 	return (
 		<>
 			<Header links={[...defaultLinks]} />
@@ -12,12 +17,14 @@ const DevelopersPageLayout = () => {
 					Developers
 				</Title>
 			</div>
+
 			<div className={classes.devBox}>
-				<DevProfileContainer dev="matuz" />
-				<DevProfileContainer dev="rsn5" />
+				{developers.map(({ id, ...rest }) => {
+					return <DevProfileContainer key={id} {...rest} />
+				})}
 			</div>
 		</>
 	)
 }
 
-export default DevelopersPageLayout
+export default DevelopersPage

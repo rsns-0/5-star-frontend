@@ -1,3 +1,4 @@
+import { type RouterOutputs } from "../utils/api"
 export interface SupportedLanguageData {
 	id: string | number
 	name: string
@@ -6,6 +7,8 @@ export interface SupportedLanguageData {
 	countryName: string
 	supported: boolean
 }
+
+export type GetAllDevelopersOutput = RouterOutputs["developerInfo"]["getAllDeveloperProfiles"]
 
 interface ISourceData {
 	primary_language: string
