@@ -8,11 +8,13 @@ import { FeatureItem } from "../../components/FeatureGrid/FeatureItem"
 import { IconCalendarCheck, IconWorld } from "@tabler/icons-react"
 import { ButtonWithModal } from "../../components/containers/ButtonWithModal"
 import { ReactToTranslate } from "./featureContent/ReactToTranslate"
+import { Navbar } from "../../components/Navbar/Navbar"
 
 const LandingPageLayout = () => {
 	return (
 		<>
-			<Header links={[...defaultLinks]} />
+			<Navbar links={defaultLinks} />
+			<Header links={defaultLinks} />
 			<Stack align="center" gap="xl">
 				<MainContent
 					titleText="5-star service at your fingertips."
