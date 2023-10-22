@@ -10,6 +10,7 @@ import AppProvider from "../providers/AppProvider"
 import Head from "next/head"
 import { Navbar } from "../components/Navbar/Navbar"
 import { defaultLinks } from "../resources/links"
+import { Header } from "../components/Header/Header"
 
 const MyApp: AppType<{ session: Session | null }> = ({
 	Component,
@@ -29,6 +30,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 			<SessionProvider session={session}>
 				<AppProvider>
 					<Navbar links={defaultLinks} />
+					<Header links={defaultLinks} />
 					<Component {...pageProps} />
 				</AppProvider>
 			</SessionProvider>

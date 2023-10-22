@@ -1,5 +1,5 @@
 import { Title } from "@mantine/core"
-import { Header, defaultLinks } from "~/components/Header/Header"
+
 import classes from "./DevelopersPage.module.css"
 import { type GetAllDevelopersOutput } from "../../types/types"
 import DevProfileContainer from "../../components/DevProfileContainer/DevProfileContainer"
@@ -11,7 +11,6 @@ type DevelopersPageProps = {
 const DevelopersPage = ({ developers }: DevelopersPageProps) => {
 	return (
 		<>
-			<Header links={[...defaultLinks]} />
 			<div className={classes.devBox}>
 				<Title size={55} className={classes.titleBox}>
 					Developers

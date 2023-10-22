@@ -1,6 +1,6 @@
 import MainContent from "../../components/MainContent/MainContent"
 import { Group, Stack } from "@mantine/core"
-import { Header, defaultLinks } from "../../components/Header/Header"
+
 import InviteDiscordButton from "../../components/InviteDiscordButton/InviteDiscordButton"
 import FeatureGrid from "../../components/FeatureGrid/FeatureGrid"
 import { TitleText } from "../../components/typography/TitleText"
@@ -13,7 +13,6 @@ import { ReactToTranslate } from "./featureContent/ReactToTranslate"
 const LandingPageLayout = () => {
 	return (
 		<>
-			<Header links={defaultLinks} />
 			<Stack align="center" gap="xl">
 				<MainContent
 					titleText="5-star service at your fingertips."
