@@ -1,6 +1,7 @@
 import { defaultLinks } from "../../resources/links"
 import { Group } from "@mantine/core"
-import classes from "./HeaderSearch.module.css"
+
+import classes from "./Header.module.css"
 import InviteDiscordButton from "../InviteDiscordButton/InviteDiscordButton"
 import Link from "next/link"
 import { observer } from "mobx-react"

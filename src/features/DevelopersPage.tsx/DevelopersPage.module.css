@@ -1,0 +1,10 @@
+.titleBox {
+	display: flex;
+	justify-content: center;
+}
+
+.devBox {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
