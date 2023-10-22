@@ -8,6 +8,8 @@ import "~/styles/globals.css"
 import "@mantine/core/styles.css"
 import AppProvider from "../providers/AppProvider"
 import Head from "next/head"
+import { Navbar } from "../components/Navbar/Navbar"
+import { defaultLinks } from "../resources/links"
 
 const MyApp: AppType<{ session: Session | null }> = ({
 	Component,
@@ -23,8 +25,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
 				/>
 				<title>5 Stars</title>
 			</Head>
+
 			<SessionProvider session={session}>
 				<AppProvider>
+					<Navbar links={defaultLinks} />
 					<Component {...pageProps} />
 				</AppProvider>
 			</SessionProvider>
