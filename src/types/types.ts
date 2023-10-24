@@ -1,4 +1,14 @@
+import { type ActionIconProps, type ElementProps, type ButtonProps } from "@mantine/core"
+import { type TablerIconsProps } from "@tabler/icons-react"
 import { type RouterOutputs } from "../utils/api"
+import { type z } from "zod"
+import {
+	type remindersCreateSchema,
+	type remindersUpdateFormSchema,
+} from "../models/validationSchemas"
+
+export type Providers = "discord"
+
 export interface SupportedLanguageData {
 	id: string | number
 	name: string
@@ -8,39 +18,43 @@ export interface SupportedLanguageData {
 	supported: boolean
 }
 
+export interface IconButtonProps
+	extends ActionIconProps,
+		ElementProps<"button", keyof ButtonProps> {
+	iconProps?: TablerIconsProps
+}
+
 export type GetAllDevelopersOutput = RouterOutputs["developerInfo"]["getAllDeveloperProfiles"]
 
-interface ISourceData {
-	primary_language: string
-	full_data: object
+export type ChannelData = RouterOutputs["discordRouter"]["getGuildsAndTextBasedChannelsOfUser"]
+
+export type ReminderData = RouterOutputs["reminderRouter"]["get"]["getAllReminders"][0]
+
+export type ReminderRowItem = ReminderData & {
+	actions?: any
 }
 
-abstract class CiaData implements ISourceData {
-	abstract primary_language: string
-	abstract full_data: CiaFullData
+export type GetArrayItem<T> = T extends Array<infer U> ? U : never
+
+export type ParametersO<T> = T extends (...args: infer U) => any ? U[0] : never
+
+export type ReminderTableProps = {
+	title?: string
+	modalEditingTitle?: string
 }
 
-interface CiaFullData {
-	country: string
-	languages: Record<string, string>
+export type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }
+
+export type PropsAreEqual<P> = (prevProps: Readonly<P>, nextProps: Readonly<P>) => boolean
+
+export type WrappedComponent<P> = {
+	(props: P): Exclude<React.ReactNode, undefined>
+	displayName?: string
 }
 
-abstract class WikipediaData implements ISourceData {
-	abstract primary_language: string
-	abstract full_data: WikipediaFullData
+export type HocReturn<P> = {
+	(props: P): React.JSX.Element
+	displayName: string
 }
-
-interface WikipediaFullData {
-	widely_spoken: string
-	country_region: string
-	minority_language: string
-	national_language: string
-	official_language: string
-	regional_language: string
-}
-
-export interface CountryResult {
-	country_name: string
-	cia_data: CiaData
-	wikipedia_data: WikipediaData
-}
+export type ReminderUpdateFormData = z.infer<typeof remindersUpdateFormSchema>
+export type ReminderCreateFormData = z.infer<typeof remindersCreateSchema>
