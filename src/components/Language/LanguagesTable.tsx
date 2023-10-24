@@ -17,17 +17,17 @@ type LanguagesTableProps = {
 
 const columnDefs: ColDef<SupportedLanguageData>[] = [
 	{
-		field: "name",
-		headerName: "Language",
+		field: "icon",
+		cellRenderer: (params: ICellRendererParams<SupportedLanguageData, string>) => {
+			return params.value && <TwemojiImage emoji={params.value} />
+		},
 	},
 	{
 		field: "countryName",
 	},
 	{
-		field: "icon",
-		cellRenderer: (params: ICellRendererParams<SupportedLanguageData, string>) => {
-			return params.value && <TwemojiImage emoji={params.value} />
-		},
+		field: "name",
+		headerName: "Language",
 	},
 	{
 		field: "discordIconLabel",
@@ -40,6 +40,7 @@ const columnDefs: ColDef<SupportedLanguageData>[] = [
 const defaultColDef: ColDef<SupportedLanguageData> = {
 	flex: 1,
 	minWidth: 100,
+	resizable: false,
 	sortable: true,
 	filter: true,
 	lockVisible: true,
@@ -81,6 +82,16 @@ export const LanguagesTable = ({ data }: LanguagesTableProps) => {
 			<div className={`ag-theme-alpine-dark ${styles.tableContainer}`}>
 				<AgGridReact<SupportedLanguageData>
 					ref={gridRef}
+					pagination={true}
+					onGridReady={(e) => {
+						e.api.sizeColumnsToFit({
+							columnLimits: [
+								{ key: "icon", maxWidth: 10 },
+								{ key: "supported", maxWidth: 120 },
+							],
+						})
+					}}
+					ensureDomOrder={true}
 					quickFilterText={value}
 					rowData={data}
 					columnDefs={columnDefs}

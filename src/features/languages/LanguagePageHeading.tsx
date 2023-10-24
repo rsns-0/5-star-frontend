@@ -7,7 +7,7 @@ export function LanguagePageHeading() {
 			<Container>
 				<TitleText order={1}>Supported Languages</TitleText>
 			</Container>
-			<Box component="section" w={"40rem"}>
+			<Box component="section" title="Description" maw="40rem">
 				<Text>
 					The following table shows the mappings between the associated discord flag
 					emoji, the associated country, and the estimated primary language spoken in that

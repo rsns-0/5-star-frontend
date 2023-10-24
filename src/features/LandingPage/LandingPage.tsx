@@ -8,7 +8,7 @@ import { FeatureItem } from "../../components/FeatureGrid/FeatureItem"
 import { IconCalendarCheck, IconWorld } from "@tabler/icons-react"
 import { ButtonWithModal } from "../../components/containers/ButtonWithModal"
 import { ReactToTranslate } from "./featureContent/ReactToTranslate"
-
+import { ReminderFeatureContent } from "./featureContent/Reminders"
 
 const LandingPageLayout = () => {
 	return (
@@ -29,7 +29,7 @@ const LandingPageLayout = () => {
 						description="React to any message with a flag matching your preferred language and the bot will automatically detect the message's original language and translate it to your preferred language."
 						icon={IconWorld}
 					>
-						<ButtonWithModal title="React to translate">
+						<ButtonWithModal title="React To Translate">
 							<ReactToTranslate />
 						</ButtonWithModal>
 					</FeatureItem>
@@ -38,7 +38,9 @@ const LandingPageLayout = () => {
 						description="Set reminders through the discord interface or through our feature-packed table in the web browser."
 						icon={IconCalendarCheck}
 					>
-						<ButtonWithModal title="Reminders">asd</ButtonWithModal>
+						<ButtonWithModal title="Reminders">
+							<ReminderFeatureContent />
+						</ButtonWithModal>
 					</FeatureItem>
 				</FeatureGrid>
 			</Stack>

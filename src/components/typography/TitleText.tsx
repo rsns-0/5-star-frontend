@@ -5,9 +5,9 @@ interface TitleTextProps extends TitleProps {
 	children: ReactNode
 }
 
-export const TitleText = ({ children, ...rest }: TitleTextProps) => {
+export const TitleText = ({ children, className = classes.title, ...rest }: TitleTextProps) => {
 	return (
-		<Title className={classes.title} order={2} {...rest}>
+		<Title className={className} order={2} {...rest}>
 			{children}
 		</Title>
 	)
