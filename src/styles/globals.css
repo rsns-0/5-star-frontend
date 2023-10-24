@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Fix content shift when nav bar appears on pages where scroll bar does not appear initially by always showing scroll bar. */
+/* https://stackoverflow.com/questions/37112218/css3-100vh-not-constant-in-mobile-browser */
+/* Changed from VH to EM but EM can cause overflow. Navbar is absolute position. */
+body{
+  overflow-y:scroll
+}
+
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

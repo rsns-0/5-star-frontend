@@ -3,10 +3,10 @@ import { Group } from "@mantine/core"
 
 import classes from "./Header.module.css"
 import InviteDiscordButton from "../InviteDiscordButton/InviteDiscordButton"
-import Link from "next/link"
 import { observer } from "mobx-react"
 
 import NavbarControls from "../Navbar/NavbarControls"
+import { createLinkItems } from "../../LinkItem/LinkItem"
 
 type HeaderProps = {
 	links?: { label: string; link: string }[]
@@ -15,11 +15,7 @@ type HeaderProps = {
 export { defaultLinks }
 
 export const Header = observer(({ links = defaultLinks }: HeaderProps) => {
-	const items = links.map((link) => (
-		<Link key={link.label} href={link.link} className={classes.link}>
-			{link.label}
-		</Link>
-	))
+	const items = createLinkItems(links, classes.link)
 
 	return (
 		<header className={classes.header}>

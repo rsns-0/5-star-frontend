@@ -5,14 +5,14 @@ import { clsx } from "clsx"
 type StarIconPropsBase = ComponentPropsWithoutRef<typeof AiFillStar>
 
 type StarIconProps =
-	| (StarIconPropsBase & { onClick?: never; role?: undefined; highlightOnHover?: never })
+	| (StarIconPropsBase & { onClick?: never; title?: undefined; highlightOnHover?: never })
 	| (StarIconPropsBase & {
 			onClick: <T>(args: T) => any
-			"aria-label": string
+			title: string
 			highlightOnHover?: boolean
 	  })
 
-/** Must provide aria-label if given onClick. */
+/** Must provide Title if given onClick. */
 export const StarIcon = ({ role, onClick, highlightOnHover, ...props }: StarIconProps) => {
 	if (onClick && !role) {
 		role = "button"

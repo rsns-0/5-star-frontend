@@ -1,49 +1,48 @@
-import { Transition } from "@mantine/core"
+import { Stack, Transition } from "@mantine/core"
 
 import classes from "./Navbar.module.css"
-import Link from "next/link"
 import { type defaultLinks } from "../Header/Header"
 import { observer } from "mobx-react"
 import { navbarModel } from "../../models/NavbarModel"
 import { useClickOutside } from "@mantine/hooks"
 import NavbarControls from "./NavbarControls"
 
+import { createLinkItems } from "../../LinkItem/LinkItem"
+
 type NavbarProps = {
 	links: typeof defaultLinks
 }
-
+/**
+ * TODO: Navbar occasionally appears instantly instead of sliding in on desktop only, mobile is fine. Try implementing with CSS alone and determine if this is a bug with the Mantine library.
+ */
 export const Navbar = observer(({ links }: NavbarProps) => {
 	const ref = useClickOutside(() => {
 		navbarModel.close()
 	})
-	const linkElements = createNavbarLinkitems(links)
+
+	const linkElements = createLinkItems(links, classes.link)
 
 	return (
-		<Transition mounted={navbarModel.isOpen} transition="slide-right" duration={400}>
+		<Transition
+			mounted={navbarModel.isOpen}
+			transition="slide-right"
+			duration={250}
+			exitDuration={250}
+		>
 			{(styles) => {
 				return (
-					<nav className={classes.navbar} style={styles} ref={ref}>
-						<div className={classes.wrapper}>
-							<div className={classes.main}>
-								<NavbarControls groupProps={{ className: classes.title }} />
-								{linkElements}
+					<Stack>
+						<nav className={classes.navbar} style={styles} ref={ref}>
+							<div className={classes.wrapper}>
+								<div className={classes.main}>
+									<NavbarControls groupProps={{ className: classes.title }} />
+									{linkElements}
+								</div>
 							</div>
-						</div>
-					</nav>
+						</nav>
+					</Stack>
 				)
 			}}
 		</Transition>
 	)
 })
-
-const NavbarLinkItem = ({ link, label }: { link: string; label: string }) => {
-	return (
-		<Link className={classes.link} href={link}>
-			{label}
-		</Link>
-	)
-}
-
-function createNavbarLinkitems(links: typeof defaultLinks) {
-	return links.map((link) => <NavbarLinkItem key={link.label} {...link} />)
-}

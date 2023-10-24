@@ -15,6 +15,7 @@ const NavbarControls = ({ title = "5 Star Bot", groupProps }: NavbarControlsProp
 				onClick={() => {
 					navbarModel.toggle()
 				}}
+				title="Toggle navigation menu"
 			/>
 			<StarIcon />
 			<h2>{title}</h2>
