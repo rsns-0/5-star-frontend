@@ -30,7 +30,7 @@ export type ChannelData = RouterOutputs["discordRouter"]["getGuildsAndTextBasedC
 
 export type ReminderData = RouterOutputs["reminderRouter"]["get"]["getAllReminders"][0]
 
-export type ReminderRowItem = ReminderData & {
+export type ReminderColDef = ReminderData & {
 	actions?: any
 }
 

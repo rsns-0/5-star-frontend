@@ -1,11 +1,11 @@
 import { type ICellRendererParams } from "ag-grid-community"
-import { type ReminderRowItem } from "../../types/types"
+import { type ReminderData } from "../../types/types"
 import { EditButton } from "../../components/buttons/EditButton"
 import { DeleteButton } from "../../components/buttons/DeleteButton"
 import { memo } from "react"
 import { useGlobalReminderFormModal } from "../../models/GlobalReminderFormModal"
 
-const RowActionsRenderer = ({ data }: ICellRendererParams<ReminderRowItem, string>) => {
+const RowActionsRenderer = ({ data }: ICellRendererParams<ReminderData, string>) => {
 	if (!data) {
 		return <></>
 	}
@@ -13,7 +13,7 @@ const RowActionsRenderer = ({ data }: ICellRendererParams<ReminderRowItem, strin
 	return <RowActionsImpl data={data} />
 }
 
-const RowActionsImpl = ({ data: { actions: _, ...data } }: { data: ReminderRowItem }) => {
+const RowActionsImpl = ({ data }: { data: ReminderData }) => {
 	const { openEditModal } = useGlobalReminderFormModal()
 
 	return (

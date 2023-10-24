@@ -1,14 +1,14 @@
 import { type ICellRendererParams, type ColDef } from "ag-grid-community"
-import { type ReminderRowItem } from "../../types/types"
+import { type ReminderColDef } from "../../types/types"
 import { RowActions } from "./RowActions"
 import styles from "./ReminderTable.module.css"
 
-export const columnDefs: ColDef<ReminderRowItem>[] = [
+export const columnDefs: ColDef<ReminderColDef>[] = [
 	{ field: "id", headerName: "ID" },
 	{ field: "discord_channels.name", headerName: "Channel Name" },
 	{
 		field: "time",
-		cellRenderer: (params: ICellRendererParams<ReminderRowItem, Date>) => {
+		cellRenderer: (params: ICellRendererParams<ReminderColDef, Date>) => {
 			if (!params.value) {
 				return new Date().toLocaleString()
 			}
@@ -29,7 +29,7 @@ export const columnDefs: ColDef<ReminderRowItem>[] = [
 	},
 ]
 
-export const defaultColDef: ColDef<ReminderRowItem> = {
+export const defaultColDef: ColDef<ReminderColDef> = {
 	flex: 1,
 	minWidth: 100,
 	resizable: true,

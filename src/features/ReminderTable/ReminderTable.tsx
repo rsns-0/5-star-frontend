@@ -7,7 +7,7 @@ import { useCallback, useRef } from "react"
 import { Button, Group, Stack } from "@mantine/core"
 
 import styles from "./ReminderTable.module.css"
-import { type ReminderRowItem } from "../../types/types"
+import { type ReminderData } from "../../types/types"
 import { useInput } from "../../hooks/useInput"
 import { columnDefs, defaultColDef } from "./columnDefs"
 import { withReminderFormProvider } from "../../providers/ReminderFormProvider"
@@ -15,7 +15,7 @@ import { useDebouncedValue } from "@mantine/hooks"
 import { QuickFilterInput } from "../../components/QuickFIlterInput/QuickFilterInput"
 
 type LanguagesTableProps = {
-	data: ReminderRowItem[]
+	data: ReminderData[]
 }
 
 const _ReminderTable = ({ data }: LanguagesTableProps) => {
@@ -29,7 +29,7 @@ const _ReminderTable = ({ data }: LanguagesTableProps) => {
 			</Group>
 
 			<div className={`ag-theme-alpine-dark ${styles.tableContainer}`}>
-				<AgGridReact<ReminderRowItem>
+				<AgGridReact<ReminderData>
 					ref={gridRef}
 					pagination={true}
 					ensureDomOrder={true}
@@ -47,9 +47,7 @@ const _ReminderTable = ({ data }: LanguagesTableProps) => {
 export const ReminderTable = withReminderFormProvider(_ReminderTable)
 
 const useTable = () => {
-	const gridRef = useRef<AgGridReact<ReminderRowItem>>(
-		null as any as AgGridReact<ReminderRowItem>
-	) // assuming it is used only in a handler
+	const gridRef = useRef<AgGridReact<ReminderData>>(null as any as AgGridReact<ReminderData>) // assuming it is used only in a handler
 
 	const { value, inputProps, setValue } = useInput()
 	const [debouncedValue] = useDebouncedValue(value, 400)

@@ -1,7 +1,7 @@
 import { type ICellRendererParams } from "ag-grid-community"
-import { type ReminderRowItem } from "../../types/types"
+import { type ReminderData } from "../../types/types"
 
-export const ReminderTimeRenderer = (params: ICellRendererParams<ReminderRowItem, string>) => {
+export const ReminderTimeRenderer = (params: ICellRendererParams<ReminderData, string>) => {
 	if (!params.value) {
 		return new Date().toLocaleString()
 	}
