@@ -13,6 +13,7 @@ __metadata:
     "@emotion/react": ^11.11.1
     "@emotion/styled": ^11.11.0
     "@faker-js/faker": ^8.2.0
+    "@hookform/resolvers": ^3.3.2
     "@mantine/core": ^7.1.3
     "@mantine/hooks": ^7.1.3
     "@mui/icons-material": ^5.14.9
@@ -29,6 +30,7 @@ __metadata:
     "@trpc/react-query": ^10.37.1
     "@trpc/server": ^10.37.1
     "@types/eslint": ^8.44.2
+    "@types/luxon": ^3.3.3
     "@types/node": ^18.16.0
     "@types/react": ^18.2.20
     "@types/react-dom": ^18.2.7
@@ -42,7 +44,9 @@ __metadata:
     eslint: ^8.47.0
     eslint-config-next: ^13.4.19
     immer: ^10.0.2
+    jotai: ^2.5.0
     jsdom: latest
+    luxon: ^3.4.3
     mobx: ^6.10.2
     mobx-react: ^9.0.1
     msw: ^1.3.1
@@ -58,15 +62,17 @@ __metadata:
     prisma: ^5.1.1
     react: 18.2.0
     react-dom: 18.2.0
+    react-hook-form: ^7.47.0
     react-icons: ^4.11.0
     superjson: ^1.13.1
     tailwindcss: ^3.3.3
+    transaction-exception: ^1.1.0
     tsx: ^3.12.10
     twemoji: ^14.0.2
     typescript: ^5.1.6
     vite: ^4.4.11
     vitest: latest
-    zod: ^3.21.4
+    zod: ^3.22.4
     zod-prisma: ^0.5.4
     zustand: ^4.4.1
   languageName: unknown
@@ -805,6 +811,15 @@ __metadata:
   version: 0.1.4
   resolution: "@floating-ui/utils@npm:0.1.4"
   checksum: e6195ded5b3a6fd38411a833605184c31f24609b08feab2615e90ccc063bf4d3965383d817642fc7e8ca5ab6a54c29c71103e874f3afb0518595c8bd3390ba16
+  languageName: node
+  linkType: hard
+
+"@hookform/resolvers@npm:^3.3.2":
+  version: 3.3.2
+  resolution: "@hookform/resolvers@npm:3.3.2"
+  peerDependencies:
+    react-hook-form: ^7.0.0
+  checksum: bcaefe2a8a212b015b3ea99c93d7ecb5c8f475606d83be9d82dc6cc0cbb3cda03f7fd7a4426688c2de29b6800b93adbf9abb932a1dafee1d053dcaa69ec13f3f
   languageName: node
   linkType: hard
 
@@ -1617,6 +1632,13 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: e60b153664572116dfea673c5bda7778dbff150498f44f998e34b5886d8afc47f16799280e4b6e241c0472aef1bc36add771c569c68fc5125fc2ae519a3eb9ac
+  languageName: node
+  linkType: hard
+
+"@types/luxon@npm:^3.3.3":
+  version: 3.3.3
+  resolution: "@types/luxon@npm:3.3.3"
+  checksum: 072dd39eea3f63453788fab2fcfc83eb33917afcaffe178ce08ecd8b016824b8ab3bfa991f66266f2fc1927768a56b4334945f2eb1d83638e325c0c43d7d0e86
   languageName: node
   linkType: hard
 
@@ -4647,6 +4669,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jotai@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "jotai@npm:2.5.0"
+  peerDependencies:
+    "@types/react": ">=17.0.0"
+    react: ">=17.0.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    react:
+      optional: true
+  checksum: 95bafc2912a3b5da29a891b6d5b9fa73decf314def6db1fb56cec93c971334704bac3b566dfcf16f4c96f4563a04b49bbbf67eabe5d3379d19bd99e10a2ce759
+  languageName: node
+  linkType: hard
+
 "js-levenshtein@npm:^1.1.6":
   version: 1.1.6
   resolution: "js-levenshtein@npm:1.1.6"
@@ -4947,6 +4984,13 @@ jsdom@latest:
   version: 10.0.1
   resolution: "lru-cache@npm:10.0.1"
   checksum: 06f8d0e1ceabd76bb6f644a26dbb0b4c471b79c7b514c13c6856113879b3bf369eb7b497dad4ff2b7e2636db202412394865b33c332100876d838ad1372f0181
+  languageName: node
+  linkType: hard
+
+"luxon@npm:^3.4.3":
+  version: 3.4.3
+  resolution: "luxon@npm:3.4.3"
+  checksum: 3eade81506224d038ed24035a0cd0dd4887848d7eba9361dce9ad8ef81380596a68153240be3988721f9690c624fb449fcf8fd8c3fc0681a6a8496faf48e92a3
   languageName: node
   linkType: hard
 
@@ -6204,6 +6248,15 @@ jsdom@latest:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^7.47.0":
+  version: 7.47.0
+  resolution: "react-hook-form@npm:7.47.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: dec192fec9c54e436f9e47008635dd7849b6b119ed477a9b0cd491367a0b2ced3427cd937febfb245e1cb7578c863917181d903eff4519c2787bf713ec7d3426
+  languageName: node
+  linkType: hard
+
 "react-icons@npm:^4.11.0":
   version: 4.11.0
   resolution: "react-icons@npm:4.11.0"
@@ -7222,6 +7275,13 @@ jsdom@latest:
   languageName: node
   linkType: hard
 
+"transaction-exception@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "transaction-exception@npm:1.1.0"
+  checksum: 53c73fe58e410aaa4b4761ee3def15fe611f5de24c790133e196935016ba46b3e145e4a1886de02fadb2e5e598cae3bd466812b66dba2b70a159ebc9d0e70bfc
+  languageName: node
+  linkType: hard
+
 "ts-api-utils@npm:^1.0.1":
   version: 1.0.3
   resolution: "ts-api-utils@npm:1.0.3"
@@ -8106,10 +8166,10 @@ vitest@latest:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.21.4":
-  version: 3.22.2
-  resolution: "zod@npm:3.22.2"
-  checksum: 231e2180c8eabb56e88680d80baff5cf6cbe6d64df3c44c50ebe52f73081ecd0229b1c7215b9552537f537a36d9e36afac2737ddd86dc14e3519bdbc777e82b9
+"zod@npm:^3.22.4":
+  version: 3.22.4
+  resolution: "zod@npm:3.22.4"
+  checksum: 80bfd7f8039b24fddeb0718a2ec7c02aa9856e4838d6aa4864335a047b6b37a3273b191ef335bf0b2002e5c514ef261ffcda5a589fb084a48c336ffc4cdbab7f
   languageName: node
   linkType: hard
 
