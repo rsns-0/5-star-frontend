@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx"
 
-class NavbarOpenStateModel {
+class NavbarModel {
 	isOpen = false
 	constructor() {
 		makeAutoObservable(this)
@@ -17,4 +17,4 @@ class NavbarOpenStateModel {
 	}
 }
 
-export const navbarModel = new NavbarOpenStateModel()
+export const navbarModel = new NavbarModel()

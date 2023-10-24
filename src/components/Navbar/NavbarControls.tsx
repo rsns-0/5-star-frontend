@@ -8,7 +8,7 @@ type NavbarControlsProps = {
 	groupProps?: GroupProps
 }
 
-const NavbarControls = ({ title = "5 Star Bot", groupProps }: NavbarControlsProps) => {
+const NavbarControls = ({ title = "5 Stars", groupProps }: NavbarControlsProps) => {
 	return (
 		<Group {...groupProps}>
 			<Burger /** Changed button impl to burger for accessibility; it is not immediately obvious that the star icon would be a button. */

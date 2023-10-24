@@ -29,7 +29,7 @@ const LandingPageLayout = () => {
 						description="React to any message with a flag matching your preferred language and the bot will automatically detect the message's original language and translate it to your preferred language."
 						icon={IconWorld}
 					>
-						<ButtonWithModal title="React To Translate">
+						<ButtonWithModal title="React To Translate" buttonText="Learn More">
 							<ReactToTranslate />
 						</ButtonWithModal>
 					</FeatureItem>
@@ -38,7 +38,7 @@ const LandingPageLayout = () => {
 						description="Set reminders through the discord interface or through our feature-packed table in the web browser."
 						icon={IconCalendarCheck}
 					>
-						<ButtonWithModal title="Reminders">
+						<ButtonWithModal title="Reminders" buttonText="Learn More">
 							<ReminderFeatureContent />
 						</ButtonWithModal>
 					</FeatureItem>

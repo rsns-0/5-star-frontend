@@ -1,12 +1,12 @@
-import { Button, Modal } from "@mantine/core"
+import { Button, type ButtonProps, Modal } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
 import { type ReactNode } from "react"
 import { TitleText } from "../typography/TitleText"
 
 type ModalProps = {
 	children: ReactNode
-	buttonText?: string
-	buttonProps?: Exclude<React.ComponentProps<typeof Button>, "onClick">
+	buttonText: string
+	buttonProps?: ButtonProps & { onClick?: React.MouseEventHandler<HTMLButtonElement> }
 	modalProps?: Exclude<
 		React.ComponentProps<typeof Modal>,
 		"opened" | "onClose" | "title" | "size" | "centered"
@@ -17,7 +17,7 @@ type ModalProps = {
 /** Pass in modal content as children. useModalContext to control the modal. */
 export const ButtonWithModal = ({
 	children,
-	buttonText = "Learn More",
+	buttonText,
 	buttonProps,
 	modalProps,
 	title,
@@ -26,7 +26,13 @@ export const ButtonWithModal = ({
 
 	return (
 		<>
-			<Button {...buttonProps} onClick={open}>
+			<Button
+				{...buttonProps}
+				onClick={(e) => {
+					buttonProps?.onClick?.(e)
+					open()
+				}}
+			>
 				{buttonText}
 			</Button>
 			<Modal
