@@ -6,16 +6,29 @@ import { TitleText } from "../typography/TitleText"
 type ModalProps = {
 	children: ReactNode
 	buttonText?: string
+	buttonProps?: Exclude<React.ComponentProps<typeof Button>, "onClick">
+	modalProps?: Exclude<
+		React.ComponentProps<typeof Modal>,
+		"opened" | "onClose" | "title" | "size" | "centered"
+	>
 	title: string
 }
 
 /** Pass in modal content as children. useModalContext to control the modal. */
-export const ButtonWithModal = ({ children, buttonText = "Show More", title }: ModalProps) => {
+export const ButtonWithModal = ({
+	children,
+	buttonText = "Learn More",
+	buttonProps,
+	modalProps,
+	title,
+}: ModalProps) => {
 	const [opened, { close, open }] = useDisclosure(false)
 
 	return (
 		<>
-			<Button onClick={open}>{buttonText}</Button>
+			<Button {...buttonProps} onClick={open}>
+				{buttonText}
+			</Button>
 			<Modal
 				closeButtonProps={{ "aria-label": "Close modal" }}
 				title={<TitleText>{title}</TitleText>}
@@ -23,6 +36,7 @@ export const ButtonWithModal = ({ children, buttonText = "Show More", title }: M
 				opened={opened}
 				onClose={close}
 				centered
+				{...modalProps}
 			>
 				{children}
 			</Modal>
