@@ -14,11 +14,11 @@ import { withReminderFormProvider } from "../../providers/ReminderFormProvider"
 import { useDebouncedValue } from "@mantine/hooks"
 import { QuickFilterInput } from "../../components/QuickFIlterInput/QuickFilterInput"
 
-type LanguagesTableProps = {
+type ReminderTableProps = {
 	data: ReminderData[]
 }
 
-const _ReminderTable = ({ data }: LanguagesTableProps) => {
+const _ReminderTable = ({ data }: ReminderTableProps) => {
 	const { gridRef, onGridReady, resetColumns, inputProps, debouncedInputValue } = useTable()
 
 	return (
