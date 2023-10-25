@@ -1,11 +1,11 @@
 import { createTRPCRouter, reminderRLSProcedure } from "~/server/api/trpc"
 
-import { z } from "zod"
 
 import { type Prisma } from "@prisma/client"
 import {
 	remindersServerUpdateSchema,
-	remindersCreateSchema,
+	remindersServerCreateSchema,
+	reminderIdSchema,
 } from "../../../models/validationSchemas"
 
 export const DEFAULT_SELECT = {
@@ -27,7 +27,7 @@ export const DEFAULT_SELECT = {
 } as const satisfies Prisma.remindersSelect
 
 const get = createTRPCRouter({
-	getReminderById: reminderRLSProcedure.input(z.number()).query(async ({ ctx, input }) => {
+	getReminderById: reminderRLSProcedure.input(reminderIdSchema).query(async ({ ctx, input }) => {
 		return await ctx.db.reminders.findUnique({
 			select: DEFAULT_SELECT,
 			where: {
@@ -36,7 +36,7 @@ const get = createTRPCRouter({
 		})
 	}),
 	getRemindersById: reminderRLSProcedure
-		.input(z.number().array())
+		.input(reminderIdSchema.array())
 		.query(async ({ ctx, input }) => {
 			return await ctx.db.reminders.findMany({
 				select: DEFAULT_SELECT,
@@ -74,17 +74,19 @@ const patch = createTRPCRouter({
 })
 
 const deleteRouter = createTRPCRouter({
-	deleteReminder: reminderRLSProcedure.input(z.number()).mutation(async ({ ctx, input }) => {
-		await ctx.db.reminders.delete({
-			where: {
-				id: input,
-			},
-		})
-		return true
-	}),
+	deleteReminder: reminderRLSProcedure
+		.input(reminderIdSchema)
+		.mutation(async ({ ctx, input }) => {
+			await ctx.db.reminders.delete({
+				where: {
+					id: input,
+				},
+			})
+			return true
+		}),
 
 	deleteReminders: reminderRLSProcedure
-		.input(z.number().array())
+		.input(reminderIdSchema.array())
 		.mutation(async ({ ctx, input }) => {
 			await ctx.db.reminders.deleteMany({
 				where: {
@@ -97,7 +99,7 @@ const deleteRouter = createTRPCRouter({
 
 const post = createTRPCRouter({
 	createReminder: reminderRLSProcedure
-		.input(remindersCreateSchema)
+		.input(remindersServerCreateSchema)
 		.mutation(async ({ ctx, input }) => {
 			const { id: webhookId } = await ctx.db.webhooks.findFirstOrThrow({
 				select: {

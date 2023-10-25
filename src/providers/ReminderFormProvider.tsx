@@ -1,5 +1,4 @@
-import { FormProvider } from "react-hook-form"
-import { useReminderForm } from "../hooks/reminderForm"
+import { _ReminderFormProviderImpl, useReminderForm } from "../hooks/reminderForm"
 
 import { memo } from "react"
 import { type WrappedComponent, type PropsAreEqual, type HocReturn } from "../types/types"
@@ -9,7 +8,7 @@ export function ReminderFormProvider({ children }: { children: React.ReactNode }
 	const form = useReminderForm({
 		defaultValues: createDefaultReminderFieldValues(),
 	})
-	return <FormProvider {...form}>{children}</FormProvider>
+	return <_ReminderFormProviderImpl form={form}>{children}</_ReminderFormProviderImpl>
 }
 
 export const withReminderFormProvider = <P extends object>(

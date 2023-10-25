@@ -1,12 +1,11 @@
 import { z } from "zod"
 
-const reminderFormItemIdSchema = z
+export const reminderIdSchema = z
 	.number()
 	.gte(0, "ID was negative.")
 	.lte(Number.MAX_SAFE_INTEGER, "ID was too large.")
 
-export const remindersUpdateFormSchema = z.object({
-	id: reminderFormItemIdSchema,
+export const remindersFormSchema = z.object({
 	time: z
 		.date()
 		.max(new Date(99_999, 1, 1), { message: "Date is too far in the future." })
@@ -23,19 +22,21 @@ export const remindersUpdateFormSchema = z.object({
 		}
 		return val
 	}),
-	channel_id: z.string().min(1, "Channel ID was blank.").max(500, "Channel ID was too large."),
+	channel_id: z.string().min(1, "Must select a channel.").max(500, "Channel ID was too large."),
 })
 
-export type ReminderUpdateFormData = z.infer<typeof remindersUpdateFormSchema>
+export const remindersServerUpdateSchema = remindersFormSchema.extend({
+	id: reminderIdSchema,
+})
 
-export const remindersServerUpdateSchema = remindersUpdateFormSchema
+export type ReminderUpdateFormData = z.infer<typeof remindersServerUpdateSchema>
 
-export type ReminderCreateFormData = z.infer<typeof remindersCreateSchema>
+export const remindersServerCreateSchema = remindersFormSchema
+
+export type ReminderCreateFormData = z.infer<typeof remindersServerCreateSchema>
 
 export type ReminderUpdateOrCreateFormData = ReminderUpdateFormData | ReminderCreateFormData
 
-export const remindersCreateSchema = remindersUpdateFormSchema.omit({ id: true })
-
 export type ReminderDeleteFormData = z.infer<typeof remindersDeleteSchema>
 
-export const remindersDeleteSchema = reminderFormItemIdSchema
+export const remindersDeleteSchema = reminderIdSchema

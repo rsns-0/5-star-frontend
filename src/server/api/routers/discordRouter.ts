@@ -15,7 +15,11 @@ export const discordRouter = createTRPCRouter({
 					select: {
 						id: true,
 						name: true,
-						webhooks: true,
+						webhooks: {
+							select: {
+								id: true,
+							},
+						},
 					},
 					where: {
 						webhooks: {
@@ -28,13 +32,7 @@ export const discordRouter = createTRPCRouter({
 			},
 		})
 
-		return res.flatMap((guild) => {
-			return guild.discord_channels.map((channel) => ({
-				id: channel.id,
-				name: channel.name,
-				label: channel.name,
-				guildName: guild.name,
-			}))
-		})
+		return res
+			
 	}),
 })

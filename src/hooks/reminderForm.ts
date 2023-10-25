@@ -1,13 +1,12 @@
-import { type UseControllerProps, useController, useForm, useFormContext } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import {
-	remindersUpdateFormSchema,
-	type ReminderUpdateOrCreateFormData,
-} from "../models/validationSchemas"
+import { type ReminderCreateFormData, remindersFormSchema } from "../models/validationSchemas"
 import { createDefaultReminderFieldValues } from "../lib/createDefaultReminderFieldValues"
+import { createFormContext, zodResolver } from "@mantine/form"
+
+export const [_ReminderFormProviderImpl, useFormContext, useForm] =
+	createFormContext<ReminderCreateFormData>()
 
 export const reminderFormConfigs = {
-	resolver: zodResolver(remindersUpdateFormSchema),
+	resolver: zodResolver(remindersFormSchema),
 	defaultValues: createDefaultReminderFieldValues(),
 }
 
@@ -15,18 +14,16 @@ export const useReminderForm = ({
 	resolver = reminderFormConfigs.resolver,
 	defaultValues = reminderFormConfigs.defaultValues,
 } = {}) => {
-	return useForm<ReminderUpdateOrCreateFormData>({
-		resolver,
-		defaultValues,
+	return useForm({
+		validate: resolver,
+		initialValues: defaultValues,
 	})
 }
 
 export const useReminderFormContext = () => {
-	return useFormContext<ReminderUpdateOrCreateFormData>()
+	return useFormContext()
 }
 
-export const useReminderFormController = (
-	props: UseControllerProps<ReminderUpdateOrCreateFormData>
-) => {
-	return useController(props)
-}
+// export const useReminderFormController = (props: UseControllerProps<ReminderCreateFormData>) => {
+// 	return useController(props)
+// }

@@ -13,6 +13,9 @@ import { columnDefs, defaultColDef } from "./columnDefs"
 import { withReminderFormProvider } from "../../providers/ReminderFormProvider"
 import { useDebouncedValue } from "@mantine/hooks"
 import { QuickFilterInput } from "../../components/QuickFIlterInput/QuickFilterInput"
+import { ReminderTableModal } from "./ReminderTableModal"
+import { observer } from "mobx-react"
+import { useOpenReminderTableCreateModal } from "../../hooks/reminderTable"
 
 type ReminderTableProps = {
 	data: ReminderData[]
@@ -20,31 +23,36 @@ type ReminderTableProps = {
 
 const _ReminderTable = ({ data }: ReminderTableProps) => {
 	const { gridRef, onGridReady, resetColumns, inputProps, debouncedInputValue } = useTable()
+	const openNew = useOpenReminderTableCreateModal()
 
 	return (
-		<Stack gap="md">
-			<Group align="end" ml="lg">
-				<QuickFilterInput {...inputProps} />
-				<Button onClick={resetColumns}>Reset columns</Button>
-			</Group>
+		<>
+			<Stack gap="md">
+				<Group align="end" ml="lg">
+					<QuickFilterInput {...inputProps} />
+					<Button onClick={resetColumns}>Reset columns</Button>
+					<Button onClick={openNew}>Create new</Button>
+				</Group>
 
-			<div className={`ag-theme-alpine-dark ${styles.tableContainer}`}>
-				<AgGridReact<ReminderData>
-					ref={gridRef}
-					pagination={true}
-					ensureDomOrder={true}
-					quickFilterText={debouncedInputValue}
-					rowData={data}
-					columnDefs={columnDefs}
-					defaultColDef={defaultColDef}
-					onGridReady={onGridReady}
-				/>
-			</div>
-		</Stack>
+				<div className={`ag-theme-alpine-dark ${styles.tableContainer}`}>
+					<AgGridReact<ReminderData>
+						ref={gridRef}
+						pagination={true}
+						ensureDomOrder={true}
+						quickFilterText={debouncedInputValue}
+						rowData={data}
+						columnDefs={columnDefs}
+						defaultColDef={defaultColDef}
+						onGridReady={onGridReady}
+					/>
+				</div>
+			</Stack>
+			<ReminderTableModal />
+		</>
 	)
 }
 
-export const ReminderTable = withReminderFormProvider(_ReminderTable)
+export const ReminderTable = withReminderFormProvider(observer(_ReminderTable))
 
 const useTable = () => {
 	const gridRef = useRef<AgGridReact<ReminderData>>(null as any as AgGridReact<ReminderData>) // assuming it is used only in a handler
