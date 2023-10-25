@@ -15,7 +15,10 @@ __metadata:
     "@faker-js/faker": ^8.2.0
     "@hookform/resolvers": ^3.3.2
     "@mantine/core": ^7.1.3
+    "@mantine/dates": ^7.1.5
+    "@mantine/form": ^7.1.5
     "@mantine/hooks": ^7.1.3
+    "@mantine/notifications": ^7.1.5
     "@mui/icons-material": ^5.14.9
     "@mui/material": ^5.14.10
     "@next-auth/prisma-adapter": ^1.0.7
@@ -41,12 +44,14 @@ __metadata:
     ag-grid-react: ^30.2.0
     autoprefixer: ^10.4.14
     clsx: ^2.0.0
+    constate: ^3.3.2
+    dayjs: ^1.11.10
     eslint: ^8.47.0
     eslint-config-next: ^13.4.19
     immer: ^10.0.2
     jotai: ^2.5.0
+    jotai-trpc: ^0.5.1
     jsdom: latest
-    luxon: ^3.4.3
     mobx: ^6.10.2
     mobx-react: ^9.0.1
     msw: ^1.3.1
@@ -931,12 +936,63 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/dates@npm:^7.1.5":
+  version: 7.1.5
+  resolution: "@mantine/dates@npm:7.1.5"
+  dependencies:
+    clsx: 2.0.0
+  peerDependencies:
+    "@mantine/core": 7.1.5
+    "@mantine/hooks": 7.1.5
+    dayjs: ^1.10.5
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 61a110b06b5b79e2b5cb40047b0475abcee208ffe637fbd44d71ab8f60a7133c25d539e4e8cfed7d66f8b673cbf29be4b9b60da4838f212c34e9ef829baa8119
+  languageName: node
+  linkType: hard
+
+"@mantine/form@npm:^7.1.5":
+  version: 7.1.5
+  resolution: "@mantine/form@npm:7.1.5"
+  dependencies:
+    fast-deep-equal: ^3.1.3
+    klona: ^2.0.5
+  peerDependencies:
+    react: ^18.2.0
+  checksum: c88b128e8e18a316cd89c359ec5aa821ea2b331213d9702cf8d36046a724683815328168212dc1f46184ec794190d1b3d9d80bcc13b597b6290c05b0da9a576d
+  languageName: node
+  linkType: hard
+
 "@mantine/hooks@npm:^7.1.3":
   version: 7.1.3
   resolution: "@mantine/hooks@npm:7.1.3"
   peerDependencies:
     react: ^18.2.0
   checksum: 387f7dd5f9c9cff03d704e0e7bb53447e9592e570f9cc5c9a6d64072fb834d4f814f0e30b590363b9efd1701ce05506c7ab0e44aaa3bc5458b2f7123a0ca0d20
+  languageName: node
+  linkType: hard
+
+"@mantine/notifications@npm:^7.1.5":
+  version: 7.1.5
+  resolution: "@mantine/notifications@npm:7.1.5"
+  dependencies:
+    "@mantine/store": 7.1.5
+    react-transition-group: 4.4.5
+  peerDependencies:
+    "@mantine/core": 7.1.5
+    "@mantine/hooks": 7.1.5
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 92ae777a3666a01bf7e3b05cc1ceedba34099355502a8d04c9687992284417e209069f4ab49c6ecffd73026f30b165d70db0b22025600e83a7d4609f4b7a2538
+  languageName: node
+  linkType: hard
+
+"@mantine/store@npm:7.1.5":
+  version: 7.1.5
+  resolution: "@mantine/store@npm:7.1.5"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: da4e4c5b95030145f1c3ec1e2a0ebdde969010570c66f1d6913ed041de3aaed23e7942efc6414de79e95aede419cb4959bb9e7c55d582f488c36c596031ae2ca
   languageName: node
   linkType: hard
 
@@ -2719,6 +2775,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"constate@npm:^3.3.2":
+  version: 3.3.2
+  resolution: "constate@npm:3.3.2"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 1bc1c49aacf37221bc8ed65ec18ea3501dd7f9ec43df347643e50a365123ed6cbc40e4f53dbfb3ba4e1d50619da712d330e2bee732f702919fd13d4b2edac63a
+  languageName: node
+  linkType: hard
+
 "convert-source-map@npm:^1.5.0, convert-source-map@npm:^1.7.0":
   version: 1.9.0
   resolution: "convert-source-map@npm:1.9.0"
@@ -2813,6 +2878,13 @@ __metadata:
     whatwg-mimetype: ^3.0.0
     whatwg-url: ^12.0.0
   checksum: 006e869b5bf079647949a3e9b1dd69d84b2d5d26e6b01c265485699bc96e83817d4b5aae758b2910a4c58c0601913f3a0034121c1ca2da268e9a244c57515b15
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.11.10":
+  version: 1.11.10
+  resolution: "dayjs@npm:1.11.10"
+  checksum: a6b5a3813b8884f5cd557e2e6b7fa569f4c5d0c97aca9558e38534af4f2d60daafd3ff8c2000fed3435cfcec9e805bcebd99f90130c6d1c5ef524084ced588c4
   languageName: node
   linkType: hard
 
@@ -4669,6 +4741,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jotai-trpc@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "jotai-trpc@npm:0.5.1"
+  peerDependencies:
+    "@trpc/client": ">=10.0.0"
+    "@trpc/server": ">=10.0.0"
+    jotai: ">=1.11.0"
+  checksum: f3a4922333c434b23f209dc431b1eafdc2f946f5275d0064549cae25bacf3a3a6a476cda69c0dbdbc640409abd177652798822fa9b7cc7db15e9968019d85c78
+  languageName: node
+  linkType: hard
+
 "jotai@npm:^2.5.0":
   version: 2.5.0
   resolution: "jotai@npm:2.5.0"
@@ -4855,6 +4938,13 @@ jsdom@latest:
   languageName: node
   linkType: hard
 
+"klona@npm:^2.0.5":
+  version: 2.0.6
+  resolution: "klona@npm:2.0.6"
+  checksum: ac9ee3732e42b96feb67faae4d27cf49494e8a3bf3fa7115ce242fe04786788e0aff4741a07a45a2462e2079aa983d73d38519c85d65b70ef11447bbc3c58ce7
+  languageName: node
+  linkType: hard
+
 "language-subtag-registry@npm:~0.3.2":
   version: 0.3.22
   resolution: "language-subtag-registry@npm:0.3.22"
@@ -4984,13 +5074,6 @@ jsdom@latest:
   version: 10.0.1
   resolution: "lru-cache@npm:10.0.1"
   checksum: 06f8d0e1ceabd76bb6f644a26dbb0b4c471b79c7b514c13c6856113879b3bf369eb7b497dad4ff2b7e2636db202412394865b33c332100876d838ad1372f0181
-  languageName: node
-  linkType: hard
-
-"luxon@npm:^3.4.3":
-  version: 3.4.3
-  resolution: "luxon@npm:3.4.3"
-  checksum: 3eade81506224d038ed24035a0cd0dd4887848d7eba9361dce9ad8ef81380596a68153240be3988721f9690c624fb449fcf8fd8c3fc0681a6a8496faf48e92a3
   languageName: node
   linkType: hard
 
@@ -6380,7 +6463,7 @@ jsdom@latest:
   languageName: node
   linkType: hard
 
-"react-transition-group@npm:^4.4.5":
+"react-transition-group@npm:4.4.5, react-transition-group@npm:^4.4.5":
   version: 4.4.5
   resolution: "react-transition-group@npm:4.4.5"
   dependencies:
