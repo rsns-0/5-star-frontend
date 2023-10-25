@@ -3,8 +3,8 @@ import { type TablerIconsProps } from "@tabler/icons-react"
 import { type RouterOutputs } from "../utils/api"
 import { type z } from "zod"
 import {
-	type remindersCreateSchema,
-	type remindersUpdateFormSchema,
+	type remindersServerCreateSchema,
+	type remindersFormSchema,
 } from "../models/validationSchemas"
 
 export type Providers = "discord"
@@ -36,7 +36,12 @@ export type ReminderColDef = ReminderData & {
 
 export type GetArrayItem<T> = T extends Array<infer U> ? U : never
 
-export type ParametersO<T> = T extends (...args: infer U) => any ? U[0] : never
+/** Defaults to the first function argument. Index starts at 0. */
+export type GetFunctionArgument<T, UArgumentNumber extends number = 0> = T extends (
+	...args: infer U
+) => any
+	? U[UArgumentNumber]
+	: never
 
 export type ReminderTableProps = {
 	title?: string
@@ -56,5 +61,5 @@ export type HocReturn<P> = {
 	(props: P): React.JSX.Element
 	displayName: string
 }
-export type ReminderUpdateFormData = z.infer<typeof remindersUpdateFormSchema>
-export type ReminderCreateFormData = z.infer<typeof remindersCreateSchema>
+export type ReminderUpdateFormData = z.infer<typeof remindersFormSchema>
+export type ReminderCreateFormData = z.infer<typeof remindersServerCreateSchema>
