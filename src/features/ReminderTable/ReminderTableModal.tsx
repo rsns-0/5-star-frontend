@@ -1,7 +1,8 @@
 import { Box, Group, Button, Modal, Select, Textarea, Stack } from "@mantine/core"
 
 import { TitleText } from "../../components/typography/TitleText"
-import { useGetChannels, useReminderFormModal } from "../../hooks/reminderTable"
+import { useReminderFormModal } from "../../hooks/reminderTable"
+import { useGetChannels } from "~/hooks/getChannels"
 import { DateTimePicker } from "@mantine/dates"
 import { observer } from "mobx-react"
 

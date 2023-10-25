@@ -1,9 +1,7 @@
 import { useCallback } from "react"
-import { type ChannelData, type GetFunctionArgument, type ReminderData } from "../types/types"
+import { type GetFunctionArgument, type ReminderData } from "../types/types"
 import { useReminderFormContext } from "./reminderForm"
 import { tableStateModel } from "../models/TableStateModel"
-import { type ComboboxData } from "@mantine/core"
-import { useChannelContext } from "../providers/ChannelsProvider"
 import { notifications } from "@mantine/notifications"
 
 export const useReminderFormModal = () => {
@@ -47,24 +45,6 @@ export const useReminderFormModal = () => {
 	}
 }
 
-class ChannelDataTransformer {
-	constructor(public data: ChannelData) {}
-
-	public transformMantineComboboxData() {
-		return this.data.map((guild) => ({
-			group: guild.name,
-			items: guild.discord_channels.map((channel) => ({
-				value: channel.id,
-				label: channel.name,
-			})),
-		})) satisfies ComboboxData
-	}
-}
-
-export function useGetChannels() {
-	return new ChannelDataTransformer(useChannelContext()).transformMantineComboboxData()
-}
-
 export function useCancelReminderTableModal() {
 	const close = () => {
 		tableStateModel.close()
@@ -72,17 +52,14 @@ export function useCancelReminderTableModal() {
 	return close
 }
 
-export function useOpenReminderTableEditModal() {
+export function useOpenReminderTableEditModal(data: ReminderData) {
 	const { reset, setValues } = useReminderFormContext()
 
-	const openEditModal = useCallback(
-		(data: ReminderData) => {
-			tableStateModel.openEdit(data.id)
-			reset()
-			setValues(data)
-		},
-		[reset, setValues]
-	)
+	const openEditModal = useCallback(() => {
+		tableStateModel.openEdit(data.id)
+		reset()
+		setValues(data)
+	}, [reset, setValues, data])
 	return openEditModal
 }
 
@@ -98,6 +75,8 @@ export function useOpenReminderTableCreateModal() {
 
 export function useDeleteItem(id: number) {
 	return useCallback(() => {
-		console.log(`delete ${id}`)
+		notifications.show({
+			message: `Reminder ${id} deleted`,
+		})
 	}, [id])
 }
