@@ -44,7 +44,6 @@ __metadata:
     ag-grid-react: ^30.2.0
     autoprefixer: ^10.4.14
     clsx: ^2.0.0
-    constate: ^3.3.2
     dayjs: ^1.11.10
     eslint: ^8.47.0
     eslint-config-next: ^13.4.19
@@ -2772,15 +2771,6 @@ __metadata:
   version: 1.1.0
   resolution: "console-control-strings@npm:1.1.0"
   checksum: 8755d76787f94e6cf79ce4666f0c5519906d7f5b02d4b884cf41e11dcd759ed69c57da0670afd9236d229a46e0f9cf519db0cd829c6dca820bb5a5c3def584ed
-  languageName: node
-  linkType: hard
-
-"constate@npm:^3.3.2":
-  version: 3.3.2
-  resolution: "constate@npm:3.3.2"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 1bc1c49aacf37221bc8ed65ec18ea3501dd7f9ec43df347643e50a365123ed6cbc40e4f53dbfb3ba4e1d50619da712d330e2bee732f702919fd13d4b2edac63a
   languageName: node
   linkType: hard
 
