@@ -1,5 +1,5 @@
 import MainContent from "../../components/MainContent/MainContent"
-import { Group, Stack } from "@mantine/core"
+import { Box, Divider, Group, Stack } from "@mantine/core"
 
 import InviteDiscordButton from "../../components/InviteDiscordButton/InviteDiscordButton"
 import FeatureGrid from "../../components/FeatureGrid/FeatureGrid"
@@ -10,20 +10,32 @@ import { ButtonWithModal } from "../../components/containers/ButtonWithModal"
 import { ReactToTranslate } from "./featureContent/ReactToTranslate"
 import { ReminderFeatureContent } from "./featureContent/Reminders"
 
+const TitleComponent = () => {
+	return (
+		<>
+			<TitleText variant="gradient" style={{ fontSize: "3rem" }}>
+				Features
+			</TitleText>
+
+			<Divider size="md" color="blue.8" />
+		</>
+	)
+}
+
 const LandingPageLayout = () => {
 	return (
 		<>
 			<Stack align="center" gap="xl">
 				<MainContent
-					titleText="5-star service at your fingertips."
-					bodyText="5-stars automates your daily tasks and comes with additional features."
+					titleText="5 star service at your fingertips."
+					bodyText="5 Stars automates your daily tasks and comes with additional features."
 				>
 					<Group justify="end">
 						<InviteDiscordButton />
 					</Group>
 				</MainContent>
 
-				<FeatureGrid titleComponent={<TitleText>Features</TitleText>}>
+				<FeatureGrid titleComponent={<TitleComponent />}>
 					<FeatureItem
 						title="React to Translate"
 						description="React to any message with a flag matching your preferred language and the bot will automatically detect the message's original language and translate it to your preferred language."
@@ -38,9 +50,11 @@ const LandingPageLayout = () => {
 						description="Set reminders through the discord interface or through our feature-packed table in the web browser."
 						icon={IconCalendarCheck}
 					>
-						<ButtonWithModal title="Reminders" buttonText="Learn More">
-							<ReminderFeatureContent />
-						</ButtonWithModal>
+						<Box mt="lg">
+							<ButtonWithModal title="Reminders" buttonText="Learn More">
+								<ReminderFeatureContent />
+							</ButtonWithModal>
+						</Box>
 					</FeatureItem>
 				</FeatureGrid>
 			</Stack>

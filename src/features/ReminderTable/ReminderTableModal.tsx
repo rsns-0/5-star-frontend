@@ -17,13 +17,14 @@ type ReminderTableModalProps = {
 export const ReminderTableModal = observer(({ modalProps }: ReminderTableModalProps) => {
 	const { isOpen, close, title, register, onSubmit } = useReminderFormModal()
 	const channels = useGetChannels()
+	
 
 	return (
 		<>
 			<Modal
 				closeButtonProps={{ "aria-label": "Close modal" }}
 				title={<TitleText>{title}</TitleText>}
-				size={"xl"}
+				size={"md"}
 				opened={isOpen}
 				onClose={close}
 				centered
@@ -38,6 +39,7 @@ export const ReminderTableModal = observer(({ modalProps }: ReminderTableModalPr
 						/>
 						<DateTimePicker
 							label="Time"
+							valueFormat="L LT"
 							placeholder="Select a time."
 							{...register("time")}
 						/>

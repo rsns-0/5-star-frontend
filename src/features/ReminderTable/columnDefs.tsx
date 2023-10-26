@@ -5,7 +5,9 @@ import styles from "./ReminderTable.module.css"
 
 export const columnDefs: ColDef<ReminderColDef>[] = [
 	{ field: "id", headerName: "ID" },
+	{ field: "discord_channels.discord_guilds.name", headerName: "Server Name" },
 	{ field: "discord_channels.name", headerName: "Channel Name" },
+	{ field: "reminder_message", headerName: "Message" },
 	{
 		field: "time",
 		cellRenderer: (params: ICellRendererParams<ReminderColDef, Date>) => {
@@ -15,8 +17,6 @@ export const columnDefs: ColDef<ReminderColDef>[] = [
 			return params.value.toLocaleString()
 		},
 	},
-	{ field: "reminder_message", headerName: "Message" },
-	{ field: "discord_channels.discord_guilds.name", headerName: "Server Name" },
 	{
 		field: "actions",
 		headerName: "Actions",
