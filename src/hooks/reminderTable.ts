@@ -3,9 +3,14 @@ import { type GetFunctionArgument, type ReminderData } from "../types/types"
 import { useReminderFormContext } from "./reminderForm"
 import { tableStateModel } from "../models/TableStateModel"
 import { notifications } from "@mantine/notifications"
+import { useCreateReminder, useDeleteReminder, useUpdateReminder } from "./reminderCRUD"
 
 export const useReminderFormModal = () => {
 	const { getInputProps, errors, onSubmit: handleSubmit } = useReminderFormContext()
+
+	const { mutate: updateMutation } = useUpdateReminder()
+
+	const { mutate: createMutation } = useCreateReminder()
 
 	const close = () => {
 		tableStateModel.close()
@@ -13,6 +18,7 @@ export const useReminderFormModal = () => {
 
 	const create = handleSubmit((data) => {
 		close()
+		createMutation(data)
 		notifications.show({
 			message: `Reminder ${JSON.stringify(data, null, 4)} created`,
 		})
@@ -20,6 +26,11 @@ export const useReminderFormModal = () => {
 
 	const update = handleSubmit((data) => {
 		close()
+		const id = tableStateModel.currentItemId
+		if (!id) {
+			throw new Error("Unexpected missing id")
+		}
+		updateMutation({ ...data, id })
 		notifications.show({
 			message: `Reminder ${JSON.stringify(data, null, 4)} updated`,
 		})
@@ -74,9 +85,13 @@ export function useOpenReminderTableCreateModal() {
 }
 
 export function useDeleteItem(id: number) {
+	const { mutate } = useDeleteReminder()
+
 	return useCallback(() => {
+		mutate(id)
 		notifications.show({
 			message: `Reminder ${id} deleted`,
 		})
-	}, [id])
+	}, [id, mutate])
 }
+

@@ -1,11 +1,19 @@
 import { makeAutoObservable } from "mobx"
 
 class TableStateModel {
-	isOpen = false
-	formItemId: null | number = null
+	private open = false
+	private formItemId: null | number = null
 
 	constructor() {
-		makeAutoObservable(this)
+		makeAutoObservable(this) //private variables fine with makeAutoObservable https://github.com/mobxjs/mobx/discussions/2490
+	}
+
+	get isOpen() {
+		return this.open
+	}
+
+	get currentItemId() {
+		return this.formItemId
 	}
 
 	get title() {
@@ -21,18 +29,17 @@ class TableStateModel {
 	}
 
 	openEdit(id: number) {
-		this.isOpen = true
+		this.open = true
 		this.formItemId = id
 	}
 
 	openCreate() {
-		this.isOpen = true
+		this.open = true
 		this.formItemId = null
 	}
 
 	close() {
-		this.isOpen = false
-		this.formItemId = null
+		this.open = false
 	}
 }
 
