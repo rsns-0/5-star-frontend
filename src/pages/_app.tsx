@@ -14,11 +14,10 @@ import { Navbar } from "../components/Navbar/Navbar"
 import { defaultLinks } from "../resources/links"
 import { Header } from "../components/Header/Header"
 
-import dayjs from "dayjs"
-import customParseFormat from "dayjs/plugin/customParseFormat"
+
+
 import { Notifications } from "@mantine/notifications"
 
-dayjs.extend(customParseFormat)
 
 const MyApp: AppType<{ session: Session | null }> = ({
 	Component,
