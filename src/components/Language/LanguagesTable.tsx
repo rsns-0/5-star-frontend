@@ -5,7 +5,7 @@ import "ag-grid-community/styles/ag-theme-alpine.css" // Optional theme CSS
 import { type ICellRendererParams, type ColDef } from "ag-grid-community"
 import { type SupportedLanguageData } from "../../types/types"
 import { useRef } from "react"
-import { Box, Stack, TextInput } from "@mantine/core"
+import { Center, Stack, TextInput } from "@mantine/core"
 import { useInputState } from "@mantine/hooks"
 import { TwemojiImage } from "../Tweemoji/TweemojiImage"
 
@@ -69,8 +69,8 @@ export const LanguagesTable = ({ data }: LanguagesTableProps) => {
 	const { value, inputProps } = useInput()
 
 	return (
-		<Stack gap="md">
-			<Box ml="lg">
+		<Center>
+			<Stack gap="xl">
 				<TextInput
 					styles={{ label: { color: "white" } }}
 					label="Quick Filter"
@@ -78,26 +78,26 @@ export const LanguagesTable = ({ data }: LanguagesTableProps) => {
 					w={400}
 					{...inputProps}
 				/>
-			</Box>
-			<div className={`ag-theme-alpine-dark ${styles.tableContainer}`}>
-				<AgGridReact<SupportedLanguageData>
-					ref={gridRef}
-					pagination={true}
-					onGridReady={(e) => {
-						e.api.sizeColumnsToFit({
-							columnLimits: [
-								{ key: "icon", maxWidth: 10 },
-								{ key: "supported", maxWidth: 120 },
-							],
-						})
-					}}
-					ensureDomOrder={true}
-					quickFilterText={value}
-					rowData={data}
-					columnDefs={columnDefs}
-					defaultColDef={defaultColDef}
-				/>
-			</div>
-		</Stack>
+				<div className={`ag-theme-alpine-dark ${styles.tableContainer}`}>
+					<AgGridReact<SupportedLanguageData>
+						ref={gridRef}
+						pagination={true}
+						onGridReady={(e) => {
+							e.api.sizeColumnsToFit({
+								columnLimits: [
+									{ key: "icon", maxWidth: 10 },
+									{ key: "supported", maxWidth: 120 },
+								],
+							})
+						}}
+						ensureDomOrder={true}
+						quickFilterText={value}
+						rowData={data}
+						columnDefs={columnDefs}
+						defaultColDef={defaultColDef}
+					/>
+				</div>
+			</Stack>
+		</Center>
 	)
 }

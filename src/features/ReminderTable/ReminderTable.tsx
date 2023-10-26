@@ -4,7 +4,7 @@ import "ag-grid-community/styles/ag-grid.css" // Core grid CSS, always needed
 import "ag-grid-community/styles/ag-theme-alpine.css" // Optional theme CSS
 
 import { useCallback, useRef } from "react"
-import { Button, Group, Stack } from "@mantine/core"
+import { Button, Center, Group, Stack } from "@mantine/core"
 
 import styles from "./ReminderTable.module.css"
 import { type ReminderData } from "../../types/types"
@@ -27,26 +27,28 @@ const _ReminderTable = ({ data }: ReminderTableProps) => {
 
 	return (
 		<>
-			<Stack gap="md">
-				<Group align="end" ml="lg">
-					<QuickFilterInput {...inputProps} />
-					<Button onClick={resetColumns}>Reset columns</Button>
-					<Button onClick={openNew}>Create new</Button>
-				</Group>
+			<Center>
+				<Stack gap="xl">
+					<Group align="end">
+						<QuickFilterInput {...inputProps} />
+						<Button onClick={resetColumns}>Reset columns</Button>
+						<Button onClick={openNew}>Create new</Button>
+					</Group>
 
-				<div className={`ag-theme-alpine-dark ${styles.tableContainer}`}>
-					<AgGridReact<ReminderData>
-						ref={gridRef}
-						pagination={true}
-						ensureDomOrder={true}
-						quickFilterText={debouncedInputValue}
-						rowData={data}
-						columnDefs={columnDefs}
-						defaultColDef={defaultColDef}
-						onGridReady={onGridReady}
-					/>
-				</div>
-			</Stack>
+					<div className={`ag-theme-alpine-dark ${styles.tableContainer}`}>
+						<AgGridReact<ReminderData>
+							ref={gridRef}
+							pagination={true}
+							ensureDomOrder={true}
+							quickFilterText={debouncedInputValue}
+							rowData={data}
+							columnDefs={columnDefs}
+							defaultColDef={defaultColDef}
+							onGridReady={onGridReady}
+						/>
+					</div>
+				</Stack>
+			</Center>
 			<ReminderTableModal />
 		</>
 	)
