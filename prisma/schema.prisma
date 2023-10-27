@@ -196,52 +196,51 @@ model rest_countries_api_data {
 }
 
 model rest_countries_api_new_data {
-  id           Int                                 @id @default(autoincrement())
-  cca2         String
-  ccn3         String?
-  cca3         String
-  cioc         String?
-  independent  Boolean?
-  unMember     Boolean
-  capital      String[]
-  altSpellings String[]
-  subregion    String?
-  translations Json
-  latlng       Float[]
-  landlocked   Boolean
-  borders      String[]
-  area         Float
-  flag         String
-  population   Int
-  gini         Json?
-  fifa         String?
-  timezones    String[]
-  capitalInfo  Json
-  car          Json
-  coatOfArms   Json
-  flags        Json
-  idd          Json
-  maps         Json
-  rest_countries_api_data_names rest_countries_api_data_names @relation(fields: [rest_countries_api_data_names_id], references: [id])
-  rest_countries_api_data_names_id Int @unique
-  name         String
-  postalCode   Json?
-  status       String
-  region       String
-  continents   String[]
-  startOfWeek  Json
-  currencies   Json?
-  demonyms     Json?
-  languages    rest_countries_api_data_languages[] @relation("rest_countries_api_data_languagesTorest_countries_api_new_data")
+  id                               Int                                 @id @default(autoincrement())
+  cca2                             String
+  ccn3                             String?
+  cca3                             String
+  cioc                             String?
+  independent                      Boolean?
+  unMember                         Boolean
+  capital                          String[]
+  altSpellings                     String[]
+  subregion                        String?
+  translations                     Json
+  latlng                           Float[]
+  landlocked                       Boolean
+  borders                          String[]
+  area                             Float
+  flag                             String
+  population                       Int
+  gini                             Json?
+  fifa                             String?
+  timezones                        String[]
+  capitalInfo                      Json
+  car                              Json
+  coatOfArms                       Json
+  flags                            Json
+  idd                              Json
+  maps                             Json
+  rest_countries_api_data_names    rest_countries_api_data_names       @relation(fields: [rest_countries_api_data_names_id], references: [id])
+  rest_countries_api_data_names_id Int                                 @unique
+  name                             String
+  postalCode                       Json?
+  status                           String
+  region                           String
+  continents                       String[]
+  startOfWeek                      Json
+  currencies                       Json?
+  demonyms                         Json?
+  languages                        rest_countries_api_data_languages[] @relation("rest_countries_api_data_languagesTorest_countries_api_new_data")
 }
 
 model rest_countries_api_data_names {
-  id                         Int                           @id @default(autoincrement())
-  common                    String                        @unique
-  official                 String                        @unique
-  nativeName               Json
-  rest_countries_api_new_data rest_countries_api_new_data? 
-  
+  id                          Int                          @id @default(autoincrement())
+  common                      String                       @unique
+  official                    String                       @unique
+  nativeName                  Json
+  rest_countries_api_new_data rest_countries_api_new_data?
 }
 
 model test_pagination {
@@ -360,7 +359,6 @@ model languages {
   @@map("languages")
 }
 
-
 enum roles {
   developer
   user
@@ -374,4 +372,24 @@ enum continents {
   Oceania
   North_America @map("North America")
   South_America @map("South America")
+}
+
+model Command {
+  id              Int               @id @default(autoincrement())
+  name            String            @unique
+  description     String
+  CommandArgument CommandArgument[]
+
+  @@map("commands")
+}
+
+model CommandArgument {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String @default("")
+
+  command   Command @relation(fields: [commandId], references: [id])
+  commandId Int     @map("command_id")
+
+  @@map("command_arguments")
 }

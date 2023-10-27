@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { commandArgumentSchema, commandSchema } from "./prismaZod"
 
 export const reminderIdSchema = z
 	.number()
@@ -40,3 +41,12 @@ export type ReminderUpdateOrCreateFormData = ReminderUpdateFormData | ReminderCr
 export type ReminderDeleteFormData = z.infer<typeof remindersDeleteSchema>
 
 export const remindersDeleteSchema = reminderIdSchema
+
+const commandArgumentFormSchema = commandArgumentSchema.omit({
+	commandId: true,
+	id: true,
+})
+
+export const commandFormSchema = commandSchema.extend({
+	commandArgs: commandArgumentFormSchema.array().min(1),
+})
