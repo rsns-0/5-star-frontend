@@ -6,6 +6,7 @@ import { useGetChannels } from "~/hooks/getChannels"
 import { DateTimePicker } from "@mantine/dates"
 import { observer } from "mobx-react"
 
+
 type ReminderTableModalProps = {
 	data?: { id?: number }
 	modalProps?: Exclude<
@@ -17,7 +18,6 @@ type ReminderTableModalProps = {
 export const ReminderTableModal = observer(({ modalProps }: ReminderTableModalProps) => {
 	const { isOpen, close, title, register, onSubmit } = useReminderFormModal()
 	const channels = useGetChannels()
-	
 
 	return (
 		<>
@@ -33,17 +33,20 @@ export const ReminderTableModal = observer(({ modalProps }: ReminderTableModalPr
 				<Box component="form" maw={400} mx="auto" onSubmit={onSubmit}>
 					<Stack>
 						<Textarea
+							data-testid="reminder_message"
 							label="Message"
 							placeholder='Write your message here. Defaults to "PING!" if left blank.'
 							{...register("reminder_message")}
 						/>
 						<DateTimePicker
+							data-testid="time"
 							label="Time"
 							valueFormat="L LT"
 							placeholder="Select a time."
 							{...register("time")}
 						/>
 						<Select
+							data-testid="channel_id"
 							data={channels}
 							label="Channel"
 							placeholder="Select a channel."
@@ -53,7 +56,9 @@ export const ReminderTableModal = observer(({ modalProps }: ReminderTableModalPr
 							{...register("channel_id")}
 						/>
 						<Group justify="flex-end" mt="md">
-							<Button type="submit">Submit</Button>
+							<Button data-testid="submit" type="submit">
+								Submit
+							</Button>
 						</Group>
 					</Stack>
 				</Box>

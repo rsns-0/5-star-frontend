@@ -30,9 +30,13 @@ const _ReminderTable = ({ data }: ReminderTableProps) => {
 			<Center>
 				<Stack gap="xl">
 					<Group align="end">
-						<QuickFilterInput {...inputProps} />
-						<Button onClick={resetColumns}>Reset columns</Button>
-						<Button onClick={openNew}>Create new</Button>
+						<QuickFilterInput data-testid="quick filter" {...inputProps} />
+						<Button data-testid="reset columns" onClick={resetColumns}>
+							Reset columns
+						</Button>
+						<Button data-testid="create new" onClick={openNew}>
+							Create new
+						</Button>
 					</Group>
 
 					<div className={`ag-theme-alpine-dark ${styles.tableContainer}`}>

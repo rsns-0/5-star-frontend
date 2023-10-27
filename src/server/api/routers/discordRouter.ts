@@ -1,4 +1,5 @@
 import { createTRPCRouter, discordUserProcedure } from "~/server/api/trpc"
+import { mockChannelData } from "../../resources/mockData"
 
 export const discordRouter = createTRPCRouter({
 	getGuildsAndTextBasedChannelsOfUser: discordUserProcedure.query(async ({ ctx }) => {
@@ -33,6 +34,23 @@ export const discordRouter = createTRPCRouter({
 		})
 
 		return res
-			
 	}),
 })
+
+export const mockDiscordRouter = createTRPCRouter({
+	getGuildsAndTextBasedChannelsOfUser: discordUserProcedure.query(({}) => {
+		const res: {
+			name: string
+			discord_channels: {
+				name: string
+				webhooks: {
+					id: string
+				}[]
+				id: string
+			}[]
+			id: string
+		}[] = mockChannelData
+		return res
+	}),
+})
+

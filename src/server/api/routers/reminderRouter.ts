@@ -55,6 +55,7 @@ const get = createTRPCRouter({
 	}),
 })
 
+
 const patch = createTRPCRouter({
 	updateReminder: reminderRLSProcedure
 		.input(remindersServerUpdateSchema)
@@ -125,6 +126,8 @@ const post = createTRPCRouter({
 			return reminderId
 		}),
 })
+
+
 
 export const reminderRouter = createTRPCRouter({
 	get,

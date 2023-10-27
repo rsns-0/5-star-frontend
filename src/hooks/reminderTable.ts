@@ -5,6 +5,7 @@ import { tableStateModel } from "../models/TableStateModel"
 import { notifications } from "@mantine/notifications"
 import { useCreateReminder, useDeleteReminder, useUpdateReminder } from "./reminderCRUD"
 
+
 export const useReminderFormModal = () => {
 	const { getInputProps, errors, onSubmit: handleSubmit } = useReminderFormContext()
 
@@ -25,7 +26,7 @@ export const useReminderFormModal = () => {
 	})
 
 	const update = handleSubmit((data) => {
-		close()
+		
 		const id = tableStateModel.currentItemId
 		if (!id) {
 			throw new Error("Unexpected missing id")
@@ -34,6 +35,7 @@ export const useReminderFormModal = () => {
 		notifications.show({
 			message: `Reminder ${JSON.stringify(data, null, 4)} updated`,
 		})
+		close()
 	})
 
 	const onSubmit = tableStateModel.isEditing ? update : create

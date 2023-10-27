@@ -18,8 +18,8 @@ const RowActionsImpl = ({ data }: { data: ReminderData }) => {
 
 	return (
 		<>
-			<EditButton onClick={openEditModal} />
-			<DeleteButton onClick={handleDelete} />
+			<EditButton data-testid={`${data.id}-edit`} onClick={openEditModal} />
+			<DeleteButton data-testid={`${data.id}-delete`} onClick={handleDelete} />
 		</>
 	)
 }

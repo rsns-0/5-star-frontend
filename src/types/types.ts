@@ -6,6 +6,7 @@ import {
 	type remindersServerCreateSchema,
 	type remindersFormSchema,
 } from "../models/validationSchemas"
+import { type TrpcContext } from "~/utils/mockApi"
 
 export type Providers = "discord"
 
@@ -63,3 +64,4 @@ export type HocReturn<P> = {
 }
 export type ReminderUpdateFormData = z.infer<typeof remindersFormSchema>
 export type ReminderCreateFormData = z.infer<typeof remindersServerCreateSchema>
+export type TrpcMockContextFactory = (context: TrpcContext) => void

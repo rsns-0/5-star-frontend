@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx"
 
-class TableStateModel {
+export class TableStateModel {
 	private open = false
 	private formItemId: null | number = null
 
@@ -12,20 +12,27 @@ class TableStateModel {
 		return this.open
 	}
 
+	get isClosed() {
+		return !this.isOpen
+	}
+
 	get currentItemId() {
 		return this.formItemId
 	}
 
 	get title() {
-		return this.isEditing ? "Edit Reminder" : "Create Reminder"
+		if (this.isOpen) {
+			return this.formItemId === null ? "Create Reminder" : "Edit Reminder"
+		}
+		return ""
 	}
 
 	get isEditing() {
-		return this.formItemId !== null
+		return this.formItemId !== null && this.isOpen
 	}
 
 	get isCreating() {
-		return this.formItemId === null
+		return this.formItemId === null && this.isOpen
 	}
 
 	openEdit(id: number) {
@@ -40,6 +47,7 @@ class TableStateModel {
 
 	close() {
 		this.open = false
+		this.formItemId = null
 	}
 }
 
