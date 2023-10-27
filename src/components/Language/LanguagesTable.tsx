@@ -21,6 +21,9 @@ const columnDefs: ColDef<SupportedLanguageData>[] = [
 		cellRenderer: (params: ICellRendererParams<SupportedLanguageData, string>) => {
 			return params.value && <TwemojiImage emoji={params.value} />
 		},
+		filter: false,
+		sortable: false,
+		width: 100,
 	},
 	{
 		field: "countryName",
