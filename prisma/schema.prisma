@@ -6,11 +6,11 @@ generator client {
 generator zod {
   provider              = "zod-prisma"
   output                = "../src/models/prismaZod"
-  useDecimalJs          = "true"
   modelSuffix           = "Schema"
   modelCase             = "camelCase"
-  relationModel         = "true"
   prismaJsonNullability = "true"
+  useDecimalJs          = "true"
+  relationModel         = "true"
 }
 
 datasource db {
@@ -222,8 +222,6 @@ model rest_countries_api_new_data {
   flags                            Json
   idd                              Json
   maps                             Json
-  rest_countries_api_data_names    rest_countries_api_data_names       @relation(fields: [rest_countries_api_data_names_id], references: [id])
-  rest_countries_api_data_names_id Int                                 @unique
   name                             String
   postalCode                       Json?
   status                           String
@@ -232,6 +230,8 @@ model rest_countries_api_new_data {
   startOfWeek                      Json
   currencies                       Json?
   demonyms                         Json?
+  rest_countries_api_data_names_id Int                                 @unique
+  rest_countries_api_data_names    rest_countries_api_data_names       @relation(fields: [rest_countries_api_data_names_id], references: [id])
   languages                        rest_countries_api_data_languages[] @relation("rest_countries_api_data_languagesTorest_countries_api_new_data")
 }
 
@@ -240,6 +240,7 @@ model rest_countries_api_data_names {
   common                      String                       @unique
   official                    String                       @unique
   nativeName                  Json
+  ProcessedLangData           ProcessedLangData?
   rest_countries_api_new_data rest_countries_api_new_data?
 }
 
@@ -359,6 +360,76 @@ model languages {
   @@map("languages")
 }
 
+model Command {
+  name            String            @unique
+  description     String
+  id              Int               @id @default(autoincrement())
+  CommandArgument CommandArgument[]
+
+  @@map("commands")
+}
+
+model CommandArgument {
+  name        String
+  description String  @default("")
+  id          Int     @id @default(autoincrement())
+  commandId   Int     @map("command_id")
+  command     Command @relation(fields: [commandId], references: [id])
+
+  @@map("command_arguments")
+}
+
+model ProcessedLangData {
+  id                                             Int                           @id
+  common                                         String                        @unique
+  official                                       String                        @unique
+  nativeName                                     Json
+  fuzzy_official_top_country                     String
+  fuzzy_official_top_country_similarity          Int
+  fuzzy_common_top_country                       String
+  fuzzy_common_top_country_similarity            Int
+  max_official_score_between_common_and_official Int
+  country                                        String
+  primary_language                               String
+  fuzzy_top_country_or_region                    String
+  fuzzy_top_country_or_region_similarity         Int
+  widely_spoken                                  String
+  country_or_region                              String
+  minority_language                              String
+  national_language                              String
+  official_language                              String
+  regional_language                              String
+  primary_language_wiki                          String
+  rest_countries_api_data_names_id               Int                           @unique
+  rest_countries_api_data_names                  rest_countries_api_data_names @relation(fields: [rest_countries_api_data_names_id], references: [id])
+
+  @@map("processed_lang_data")
+}
+
+view processed_lang_data_v1 {
+  id                                             Int    @unique
+  common                                         String
+  official                                       String
+  nativeName                                     Json
+  fuzzy_official_top_country                     String
+  fuzzy_official_top_country_similarity          Int
+  fuzzy_common_top_country                       String
+  fuzzy_common_top_country_similarity            Int
+  max_official_score_between_common_and_official Int
+  country                                        String
+  primary_language                               String
+  fuzzy_top_country_or_region                    String
+  fuzzy_top_country_or_region_similarity         Int
+  widely_spoken                                  String
+  country_or_region                              String
+  minority_language                              String
+  national_language                              String
+  official_language                              String
+  regional_language                              String
+  primary_language_wiki                          String
+  rest_countries_api_data_names_id               Int
+}
+
 enum roles {
   developer
   user
@@ -372,24 +443,4 @@ enum continents {
   Oceania
   North_America @map("North America")
   South_America @map("South America")
-}
-
-model Command {
-  id              Int               @id @default(autoincrement())
-  name            String            @unique
-  description     String
-  CommandArgument CommandArgument[]
-
-  @@map("commands")
-}
-
-model CommandArgument {
-  id          Int    @id @default(autoincrement())
-  name        String
-  description String @default("")
-
-  command   Command @relation(fields: [commandId], references: [id])
-  commandId Int     @map("command_id")
-
-  @@map("command_arguments")
 }

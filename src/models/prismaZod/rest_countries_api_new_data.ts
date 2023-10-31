@@ -34,7 +34,6 @@ export const rest_countries_api_new_dataSchema = z.object({
   flags: jsonSchema,
   idd: jsonSchema,
   maps: jsonSchema,
-  rest_countries_api_data_names_id: z.number().int(),
   name: z.string(),
   postalCode: jsonSchema,
   status: z.string(),
@@ -43,6 +42,7 @@ export const rest_countries_api_new_dataSchema = z.object({
   startOfWeek: jsonSchema,
   currencies: jsonSchema,
   demonyms: jsonSchema,
+  rest_countries_api_data_names_id: z.number().int(),
 })
 
 export interface Completerest_countries_api_new_data extends z.infer<typeof rest_countries_api_new_dataSchema> {

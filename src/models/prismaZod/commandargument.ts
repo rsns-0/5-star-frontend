@@ -1,15 +1,15 @@
 import * as z from "zod"
-import { type CompleteCommand, relatedCommandSchema } from "./index"
+import { CompleteCommand, relatedCommandSchema } from "./index"
 
 export const commandArgumentSchema = z.object({
-	id: z.number().int(),
-	name: z.string(),
-	description: z.string(),
-	commandId: z.number().int(),
+  name: z.string(),
+  description: z.string(),
+  id: z.number().int(),
+  commandId: z.number().int(),
 })
 
 export interface CompleteCommandArgument extends z.infer<typeof commandArgumentSchema> {
-	command: CompleteCommand
+  command: CompleteCommand
 }
 
 /**
@@ -17,8 +17,6 @@ export interface CompleteCommandArgument extends z.infer<typeof commandArgumentS
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const relatedCommandArgumentSchema: z.ZodSchema<CompleteCommandArgument> = z.lazy(() =>
-	commandArgumentSchema.extend({
-		command: relatedCommandSchema,
-	})
-)
+export const relatedCommandArgumentSchema: z.ZodSchema<CompleteCommandArgument> = z.lazy(() => commandArgumentSchema.extend({
+  command: relatedCommandSchema,
+}))

@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { Completerest_countries_api_new_data, relatedrest_countries_api_new_dataSchema } from "./index"
+import { CompleteProcessedLangData, relatedProcessedLangDataSchema, Completerest_countries_api_new_data, relatedrest_countries_api_new_dataSchema } from "./index"
 
 // Helper schema for JSON fields
 type Literal = boolean | number | string
@@ -15,6 +15,7 @@ export const rest_countries_api_data_namesSchema = z.object({
 })
 
 export interface Completerest_countries_api_data_names extends z.infer<typeof rest_countries_api_data_namesSchema> {
+  ProcessedLangData?: CompleteProcessedLangData | null
   rest_countries_api_new_data?: Completerest_countries_api_new_data | null
 }
 
@@ -24,5 +25,6 @@ export interface Completerest_countries_api_data_names extends z.infer<typeof re
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
 export const relatedrest_countries_api_data_namesSchema: z.ZodSchema<Completerest_countries_api_data_names> = z.lazy(() => rest_countries_api_data_namesSchema.extend({
+  ProcessedLangData: relatedProcessedLangDataSchema.nullish(),
   rest_countries_api_new_data: relatedrest_countries_api_new_dataSchema.nullish(),
 }))
