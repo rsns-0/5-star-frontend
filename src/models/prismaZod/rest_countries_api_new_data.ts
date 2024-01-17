@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { Completerest_countries_api_data_names, relatedrest_countries_api_data_namesSchema, Completerest_countries_api_data_languages, relatedrest_countries_api_data_languagesSchema } from "./index"
+import { Completediscord_flag_emojis, relateddiscord_flag_emojisSchema, CompleteIBANCountryCodeData, relatedIBANCountryCodeDataSchema, CompleteNewCiaLanguageData, relatedNewCiaLanguageDataSchema, Completeresolve_tie_data, relatedresolve_tie_dataSchema, Completerest_countries_api_data_names, relatedrest_countries_api_data_namesSchema, CompleteWikiData, relatedWikiDataSchema, CompleteWikiIsoData, relatedWikiIsoDataSchema, Completelanguages, relatedlanguagesSchema } from "./index"
 
 // Helper schema for JSON fields
 type Literal = boolean | number | string
@@ -43,11 +43,18 @@ export const rest_countries_api_new_dataSchema = z.object({
   currencies: jsonSchema,
   demonyms: jsonSchema,
   rest_countries_api_data_names_id: z.number().int(),
+  spoken_languages: jsonSchema,
 })
 
 export interface Completerest_countries_api_new_data extends z.infer<typeof rest_countries_api_new_dataSchema> {
+  discord_flag_emojis?: Completediscord_flag_emojis | null
+  IBANCountryCodeData: CompleteIBANCountryCodeData[]
+  NewCiaLanguageData: CompleteNewCiaLanguageData[]
+  resolve_tie_data?: Completeresolve_tie_data | null
   rest_countries_api_data_names: Completerest_countries_api_data_names
-  languages: Completerest_countries_api_data_languages[]
+  WikiData: CompleteWikiData[]
+  WikiIsoData?: CompleteWikiIsoData | null
+  languages: Completelanguages[]
 }
 
 /**
@@ -56,6 +63,12 @@ export interface Completerest_countries_api_new_data extends z.infer<typeof rest
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
 export const relatedrest_countries_api_new_dataSchema: z.ZodSchema<Completerest_countries_api_new_data> = z.lazy(() => rest_countries_api_new_dataSchema.extend({
+  discord_flag_emojis: relateddiscord_flag_emojisSchema.nullish(),
+  IBANCountryCodeData: relatedIBANCountryCodeDataSchema.array(),
+  NewCiaLanguageData: relatedNewCiaLanguageDataSchema.array(),
+  resolve_tie_data: relatedresolve_tie_dataSchema.nullish(),
   rest_countries_api_data_names: relatedrest_countries_api_data_namesSchema,
-  languages: relatedrest_countries_api_data_languagesSchema.array(),
+  WikiData: relatedWikiDataSchema.array(),
+  WikiIsoData: relatedWikiIsoDataSchema.nullish(),
+  languages: relatedlanguagesSchema.array(),
 }))

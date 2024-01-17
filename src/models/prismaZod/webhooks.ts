@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { Completereminders, relatedremindersSchema, Completereminders_duplicate, relatedreminders_duplicateSchema, Completediscord_channels, relateddiscord_channelsSchema } from "./index"
+import { Completereminders, relatedremindersSchema, Completediscord_channels, relateddiscord_channelsSchema } from "./index"
 
 export const webhooksSchema = z.object({
   id: z.string(),
@@ -12,7 +12,6 @@ export const webhooksSchema = z.object({
 
 export interface Completewebhooks extends z.infer<typeof webhooksSchema> {
   reminders: Completereminders[]
-  reminders_duplicate: Completereminders_duplicate[]
   discord_channels: Completediscord_channels
 }
 
@@ -23,6 +22,5 @@ export interface Completewebhooks extends z.infer<typeof webhooksSchema> {
  */
 export const relatedwebhooksSchema: z.ZodSchema<Completewebhooks> = z.lazy(() => webhooksSchema.extend({
   reminders: relatedremindersSchema.array(),
-  reminders_duplicate: relatedreminders_duplicateSchema.array(),
   discord_channels: relateddiscord_channelsSchema,
 }))
