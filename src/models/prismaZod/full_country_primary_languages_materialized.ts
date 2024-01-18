@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-export const full_country_primary_languagesSchema = z.object({
+export const full_country_primary_languages_materializedSchema = z.object({
   country_id: z.number().int(),
   country_name: z.string(),
   primary_language: z.string(),

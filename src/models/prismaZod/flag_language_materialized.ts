@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-export const flag_languageSchema = z.object({
+export const flag_language_materializedSchema = z.object({
   id: z.number().int(),
   flag_key: z.string(),
   flag_emoji: z.string(),

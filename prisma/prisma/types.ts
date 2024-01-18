@@ -62,6 +62,14 @@ export type country_aggregated = {
 	name: string
 	weight: string
 }
+export type country_emoji = {
+	id: Generated<number>
+	iso: string
+	emoji: string
+	unicode: string
+	name: string
+	rest_countries_api_new_data_id: number
+}
 export type country_entries = {
 	id: number
 	type: string
@@ -133,6 +141,24 @@ export type discord_user = {
 export type flag_language = {
 	id: number
 	flag_key: string
+	flag_emoji: string
+	country_name: string
+	primary_language: string
+	primary_language_id: number
+	cca2: string
+	cca3: string
+	iso1: string | null
+	iso2: string
+	iso2b: string | null
+	is_supported_by_deep_l: boolean
+	country_name_weight: number
+	language_name_weight: number
+	primary_language_weight: number
+}
+export type flag_language_materialized = {
+	id: number
+	flag_key: string
+	flag_emoji: string
 	country_name: string
 	primary_language: string
 	primary_language_id: number
@@ -148,16 +174,30 @@ export type flag_language = {
 }
 export type full_country_primary_languages = {
 	country_id: number
-	country_name: string | null
-	primary_language: string | null
-	primary_language_id: string | null
-	country_name_weight: string | null
-	language_name_weight: string | null
-	primary_language_weight: number | null
-	cca2: string | null
-	cca3: string | null
+	country_name: string
+	primary_language: string
+	primary_language_id: number
+	country_name_weight: number
+	language_name_weight: number
+	primary_language_weight: number
+	cca2: string
+	cca3: string
 	iso1: string | null
-	iso2: string | null
+	iso2: string
+	iso2b: string | null
+}
+export type full_country_primary_languages_materialized = {
+	country_id: number
+	country_name: string
+	primary_language: string
+	primary_language_id: number
+	country_name_weight: number
+	language_name_weight: number
+	primary_language_weight: number
+	cca2: string
+	cca3: string
+	iso1: string | null
+	iso2: string
 	iso2b: string | null
 }
 export type IBANCountryCodeData = {
@@ -432,6 +472,7 @@ export type DB = {
 	congress_iso_mappings: CongressIsoMappings
 	countries: countries
 	country_aggregated: country_aggregated
+	country_emoji: country_emoji
 	country_entries: country_entries
 	country_primary_languages: country_primary_languages
 	country_primary_languages_resolved_ties: country_primary_languages_resolved_ties
@@ -442,7 +483,9 @@ export type DB = {
 	discord_messages: discord_messages
 	discord_user: discord_user
 	flag_language: flag_language
+	flag_language_materialized: flag_language_materialized
 	full_country_primary_languages: full_country_primary_languages
+	full_country_primary_languages_materialized: full_country_primary_languages_materialized
 	iban_country_code_data: IBANCountryCodeData
 	language_aggregated: language_aggregated
 	language_and_country_representations: language_and_country_representations

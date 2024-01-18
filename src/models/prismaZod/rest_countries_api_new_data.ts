@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { Completediscord_flag_emojis, relateddiscord_flag_emojisSchema, CompleteIBANCountryCodeData, relatedIBANCountryCodeDataSchema, CompleteNewCiaLanguageData, relatedNewCiaLanguageDataSchema, Completeresolve_tie_data, relatedresolve_tie_dataSchema, Completerest_countries_api_data_names, relatedrest_countries_api_data_namesSchema, CompleteWikiData, relatedWikiDataSchema, CompleteWikiIsoData, relatedWikiIsoDataSchema, Completelanguages, relatedlanguagesSchema } from "./index"
+import { Completediscord_flag_emojis, relateddiscord_flag_emojisSchema, CompleteIBANCountryCodeData, relatedIBANCountryCodeDataSchema, CompleteNewCiaLanguageData, relatedNewCiaLanguageDataSchema, Completeresolve_tie_data, relatedresolve_tie_dataSchema, Completerest_countries_api_data_names, relatedrest_countries_api_data_namesSchema, CompleteWikiData, relatedWikiDataSchema, CompleteWikiIsoData, relatedWikiIsoDataSchema, Completelanguages, relatedlanguagesSchema, Completecountry_emoji, relatedcountry_emojiSchema } from "./index"
 
 // Helper schema for JSON fields
 type Literal = boolean | number | string
@@ -55,6 +55,7 @@ export interface Completerest_countries_api_new_data extends z.infer<typeof rest
   WikiData: CompleteWikiData[]
   WikiIsoData?: CompleteWikiIsoData | null
   languages: Completelanguages[]
+  country_emoji: Completecountry_emoji[]
 }
 
 /**
@@ -71,4 +72,5 @@ export const relatedrest_countries_api_new_dataSchema: z.ZodSchema<Completerest_
   WikiData: relatedWikiDataSchema.array(),
   WikiIsoData: relatedWikiIsoDataSchema.nullish(),
   languages: relatedlanguagesSchema.array(),
+  country_emoji: relatedcountry_emojiSchema.array(),
 }))
