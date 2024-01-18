@@ -47,8 +47,10 @@ __metadata:
     autoprefixer: ^10.4.14
     clsx: ^2.0.0
     dayjs: ^1.11.10
+    dotenv: ^16.3.1
     eslint: ^8.47.0
     eslint-config-next: ^13.4.19
+    export-from-json: ^1.7.4
     immer: ^10.0.2
     jotai: ^2.5.0
     jotai-trpc: ^0.5.1
@@ -74,11 +76,13 @@ __metadata:
     react-hook-form: ^7.47.0
     react-icons: ^4.11.0
     react-markdown: ^9.0.0
+    remeda: ^1.37.0
     superjson: ^1.13.1
     tailwindcss: ^3.3.3
     transaction-exception: ^1.1.0
     tsx: ^3.12.10
     twemoji: ^14.0.2
+    type-fest: ^4.9.0
     typescript: ^5.1.6
     vite: ^4.4.11
     vitest: latest
@@ -3670,6 +3674,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv@npm:^16.3.1":
+  version: 16.3.1
+  resolution: "dotenv@npm:16.3.1"
+  checksum: 15d75e7279018f4bafd0ee9706593dd14455ddb71b3bcba9c52574460b7ccaf67d5cf8b2c08a5af1a9da6db36c956a04a1192b101ee102a3e0cf8817bbcf3dfd
+  languageName: node
+  linkType: hard
+
 "eastasianwidth@npm:^0.2.0":
   version: 0.2.0
   resolution: "eastasianwidth@npm:0.2.0"
@@ -4258,6 +4269,13 @@ __metadata:
   version: 3.1.1
   resolution: "exponential-backoff@npm:3.1.1"
   checksum: 3d21519a4f8207c99f7457287291316306255a328770d320b401114ec8481986e4e467e854cb9914dd965e0a1ca810a23ccb559c642c88f4c7f55c55778a9b48
+  languageName: node
+  linkType: hard
+
+"export-from-json@npm:^1.7.4":
+  version: 1.7.4
+  resolution: "export-from-json@npm:1.7.4"
+  checksum: af55142af9f0fb17e24cdaf55caac2cfd0d1ee89a075c0e968c27ab37cdb37df96fa6265e9d3de52198d634ea1be2c8eeab59457b652b984d1ec07a75f0eee4f
   languageName: node
   linkType: hard
 
@@ -8292,6 +8310,13 @@ jsdom@latest:
   languageName: node
   linkType: hard
 
+"remeda@npm:^1.37.0":
+  version: 1.37.0
+  resolution: "remeda@npm:1.37.0"
+  checksum: c77e4331302fd62ca9a292bbe86e20074623061f486fec1a688cd0dca13eec90c9fef12cd36759c0845bac24a4c03712f22598a2ad65211ad5107e1ef4f14680
+  languageName: node
+  linkType: hard
+
 "replace-string@npm:3.1.0":
   version: 3.1.0
   resolution: "replace-string@npm:3.1.0"
@@ -9517,6 +9542,13 @@ jsdom@latest:
   version: 3.13.1
   resolution: "type-fest@npm:3.13.1"
   checksum: c06b0901d54391dc46de3802375f5579868949d71f93b425ce564e19a428a0d411ae8d8cb0e300d330071d86152c3ea86e744c3f2860a42a79585b6ec2fdae8e
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^4.9.0":
+  version: 4.9.0
+  resolution: "type-fest@npm:4.9.0"
+  checksum: 73383de23237b399a70397a53101152548846d919aebcc7d8733000c6c354dc2632fe37c4a70b8571b79fdbfa099e2d8304c5ac56b3254780acff93e4c7a797f
   languageName: node
   linkType: hard
 
