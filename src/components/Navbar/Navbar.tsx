@@ -1,13 +1,14 @@
 import { Stack, Transition } from "@mantine/core"
 
 import classes from "./Navbar.module.css"
-import { type defaultLinks } from "../Header/Header"
+
 import { observer } from "mobx-react"
 import { navbarModel } from "../../models/NavbarModel"
 import { useClickOutside } from "@mantine/hooks"
 import NavbarControls from "./NavbarControls"
 
 import { createLinkItems } from "../../LinkItem/LinkItem"
+import type { defaultLinks } from "../../resources/links"
 
 type NavbarProps = {
 	links: typeof defaultLinks

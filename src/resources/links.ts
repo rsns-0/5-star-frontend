@@ -1,9 +1,9 @@
 export const DeepLLink = `https://www.deepl.com/en/docs-api`
 
-type LinkData = {
+export type LinkData = {
 	label: string
 	link: string
-} 
+}
 
 export const defaultLinks = [
 	{ label: "Home", link: "/" },

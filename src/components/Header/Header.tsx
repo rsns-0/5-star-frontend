@@ -9,10 +9,8 @@ import NavbarControls from "../Navbar/NavbarControls"
 import { createLinkItems } from "../../LinkItem/LinkItem"
 
 type HeaderProps = {
-	links?: { label: string; link: string }[]
+	links?: typeof defaultLinks
 }
-
-export { defaultLinks }
 
 export const Header = observer(({ links = defaultLinks }: HeaderProps) => {
 	const items = createLinkItems(links, classes.link)

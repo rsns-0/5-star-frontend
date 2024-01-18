@@ -3,8 +3,8 @@ import { useRouter } from "next/router"
 import { type defaultLinks } from "../resources/links"
 
 type LinkProps = {
-	link: (typeof defaultLinks)[0]
-	className: string | undefined
+	link: (typeof defaultLinks)[number]
+	className?: string | undefined
 }
 
 export const Linkitem: React.FC<LinkProps> = ({ link, className }) => {

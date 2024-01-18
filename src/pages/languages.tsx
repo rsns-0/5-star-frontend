@@ -9,7 +9,6 @@ export default function Languages({ langData }: InferGetStaticPropsType<typeof g
 		<>
 			<Stack pl="sm" gap="xl" pt="xl" pb="xl" pr="sm">
 				<LanguagePageHeading />
-
 				<LanguagesTable data={langData} />
 			</Stack>
 		</>

@@ -10,10 +10,11 @@ export function LanguagePageHeading() {
 				</Container>
 				<Box component="section" title="Description" maw="40rem">
 					<Text>
-						The following table shows the mappings between the associated discord flag
-						emoji, the associated country, and the estimated primary language spoken in
-						that country. It also shows whether or not the language is available as an
-						available option to use the react feature with.
+						The following table provides data on the mappings between the country, its
+						associated flag emoji, and its estimated primary language. Only countries
+						and languages with mainstream ISO codes and countries with known spoken
+						languages will be displayed. Hover over the column headers for more
+						information.
 					</Text>
 				</Box>
 			</Stack>

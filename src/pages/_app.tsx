@@ -28,7 +28,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 			<Head>
 				<meta
 					name="description"
-					content="Ease your life with the 5 Stars Discord bot for automating tasks."
+					content="5 Stars provides data and services related to languages, countries, and time."
 					charSet="utf-8"
 				/>
 				<title>5 Stars</title>

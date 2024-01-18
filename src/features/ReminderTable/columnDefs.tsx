@@ -5,11 +5,25 @@ import styles from "./ReminderTable.module.css"
 
 export const columnDefs: ColDef<ReminderColDef>[] = [
 	{ field: "id", headerName: "ID" },
-	{ field: "discord_channels.discord_guilds.name", headerName: "Server Name" },
-	{ field: "discord_channels.name", headerName: "Channel Name" },
-	{ field: "reminder_message", headerName: "Message" },
+	{
+		field: "discord_channels.discord_guilds.name",
+		headerName: "Server Name",
+		headerTooltip:
+			"The name of the discord guild/server which this reminder will be located within.",
+	},
+	{
+		field: "discord_channels.name",
+		headerName: "Channel Name",
+		headerTooltip: "The channel within the server which this reminder will be located within",
+	},
+	{
+		field: "reminder_message",
+		headerName: "Message",
+		headerTooltip: "The message which will be sent when the reminder is triggered.",
+	},
 	{
 		field: "time",
+		headerTooltip: "The time at which the reminder will be triggered.",
 		cellRenderer: (params: ICellRendererParams<ReminderColDef, Date>) => {
 			if (!params.value) {
 				return new Date().toLocaleString()
@@ -20,6 +34,7 @@ export const columnDefs: ColDef<ReminderColDef>[] = [
 	{
 		field: "actions",
 		headerName: "Actions",
+		headerTooltip: "Actions which can be performed on this reminder.",
 		cellClass: styles.actionRow,
 		cellRenderer: RowActions,
 		resizable: false,
@@ -36,4 +51,5 @@ export const defaultColDef: ColDef<ReminderColDef> = {
 	sortable: true,
 	filter: true,
 	lockVisible: true,
+	tooltipValueGetter: (s) => s.value,
 }

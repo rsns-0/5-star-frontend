@@ -27,8 +27,8 @@ const LandingPageLayout = () => {
 		<>
 			<Stack align="center" gap="xl">
 				<MainContent
-					titleText="5 star service at your fingertips."
-					bodyText="5 Stars automates your daily tasks and comes with additional features."
+					titleText="Language and Time Services"
+					bodyText="5 Stars provides data and services related to languages, countries, and time."
 				>
 					<Group justify="end">
 						<InviteDiscordButton />

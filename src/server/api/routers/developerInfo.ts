@@ -1,6 +1,7 @@
 import { z } from "zod"
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc"
+import { type DeveloperInfo } from "~/types/types"
 
 export const developerInfoRouter = createTRPCRouter({
 	getDeveloperInfo: protectedProcedure
@@ -25,7 +26,7 @@ export const developerInfoRouter = createTRPCRouter({
 				role: "developer",
 			},
 		})
-		return res.map(({ id, image, name, role }) => {
+		return res.map(({ id, image, name, role }): DeveloperInfo => {
 			return {
 				id,
 				src: image,

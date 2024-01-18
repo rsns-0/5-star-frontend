@@ -33,7 +33,7 @@ export const useReminderFormModal = () => {
 		}
 		updateMutation({ ...data, id })
 		notifications.show({
-			message: `Reminder ${JSON.stringify(data, null, 4)} updated`,
+			message: `Reminder ${id} updated`,
 		})
 		close()
 	})

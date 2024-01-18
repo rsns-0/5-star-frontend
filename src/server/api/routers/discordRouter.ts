@@ -31,6 +31,7 @@ export const discordRouter = createTRPCRouter({
 				id: true,
 				name: true,
 			},
+			take: 10000,
 		})
 
 		return res
@@ -38,7 +39,7 @@ export const discordRouter = createTRPCRouter({
 })
 
 export const mockDiscordRouter = createTRPCRouter({
-	getGuildsAndTextBasedChannelsOfUser: discordUserProcedure.query(({}) => {
+	getGuildsAndTextBasedChannelsOfUser: discordUserProcedure.query(() => {
 		const res: {
 			name: string
 			discord_channels: {
