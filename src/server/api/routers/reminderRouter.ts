@@ -1,12 +1,12 @@
 import { createTRPCRouter, reminderRLSProcedure } from "~/server/api/trpc"
 
-
 import { type Prisma } from "@prisma/client"
 import {
 	remindersServerUpdateSchema,
 	remindersServerCreateSchema,
 	reminderIdSchema,
 } from "../../../models/validationSchemas"
+import { insertReminder } from "../../queries/insertReminder"
 
 export const DEFAULT_SELECT = {
 	id: true,
@@ -24,6 +24,10 @@ export const DEFAULT_SELECT = {
 			},
 		},
 	},
+} as const satisfies Prisma.remindersSelect
+
+export const DEFAULT_RETURN = {
+	id: true,
 } as const satisfies Prisma.remindersSelect
 
 const get = createTRPCRouter({
@@ -55,12 +59,12 @@ const get = createTRPCRouter({
 	}),
 })
 
-
 const patch = createTRPCRouter({
 	updateReminder: reminderRLSProcedure
 		.input(remindersServerUpdateSchema)
 		.mutation(async ({ ctx, input: { id, reminder_message, time, channel_id } }) => {
-			await ctx.db.reminders.update({
+			return await ctx.db.reminders.update({
+				select: DEFAULT_RETURN,
 				where: {
 					id,
 				},
@@ -70,7 +74,6 @@ const patch = createTRPCRouter({
 					channel_id,
 				},
 			})
-			return true
 		}),
 })
 
@@ -78,53 +81,41 @@ const deleteRouter = createTRPCRouter({
 	deleteReminder: reminderRLSProcedure
 		.input(reminderIdSchema)
 		.mutation(async ({ ctx, input }) => {
-			await ctx.db.reminders.delete({
+			return await ctx.db.reminders.delete({
+				select: DEFAULT_RETURN,
 				where: {
 					id: input,
 				},
 			})
-			return true
 		}),
 
 	deleteReminders: reminderRLSProcedure
 		.input(reminderIdSchema.array())
 		.mutation(async ({ ctx, input }) => {
-			await ctx.db.reminders.deleteMany({
+			return await ctx.db.reminders.deleteMany({
 				where: {
 					id: { in: input },
 				},
 			})
-			return true
 		}),
 })
 
 const post = createTRPCRouter({
 	createReminder: reminderRLSProcedure
 		.input(remindersServerCreateSchema)
-		.mutation(async ({ ctx, input }) => {
-			const { id: webhookId } = await ctx.db.webhooks.findFirstOrThrow({
-				select: {
-					id: true,
-				},
-				where: {
-					discord_channel_id: input.channel_id,
-				},
-			})
-			const { id: reminderId } = await ctx.db.reminders.create({
-				data: {
-					time: input.time,
-					reminder_message: input.reminder_message,
-					channel_id: input.channel_id,
-					user_id: ctx.userDiscordProviderId,
-					webhook_id: webhookId,
-				},
-				select: {
-					id: true,
-				},
-			})
-
-			return reminderId
-		}),
+		.mutation(
+			async ({
+				ctx: { userDiscordProviderId },
+				input: { channel_id, reminder_message, time },
+			}) => {
+				return await insertReminder({
+					channel_id,
+					reminder_message,
+					time,
+					userDiscordProviderId,
+				})
+			}
+		),
 })
 
 

@@ -7,16 +7,25 @@ import {
 	type remindersFormSchema,
 } from "../models/validationSchemas"
 import { type TrpcContext } from "~/utils/mockApi"
+import { type getCountryPrimaryLanguageData } from "../server/queries/getCountryPrimaryLanguageData"
 
 export type Providers = "discord"
 
+export type PrimaryLanguageData = Awaited<ReturnType<typeof getCountryPrimaryLanguageData>>[number]
+
 export interface SupportedLanguageData {
 	id: string | number
-	name: string
+	language: string
 	icon: string
 	discordIconLabel: string
 	countryName: string
 	supported: boolean
+	ISO1: string | null
+	ISO2: string
+	ISO2B: string | null
+	CCA2: string
+	CCA3: string
+	weight: number
 }
 
 export interface IconButtonProps
@@ -65,3 +74,10 @@ export type HocReturn<P> = {
 export type ReminderUpdateFormData = z.infer<typeof remindersFormSchema>
 export type ReminderCreateFormData = z.infer<typeof remindersServerCreateSchema>
 export type TrpcMockContextFactory = (context: TrpcContext) => void
+export interface DeveloperInfo {
+	id: string
+	src: string | null
+	name: string
+	role: string
+}
+
