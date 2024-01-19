@@ -2,18 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Fix content shift when nav bar appears on pages where scroll bar does not appear initially by always showing scroll bar. */
+/* https://stackoverflow.com/questions/37112218/css3-100vh-not-constant-in-mobile-browser */
+/* Changed from VH to EM but EM can cause overflow. Navbar is absolute position. */
+body{
+  overflow-y:scroll
+}
+
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 } */
 
-:root {
+/* :root {
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 0, 0, 0;
   --background-end-rgb: 0, 0, 0;
   
-}
+} */
 
 /* @media (prefers-color-scheme: dark) {
   :root {
@@ -25,7 +33,7 @@
 
 } */
 
-body {
+/* body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -33,30 +41,12 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-}
+} */
 
-.vh-center {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.fixed-h-center {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-
-/* impossible to change built in date picker calendar css, need to use materialUI */
-
-
-.btn-pressed {
-  transition: transform 100ms; /* equivalent to transition duration-100 in Tailwind */
-}
-
-.btn-pressed:active {
-  transform: scale(0.9); /* equivalent to active:scale-90 in Tailwind */
+/* For TweemojiEmojiImage integration */
+img.emoji {
+  height: 1em;
+  width: 1em;
+  margin: 0 .05em 0 .1em;
+  vertical-align: -0.1em;
 }
