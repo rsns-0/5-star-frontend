@@ -70,6 +70,7 @@ export function useOpenReminderTableEditModal(data: ReminderData) {
 
 	const openEditModal = useCallback(() => {
 		tableStateModel.openEdit(data.id)
+
 		reset()
 		setValues(data)
 	}, [reset, setValues, data])

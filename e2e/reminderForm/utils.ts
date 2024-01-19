@@ -154,6 +154,10 @@ export class TestApiMockUtil<T> {
 			this.result = getJSON(route)
 		})
 	}
+
+	async cleanup() {
+		await this.page.unroute("*")
+	}
 }
 
 function getJSON(route: Route) {

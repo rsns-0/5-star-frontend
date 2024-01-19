@@ -14,7 +14,7 @@ export class UrlBuilder {
 type GetStorageStateArgFactory = (builder: UrlBuilder) => string
 
 type GetStorageStateOpts = {
-	path: string
+	path?: string
 }
 
 /**
@@ -27,7 +27,7 @@ type GetStorageStateOpts = {
  */
 export async function getStorageState(
 	cdpUrl: GetStorageStateArgFactory | string = new UrlBuilder().build(),
-	{ path = "auth.json" }: GetStorageStateOpts
+	{ path = "auth.json" }: GetStorageStateOpts = {}
 ) {
 	const url = typeof cdpUrl === "string" ? cdpUrl : cdpUrl(new UrlBuilder())
 
@@ -37,14 +37,16 @@ export async function getStorageState(
 	await context.storageState({ path })
 	await context.close()
 	await browser.close()
+	console.log(`Storage state saved to ${path}`)
 }
 
 type AddCookiesProps = Parameters<BrowserContext["addCookies"]>[0]
 
-export function injectAuthCookiesFromLocalFileIntoContext(
+export async function injectAuthCookiesFromLocalFileIntoContext(
 	context: BrowserContext,
 	authJsonPath = "auth.json"
 ) {
+	await getStorageState()
 	const res: { cookies: AddCookiesProps; origins: unknown[] } = JSON.parse(
 		readFileSync(authJsonPath, "utf-8")
 	)

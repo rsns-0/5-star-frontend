@@ -10,11 +10,12 @@
     "postinstall": "prisma generate",
     "lint": "next lint",
     "start": "next start",
-    "test": "vitest run",
+    "test": "vitest run tests",
     "test:watch": "vitest",
     "test:watchui": "vitest --ui --api 9527",
     "dbpull": "prisma db pull && prisma generate",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "e2e":"playwright test"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
