@@ -15,7 +15,8 @@
     "test:watchui": "vitest --ui --api 9527",
     "dbpull": "prisma db pull && prisma generate",
     "check-types": "tsc --noEmit",
-    "e2e":"playwright test"
+    "e2e": "playwright test",
+    "testAll":"vitest run tests && playwright test"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
