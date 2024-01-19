@@ -138,12 +138,6 @@ const enforceUserRLS = enforceUserIsAuthed.unstable_pipe(async ({ ctx: { db, ses
 		.account.getUserProviderAccountId(session.user.id, "discord")
 
 	if (maybeUserDiscordProviderId instanceof Error) {
-		if (1 + 1 === 2) {
-			throw new TRPCError({
-				code: "BAD_REQUEST",
-				message: `${JSON.stringify(session)}`,
-			})
-		}
 		throw new TRPCError({
 			code: "NOT_FOUND",
 			message: "User does not have a discord account linked.",
