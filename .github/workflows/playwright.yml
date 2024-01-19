@@ -19,8 +19,8 @@ jobs:
       run: yarn playwright install --with-deps
     # - name: Start server
     #   run: yarn dev &
-    - name: Wait for server to start
-      run: sleep 10
+    # - name: Wait for server to start
+    #   run: sleep 10
     - name: Run Playwright tests
       env:
         PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
