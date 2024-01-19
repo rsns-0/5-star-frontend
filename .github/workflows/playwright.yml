@@ -1,27 +1,56 @@
-# name: Playwright Tests
-# on:
-#   push:
-#     branches: [ main, master ]
-#   pull_request:
-#     branches: [ main, master ]
-# jobs:
-#   test:
-#     timeout-minutes: 60
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v3
-#     - uses: actions/setup-node@v3
-#       with:
-#         node-version: 18
-#     - name: Install dependencies
-#       run: yarn
-#     - name: Install Playwright Browsers
-#       run: yarn playwright install --with-deps
-#     - name: Run Playwright tests
-#       run: yarn playwright test
-#     - uses: actions/upload-artifact@v3
-#       if: always()
-#       with:
-#         name: playwright-report
-#         path: playwright-report/
-#         retention-days: 30
+name: Playwright Tests
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 20
+    - name: Install dependencies
+      run: yarn
+    - name: Install Playwright Browsers
+      run: yarn playwright install --with-deps
+    - name: Run Playwright tests
+      env:
+        PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+        NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+        SUPABASE_DEV_PASSWORD: ${{ secrets.SUPABASE_DEV_PASSWORD }}
+        SKIP_ENV_VALIDATION: ${{ secrets.SKIP_ENV_VALIDATION }}
+        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        DISCORD_SECRET: ${{ secrets.DISCORD_SECRET }}
+        DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
+        DISCORD_DEV_SERVER_ID: ${{ secrets.DISCORD_DEV_SERVER_ID }}
+        DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
+        DISCORD_PUBLIC_KEY: ${{ secrets.DISCORD_PUBLIC_KEY }}
+        OWNERS: ${{ secrets.OWNERS }}
+        SUPABASE_TOKEN: ${{ secrets.SUPABASE_TOKEN }}
+        SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        SUPABASE_SERVICE_ROLE: ${{ secrets.SUPABASE_SERVICE_ROLE }}
+        SUPABASE_JWT_SECRET: ${{ secrets.SUPABASE_JWT_SECRET }}
+        SUPABASE_PASSWORD: ${{ secrets.SUPABASE_PASSWORD }}
+        SUPABASE_POSTGRES_URL: ${{ secrets.SUPABASE_POSTGRES_URL }}
+        TEST_VAR: ${{ secrets.TEST_VAR }}
+        DEEPL_KEY: ${{ secrets.DEEPL_KEY }}
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        DEV_DATABASE_URL: ${{ secrets.DEV_DATABASE_URL }}
+        TEST_USER: ${{ secrets.TEST_USER }}
+        TEST_USER_ID: ${{ secrets.TEST_USER_ID }}
+        PORT: ${{ secrets.PORT }}
+        TESTING: ${{ secrets.TESTING }}
+      run: yarn playwright test
+    - uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
