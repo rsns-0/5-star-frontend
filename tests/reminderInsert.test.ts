@@ -10,20 +10,26 @@ describe("insertReminders", () => {
 		const channel_id = "1141613606279061544"
 		const time = dayjs().set("years", 2050).toDate()
 		const reminder_message = "test"
-		const where = await serverRouter.reminderRouter.post.createReminder({
-			channel_id,
-			time,
-			reminder_message,
-		})
+		try {
+			const where = await serverRouter.reminderRouter.post.createReminder({
+				channel_id,
+				time,
+				reminder_message,
+			})
+			const result = await db.reminders.findMany({
+				select: {
+					id: true,
+				},
+				where,
+				take: 10,
+			})
+			expect(result).toHaveLength(1)
+			expect(result[0]?.id).toBe(where.id)
+		} catch (e) {
+			expect.fail(JSON.stringify(e))
+		}
+		
 
-		const result = await db.reminders.findMany({
-			select: {
-				id: true,
-			},
-			where,
-			take: 10,
-		})
-		expect(result).toHaveLength(1)
-		expect(result[0]?.id).toBe(where.id)
+		
 	})
 })
