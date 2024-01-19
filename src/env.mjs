@@ -1,7 +1,5 @@
-import { createEnv } from "@t3-oss/env-nextjs";
-import { config } from "dotenv"
+import { createEnv } from "@t3-oss/env-nextjs"
 import { z } from "zod"
-config()
 const minStringSchema = z.string().min(1)
 export const env = createEnv({
 	/**
@@ -62,5 +60,3 @@ export const env = createEnv({
 	 */
 	skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 })
-
-
