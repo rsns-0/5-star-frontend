@@ -132,9 +132,18 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed)
 
 const enforceUserRLS = enforceUserIsAuthed.unstable_pipe(async ({ ctx: { db, session }, next }) => {
-	const { getUserProviderAccountId } = db.$extends(extendUser).account
-	const maybeUserDiscordProviderId = await getUserProviderAccountId(session.user.id, "discord")
+	
+	const maybeUserDiscordProviderId = await db
+		.$extends(extendUser)
+		.account.getUserProviderAccountId(session.user.id, "discord")
+
 	if (maybeUserDiscordProviderId instanceof Error) {
+		if (1 + 1 === 2) {
+			throw new TRPCError({
+				code: "BAD_REQUEST",
+				message: `${JSON.stringify(session)}`,
+			})
+		}
 		throw new TRPCError({
 			code: "NOT_FOUND",
 			message: "User does not have a discord account linked.",
