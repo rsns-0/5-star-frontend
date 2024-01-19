@@ -41,8 +41,8 @@ jobs:
         DEEPL_KEY: ${{ secrets.DEEPL_KEY }}
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
         DEV_DATABASE_URL: ${{ secrets.DEV_DATABASE_URL }}
-        TEST_USER: "clmtm7bhz00007hd4pqji6gdt"
-        TEST_USER_ID: 732655727000158310
+        TEST_USER: ${{ secrets.TEST_USER }}
+        TEST_USER_ID: ${{ secrets.TEST_USER_ID }}
         PORT: ${{ secrets.PORT }}
         TESTING: ${{ secrets.TESTING }}
         
