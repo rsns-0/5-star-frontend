@@ -7,7 +7,8 @@ import Link from "next/link"
 
 export default function Page() {
 	const session = useSession()
-	session.status === "unauthenticated"
+	
+
 	const { isLoading, isError, data } = api.reminderRouter.get.getAllReminders.useQuery()
 	void api.useContext().discordRouter.getGuildsAndTextBasedChannelsOfUser.prefetch()
 

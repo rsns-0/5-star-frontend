@@ -21,19 +21,18 @@ export const useReminderFormModal = () => {
 		close()
 		createMutation(data)
 		notifications.show({
-			message: `Reminder ${JSON.stringify(data, null, 4)} created`,
+			message: `Reminder ${data.channel_id} ${data.reminder_message} created`,
 		})
 	})
 
 	const update = handleSubmit((data) => {
-		
 		const id = tableStateModel.currentItemId
 		if (!id) {
 			throw new Error("Unexpected missing id")
 		}
 		updateMutation({ ...data, id })
 		notifications.show({
-			message: `Reminder ${id} updated`,
+			message: `Reminder ${id} ${data.reminder_message} updated`,
 		})
 		close()
 	})

@@ -2,6 +2,8 @@ import { type Locator, type Page, expect } from "@playwright/test"
 const monthRegex =
 	/January|February|March|April|May|June|July|August|September|October|November|December/gi
 
+const TEST_URL = "http://127.0.0.1:3000/testing/reminder-table" as const
+
 // const dateRegex =
 // 	/\b(0?[1-9]|[12][0-9]|3[01])\s(January|February|March|April|May|June|July|August|September|October|November|December)\s\d{4}\b/i
 export class ReminderTablePageModel {
@@ -56,7 +58,7 @@ export class ReminderTablePageModel {
 	}
 
 	async goto() {
-		await this.page.goto("http://localhost:3000/reminder-table")
+		await this.page.goto(TEST_URL)
 	}
 
 	async submit() {
