@@ -14,7 +14,8 @@ const RowActionsRenderer = ({ data }: ICellRendererParams<ReminderData, string>)
 }
 
 const RowActionsImpl = ({ data }: { data: ReminderData }) => {
-	const { handleDelete, openEditModal } = useRowActions(data)
+	const openEditModal = useOpenReminderTableEditModal(data)
+	const handleDelete = useDeleteItem(data.id)
 
 	return (
 		<>
@@ -24,15 +25,5 @@ const RowActionsImpl = ({ data }: { data: ReminderData }) => {
 	)
 }
 
-const useRowActions = (data: ReminderData) => {
-	const openEditModal = useOpenReminderTableEditModal(data)
-
-	const handleDelete = useDeleteItem(data.id)
-
-	return {
-		openEditModal,
-		handleDelete,
-	}
-}
 
 export const RowActions = observer(RowActionsRenderer)

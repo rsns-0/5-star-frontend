@@ -1,23 +1,20 @@
-import { Center, Loader, Text } from "@mantine/core"
+import { Center, Loader } from "@mantine/core"
 import { ReminderTable } from "../features/ReminderTable/ReminderTable"
 import { api } from "../utils/api"
 import { TitleText } from "../components/typography/TitleText"
 import { useSession } from "next-auth/react"
-import Link from "next/link"
+import NotSignedInCard from "../components/card/NotSignedInCard"
 
 export default function Page() {
 	const session = useSession()
-	
 
 	const { isLoading, isError, data } = api.reminderRouter.get.getAllReminders.useQuery()
 	void api.useContext().discordRouter.getGuildsAndTextBasedChannelsOfUser.prefetch()
 
 	if (session.status === "unauthenticated") {
 		return (
-			<Center>
-				<Text fz="2rem">
-					<Link href="/api/auth/signin">Please sign in.</Link>
-				</Text>
+			<Center h="80vh">
+				<NotSignedInCard scale={1.5} />
 			</Center>
 		)
 	}
@@ -28,7 +25,7 @@ export default function Page() {
 
 	if (isLoading)
 		return (
-			<Center>
+			<Center h="80vh">
 				<Loader color="blue" />
 			</Center>
 		)
