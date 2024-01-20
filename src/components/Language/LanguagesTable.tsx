@@ -5,12 +5,13 @@ import "ag-grid-community/styles/ag-theme-alpine.css" // Optional theme CSS
 import { type ICellRendererParams, type ColDef } from "ag-grid-community"
 import { type SupportedLanguageData } from "../../types/types"
 import { useRef } from "react"
-import { Button, Center, Group, Stack, TextInput, Tooltip } from "@mantine/core"
-import { useInputState } from "@mantine/hooks"
+import { Button, Center, Group, Stack, Tooltip } from "@mantine/core"
+
 import { TwemojiImage } from "../Tweemoji/TweemojiImage"
 
 import styles from "./LanguagesTable.module.css"
 import { ExportDataButton, jsonDataProps } from "../buttons/ExportDataButton"
+import { QuickFilterInput, useQuickFilterInput } from "../input/QuickFilterInput"
 
 type LanguagesTableProps = {
 	data: SupportedLanguageData[]
@@ -86,21 +87,6 @@ const defaultColDef: ColDef<SupportedLanguageData> = {
 	tooltipValueGetter: (s) => s.value,
 }
 
-const useQuickFilterInput = (initialValue = "") => {
-	const [value, setValue] = useInputState(initialValue)
-
-	const inputProps = {
-		value,
-		onChange: setValue,
-	}
-
-	return {
-		value,
-		setValue,
-		inputProps,
-	}
-}
-
 export const LanguagesTable = ({ data }: LanguagesTableProps) => {
 	const gridRef = useRef<AgGridReact<SupportedLanguageData>>(
 		null as unknown as AgGridReact<SupportedLanguageData>
@@ -124,13 +110,7 @@ export const LanguagesTable = ({ data }: LanguagesTableProps) => {
 		<Center>
 			<Stack gap="xl">
 				<Group align="end">
-					<TextInput
-						styles={{ label: { color: "white" } }}
-						label="Quick Filter"
-						placeholder="Search the entire table..."
-						w={400}
-						{...inputProps}
-					/>
+					<QuickFilterInput {...inputProps} />
 					<ExportDataButton data={data} />
 					<ExportDataButton data={data} {...jsonDataProps} />
 					<Tooltip label="Reveals all columns that were hidden through drag and drop.">

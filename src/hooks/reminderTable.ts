@@ -57,12 +57,6 @@ export const useReminderFormModal = () => {
 	}
 }
 
-export function useCancelReminderTableModal() {
-	const close = () => {
-		tableStateModel.close()
-	}
-	return close
-}
 
 export function useOpenReminderTableEditModal(data: ReminderData) {
 	const { reset, setValues } = useReminderFormContext()

@@ -1,4 +1,4 @@
-import { Button, type ButtonProps, Modal } from "@mantine/core"
+import { Button, type ButtonProps, Modal, type ModalBaseProps } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
 import { type ReactNode } from "react"
 import { TitleText } from "../typography/TitleText"
@@ -7,10 +7,7 @@ type ModalProps = {
 	children: ReactNode
 	buttonText: string
 	buttonProps?: ButtonProps & { onClick?: React.MouseEventHandler<HTMLButtonElement> }
-	modalProps?: Exclude<
-		React.ComponentProps<typeof Modal>,
-		"opened" | "onClose" | "title" | "size" | "centered"
-	>
+	modalProps?: Partial<ModalBaseProps>
 	title: string
 }
 
