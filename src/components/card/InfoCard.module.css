@@ -1,0 +1,15 @@
+.card {
+	position: relative;
+	overflow: hidden;
+	transition:
+		transform 150ms ease,
+		box-shadow 100ms ease;
+	padding: var(--mantine-spacing-xl);
+	padding-left: calc(var(--mantine-spacing-xl) * 2);
+	border-color: rgba(106, 173, 240, 0.925);
+}
+
+.card:hover {
+	box-shadow: var(--mantine-shadow-md);
+	transform: scale(1.02);
+}
