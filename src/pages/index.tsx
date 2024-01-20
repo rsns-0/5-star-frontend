@@ -53,18 +53,17 @@ export default function Home() {
 						icon={IconCalendarCheck}
 					>
 						<Box mt="lg">
-							<ButtonWithModal title="Reminders" buttonText="Learn More">
+							<ButtonWithModal
+								title="Reminders"
+								buttonText="Learn More"
+								modalProps={{ size: "80vw" }}
+							>
 								<Stack mr="xs">
 									<Stack c="section">
 										<Text>
 											<ReminderDocumentation />
 										</Text>
 									</Stack>
-									<Image
-										alt="Image of reminder feature"
-										src="/reminder-demo.png"
-										maw="28rem"
-									/>
 								</Stack>
 							</ButtonWithModal>
 						</Box>
@@ -111,11 +110,16 @@ const ReminderDocumentation = () => {
 	return (
 		<>
 			<p>
-				This command is planned to be used as the name suggests, it will remind you of
-				anything at any time in a selected discord channel,{" "}
-				<strong>make sure you have @ping notifications on</strong>, the bot will @ping you
-				when the reminder time is reached. This command has subcommands, check below::
+				The reminder feature may be used to set a reminder, which upon expiry, will cause
+				the bot to send you a notification in the channel you had set the reminder in. You
+				may use use either our discord-integrated dialog interface, or the table interface
+				we offer on the website intended for more complex data management.{" "}
+				<strong>
+					Be sure to have notifications enabled on the Discord client to receive
+					reminders.
+				</strong>
 			</p>
+			<h1 id="subcommands">Subcommands</h1>
 			<h2 id="set">Set</h2>
 			<p>
 				This subcommand can be used to <strong>set a reminder</strong>, you just need to
@@ -307,6 +311,42 @@ const ReminderDocumentation = () => {
 					it if you&#39;re using the <strong>/reminder</strong> for the first time
 				</p>
 			</blockquote>
+			<Image alt="Image of reminder feature" src="/reminder-demo.png" maw="28rem" />
+			<h1 id="table-interface">Table Interface</h1>
+			<ul>
+				<li>
+					After signing in, you will be greeted with a data table which has the standard
+					filtering/sorting functionalities associated with data tables, as well as a
+					quick filter input to allow full text search across all columns.
+				</li>
+				<li>
+					Hover over interactive components to discover more information about their
+					functionality and intended usages.
+				</li>
+				<li>
+					To create a reminder, click on the &quot;Create New&quot; button and fill out
+					the modal fields. You may also edit existing reminders by clicking on the
+					&quot;Edit&quot; button on the row of the reminder you wish to edit. You may
+					also delete reminders by clicking on the &quot;Delete&quot; button on the row of
+					the reminder you wish to delete.
+				</li>
+				<li>
+					To add column-specific filters, hover over a column header to reveal a burger
+					icon which will open a menu with column-specific filtering options.
+				</li>
+				<li>
+					To add column-specific sorting, click on the column header to sort the column in
+					ascending order. Click on the column header again to sort the column in
+					descending order. You may introduce multiple levels of sorting by holding down
+					the shift key while clicking on the column headers.
+				</li>
+				<li>Columns can be resized by dragging the edges of the column headers.</li>
+				<li>
+					Column and filter adjustments can be reset by utilizing the &quot;Reset
+					Columns&quot; button.
+				</li>
+			</ul>
+			<Image alt="Image of reminder table" src="/reminder-table-demo.png" />
 		</>
 	)
 }
