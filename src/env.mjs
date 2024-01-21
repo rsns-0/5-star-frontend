@@ -60,5 +60,5 @@ export const env = createEnv({
 	 * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
 	 * useful for Docker builds.
 	 */
-	skipValidation: true,
+	skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 })
