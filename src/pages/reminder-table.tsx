@@ -8,9 +8,6 @@ import NotSignedInCard from "../components/card/NotSignedInCard"
 export default function Page() {
 	const session = useSession()
 
-	const { isLoading, isError, data } = api.reminderRouter.get.getAllReminders.useQuery()
-	void api.useContext().discordRouter.getGuildsAndTextBasedChannelsOfUser.prefetch()
-
 	if (session.status === "unauthenticated") {
 		return (
 			<Center h="80vh">
@@ -18,6 +15,20 @@ export default function Page() {
 			</Center>
 		)
 	}
+
+	return (
+		<>
+			<Center mb={"xl"}>
+				<TitleText fz="2.5rem">Reminders</TitleText>
+			</Center>
+			<ReminderTableComponent />
+		</>
+	)
+}
+
+const ReminderTableComponent = () => {
+	const { isLoading, isError, data } = api.reminderRouter.get.getAllReminders.useQuery()
+	void api.useContext().discordRouter.getGuildsAndTextBasedChannelsOfUser.prefetch()
 
 	if (isError) {
 		throw new Error("Error fetching reminders")
@@ -30,12 +41,5 @@ export default function Page() {
 			</Center>
 		)
 
-	return (
-		<>
-			<Center mb={"xl"}>
-				<TitleText fz="2.5rem">Reminders</TitleText>
-			</Center>
-			<ReminderTable data={data} />
-		</>
-	)
+	return <ReminderTable data={data} />
 }

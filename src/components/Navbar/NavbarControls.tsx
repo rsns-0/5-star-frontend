@@ -11,12 +11,7 @@ type NavbarControlsProps = {
 const NavbarControls = ({ title = "5 Stars", groupProps }: NavbarControlsProps) => {
 	return (
 		<Group {...groupProps}>
-			<Burger /** Changed button impl to burger for accessibility; it is not immediately obvious that the star icon would be a button. */
-				onClick={() => {
-					navbarModel.toggle()
-				}}
-				title="Toggle navigation menu"
-			/>
+			<Burger onClick={() => navbarModel.toggle()} title="Toggle navigation menu" />
 			<StarIcon />
 			<h2>{title}</h2>
 		</Group>

@@ -13,9 +13,7 @@ import type { defaultLinks } from "../../resources/links"
 type NavbarProps = {
 	links: typeof defaultLinks
 }
-/**
- * TODO: Navbar occasionally appears instantly instead of sliding in on desktop only, mobile is fine. Try implementing with CSS alone and determine if this is a bug with the Mantine library.
- */
+
 export const Navbar = observer(({ links }: NavbarProps) => {
 	const ref = useClickOutside(() => {
 		navbarModel.close()

@@ -15,7 +15,7 @@ export default function Home() {
 		<>
 			<Stack align="center" gap="xl">
 				<MainContent
-					titleText="Language and Time Services"
+					titleText="Welcome!"
 					bodyText="5 Stars provides data and services related to languages, countries, and time."
 				>
 					<Group justify="end">
