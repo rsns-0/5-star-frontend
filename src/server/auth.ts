@@ -75,7 +75,8 @@ export const getServerAuthSession = async (ctx: {
 	res: GetServerSidePropsContext["res"]
 }) => {
 	if (env.NODE_ENV === "development") {
-		return testSession
+		throw new Error("Node env is dev")
+		// return testSession
 	}
 	return getServerSession(ctx.req, ctx.res, authOptions)
 }
