@@ -1,5 +1,5 @@
 import { defaultLinks } from "../../resources/links"
-import { Button, Group } from "@mantine/core"
+import { Group, Loader } from "@mantine/core"
 
 import classes from "./Header.module.css"
 import InviteDiscordButton from "../InviteDiscordButton/InviteDiscordButton"
@@ -7,7 +7,9 @@ import { observer } from "mobx-react"
 
 import NavbarControls from "../Navbar/NavbarControls"
 import { createLinkItems } from "../../LinkItem/LinkItem"
-import { signOut } from "next-auth/react"
+import { useSession } from "next-auth/react"
+import { SignInButton } from "../buttons/SignInButton"
+import { SignOutButton } from "../buttons/SignOutButton"
 
 type HeaderProps = {
 	links?: typeof defaultLinks
@@ -24,10 +26,18 @@ export const Header = observer(({ links = defaultLinks }: HeaderProps) => {
 					<Group ml={50} gap={7} className={classes.links} visibleFrom="sm">
 						{items}
 						<InviteDiscordButton />
-						<Button onClick={() => signOut()}>sign out</Button>
+						<SignInOrOutButton />
 					</Group>
 				</Group>
 			</div>
 		</header>
 	)
 })
+
+const SignInOrOutButton = () => {
+	const session = useSession()
+	if (session.status === "authenticated") {
+		return <SignOutButton w="7rem" />
+	}
+	return <SignInButton w="7rem" />
+}

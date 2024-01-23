@@ -6,13 +6,8 @@ type SignInButtonProps = ButtonProps
 
 export function SignInButton(props: SignInButtonProps) {
 	return (
-		<>
-			<Button {...props} onClick={() => signIn()}>
-				sign in
-			</Button>
-		</>
-		// <Button component={Link} href="/api/auth/signin" {...props}>
-		// 	Sign in
-		// </Button>
+		<Button {...props} onClick={() => signIn()}>
+			Sign In
+		</Button>
 	)
 }
