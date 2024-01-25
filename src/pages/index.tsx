@@ -22,7 +22,6 @@ export default function Home() {
 						<InviteDiscordButton />
 					</Group>
 				</MainContent>
-
 				<FeatureGrid titleComponent={<TitleComponent />}>
 					<FeatureItem
 						title="Translator"
@@ -38,9 +37,7 @@ export default function Home() {
 										found at <Link href="/languages">this link</Link>.
 									</Text>
 								</Box>
-
 								<Box component="section" />
-
 								<Image
 									alt="Image of translation feature"
 									src="/translate-demo.png"
@@ -80,7 +77,6 @@ const TitleComponent = () => {
 			<TitleText variant="gradient" style={{ fontSize: "3rem" }}>
 				Features
 			</TitleText>
-
 			<Divider size="md" color="blue.8" />
 		</>
 	)

@@ -1,4 +1,4 @@
-import { Button, type ButtonProps, Modal, type ModalBaseProps, Divider } from "@mantine/core"
+import { Button, type ButtonProps, Modal, type ModalBaseProps } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
 import { type ReactNode } from "react"
 import { TitleText } from "../typography/TitleText"
@@ -24,6 +24,7 @@ export const ButtonWithModal = ({
 	return (
 		<>
 			<Button
+				fullWidth={false}
 				{...buttonProps}
 				onClick={(e) => {
 					buttonProps?.onClick?.(e)
@@ -34,12 +35,19 @@ export const ButtonWithModal = ({
 			</Button>
 
 			<Modal
-				closeButtonProps={{ "aria-label": "Close modal" }}
+				centered={false}
+				closeButtonProps={{
+					"aria-label": "Close modal",
+					style: { border: "1px solid white" },
+				}}
 				title={<TitleComponent title={title} />}
 				size={"xl"}
+				padding="xl"
 				opened={opened}
+				styles={{
+					title: { width: "100%", textAlign: "center" },
+				}}
 				onClose={close}
-				centered
 				{...modalProps}
 			>
 				{children}
@@ -52,7 +60,6 @@ const TitleComponent = ({ title }: { title: ReactNode }) => {
 	return (
 		<>
 			<TitleText>{title}</TitleText>
-			<Divider size="md" color="blue.8" />
 		</>
 	)
 }

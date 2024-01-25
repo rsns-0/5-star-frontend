@@ -1,6 +1,14 @@
-import { Image } from "@mantine/core"
+import { Image, Blockquote } from "@mantine/core"
+import TitleWithDivider from "../CustomTitle/TitleWithDivider"
+import { IoInformationCircleOutline } from "react-icons/io5"
+import { SimpleButton } from "../buttons/TemplateButton"
+import { SelectionButton } from "../buttons/MakeSelectionTemplateButton"
+import styles from "./ReminderDocumentation.module.css"
+import { PiCaretCircleDoubleRightFill } from "react-icons/pi"
 
 export const ReminderDocumentation = () => {
+	const BulletDropIcon = <PiCaretCircleDoubleRightFill />
+	const infoIcon = <IoInformationCircleOutline size={25} />
 	return (
 		<>
 			<p>
@@ -13,8 +21,19 @@ export const ReminderDocumentation = () => {
 					reminders.
 				</strong>
 			</p>
-			<h1 id="subcommands">Subcommands</h1>
-			<h2 id="set">Set</h2>
+
+			<TitleWithDivider
+				icon={BulletDropIcon}
+				divider={true}
+				iconSize={30}
+				iconColor="#12e773"
+			>
+				Subcommands
+			</TitleWithDivider>
+
+			<TitleWithDivider icon={BulletDropIcon} iconSize={25} order={2} iconColor="#34b536">
+				Set
+			</TitleWithDivider>
 			<p>
 				This subcommand can be used to <strong>set a reminder</strong>, you just need to
 				pass a valid type of time. If you are using this command for the first time, the bot
@@ -22,7 +41,10 @@ export const ReminderDocumentation = () => {
 				<strong>change it at any time</strong> later using <strong>/timezone</strong>{" "}
 				option.
 			</p>
-			<h3 id="options-">Options:</h3>
+			<TitleWithDivider icon={BulletDropIcon} iconSize={20} order={3} iconColor="#006b3f">
+				Options
+			</TitleWithDivider>
+
 			<ul>
 				<li>
 					<strong>
@@ -49,22 +71,21 @@ export const ReminderDocumentation = () => {
 					command
 				</li>
 			</ul>
-			<blockquote>
-				<p>
-					<strong>Note:</strong> The bot uses <a href="https://day.js.org/en/">DayJs</a>{" "}
-					as date parser, and a custom function to handle relative times,{" "}
-					<strong>
-						in case your input is invalid, the bot will return the actual time
-					</strong>
-					, you might want to see{" "}
-					<a href="https://www.npmjs.com/package/any-date-parser#exhaustive-list-of-date-formats">
-						all possible inputs
-					</a>{" "}
-					you can use. You can also check options for relative times in{" "}
-					<strong>/Help</strong> section
-				</p>
-			</blockquote>
-			<h3 id="example-usage-">Example usage:</h3>
+			<Blockquote color="blue.8" icon={infoIcon} iconSize={25} p="md" m="xl">
+				The bot uses <a href="https://day.js.org/en/">DayJs</a> as date parser, and a custom
+				function to handle relative times,{" "}
+				<strong>in case your input is invalid, the bot will return the actual time</strong>,
+				you might want to see{" "}
+				<a href="https://www.npmjs.com/package/any-date-parser#exhaustive-list-of-date-formats">
+					all possible inputs
+				</a>{" "}
+				you can use. You can also check options for relative times in <strong>/Help</strong>{" "}
+				section
+			</Blockquote>
+			<TitleWithDivider icon={BulletDropIcon} iconSize={20} order={3} iconColor="#12e773">
+				Example usage:
+			</TitleWithDivider>
+
 			<ul>
 				<li>1d</li>
 				<li>2h 30m</li>
@@ -72,7 +93,10 @@ export const ReminderDocumentation = () => {
 				<li>Sun June 28</li>
 				<li>Wednesday, 04 January 2027</li>
 			</ul>
-			<h2 id="edit">Edit</h2>
+			<TitleWithDivider icon={BulletDropIcon} iconSize={25} order={2} iconColor="#34b536">
+				Edit
+			</TitleWithDivider>
+
 			<p>
 				This subcommand can be used to edit an already existing reminder, you can{" "}
 				<strong>edit the message or the time</strong> as you please. After calling this
@@ -81,29 +105,37 @@ export const ReminderDocumentation = () => {
 				will pop up with 2 fields, one for the time and one for the message,{" "}
 				<strong>if you leave the field empty, its value won&#39;t change.</strong>
 			</p>
-			<h3 id="options-">Options:</h3>
+			<TitleWithDivider icon={BulletDropIcon} iconSize={20} order={3} iconColor="#12e773">
+				Options
+			</TitleWithDivider>
+
 			<p>
 				<em>You&#39;ll see this options inside the embed after calling the command</em>
 			</p>
-			<ul>
+			<ul className={styles.div}>
 				<li>
-					<strong>
-						<code>1st Row of buttons:</code>
-					</strong>{" "}
-					these buttons can skip pages or stop the command if you want
+					<SimpleButton>⏪</SimpleButton> Return 5 pages
 				</li>
 				<li>
-					<strong>
-						<code>Selection Field:</code>
-					</strong>{" "}
-					skip to a specific page without pressing buttons repetitively
+					<SimpleButton>◀️</SimpleButton> Return 1 page
 				</li>
 				<li>
-					<strong>
-						<code>2nd Row of buttons:</code>
-					</strong>{" "}
-					each options refers to the each displayed reminder on the embed (if you want to
-					edit the 3rd reminder on the embed, select Option 3 for example)
+					<SimpleButton>▶️</SimpleButton> Advance 1 page
+				</li>
+				<li>
+					<SimpleButton>⏩</SimpleButton> Advance 5 pages
+				</li>
+				<li>
+					<SimpleButton color="red.7">⏹️</SimpleButton> Cancel
+				</li>
+				<li>
+					<SelectionButton>Make a selection</SelectionButton> Use this selection box to
+					skip to a specific page
+				</li>
+				<li>
+					<SimpleButton>Option X</SimpleButton> each option refers to the each displayed
+					reminder on the embed (if you want to edit the 3rd reminder on the embed, select{" "}
+					Option 3 for example)
 				</li>
 			</ul>
 			<p>After selecting an option:</p>
@@ -122,21 +154,23 @@ export const ReminderDocumentation = () => {
 					subcommand
 				</li>
 			</ul>
-			<blockquote>
-				<p>
-					<strong>Note:</strong> the previous value is displayed as placeholder for both
-					fields, if you want to keep it, just leave the field empty, otherwise it will be
-					replaced by the value currently on the field.
-				</p>
-			</blockquote>
-			<h3 id="example-usage-">Example usage:</h3>
-			<h2 id="help">Help</h2>
+			<Blockquote color="blue.8" icon={infoIcon} iconSize={25} p="md" m="xl">
+				The previous value is displayed as placeholder for both fields, if you want to keep
+				it, just leave the field empty, otherwise it will be replaced by the value currently
+				on the field.
+			</Blockquote>
+			<TitleWithDivider icon={BulletDropIcon} iconSize={25} order={2} iconColor="#34b536">
+				Help
+			</TitleWithDivider>
 			<p>
 				This subcommand returns an embed explaining how to use the{" "}
 				<strong>/reminder</strong> command inside discord and some options, just like{" "}
 				<strong>/set</strong> section but with less information.
 			</p>
-			<h3 id="options-for-relative-time-">Options for relative time:</h3>
+			<TitleWithDivider icon={BulletDropIcon} iconSize={20} order={3} iconColor="#12e773">
+				Options for relative time:
+			</TitleWithDivider>
+
 			<ul>
 				<li>
 					<code>y</code> = year
@@ -157,7 +191,9 @@ export const ReminderDocumentation = () => {
 					<code>ms</code> = milliseconds
 				</li>
 			</ul>
-			<h3 id="example-usage-">Example usage:</h3>
+			<TitleWithDivider icon={BulletDropIcon} iconSize={20} order={3} iconColor="#12e773">
+				Example usage:
+			</TitleWithDivider>
 			<ul>
 				<li>
 					<strong>Relative time usage:</strong>
@@ -178,18 +214,21 @@ export const ReminderDocumentation = () => {
 					</ul>
 				</li>
 			</ul>
-			<blockquote>
+			<Blockquote color="blue.8" icon={infoIcon} iconSize={25} p="md" m="xl">
 				<p>
-					<strong>Note:</strong> All options are optional, means you don&#39;t need to use
-					what you don&#39;t want to. and please check out{" "}
+					All options are optional, means you don&#39;t need to use what you don&#39;t
+					want to. and please check out{" "}
 					<a href="https://www.npmjs.com/package/any-date-parser#exhaustive-list-of-date-formats">
 						all possible inputs
 					</a>{" "}
-					for more options, and when using the command, use either absolute or relative
-					time, not <strong>both.</strong>
+					for more options, when using the command, use either absolute or relative time,{" "}
+					<strong>not both.</strong>
 				</p>
-			</blockquote>
-			<h2 id="timezone">Timezone</h2>
+			</Blockquote>
+			<TitleWithDivider icon={BulletDropIcon} iconSize={25} order={2} iconColor="#34b536">
+				Timezone
+			</TitleWithDivider>
+
 			<p>
 				Use this subcommand to set or change your timezone, the bot will give you two lists,
 				one containing all positive timezones and one for negative timezones{" "}
@@ -197,16 +236,22 @@ export const ReminderDocumentation = () => {
 				inside it, the bot will store your timezone and use it automatically on the next
 				reminder you <strong>/set</strong>.
 			</p>
-			<h3 id="options-">Options:</h3>
-			<blockquote>
-				<p>
-					<strong>Note:</strong> you don&#39;t need to use this command if you don&#39;t
-					want to change your current timezone, since the bot will automatically ask for
-					it if you&#39;re using the <strong>/reminder</strong> for the first time
-				</p>
-			</blockquote>
+
+			<Blockquote color="blue.8" icon={infoIcon} iconSize={25} p="md" m="xl">
+				You don&#39;t need to use this command if you don&#39;t want to change your current
+				timezone, since the bot will automatically ask for it if you&#39;re using the{" "}
+				<strong>/reminder</strong> for the first time
+			</Blockquote>
 			<Image alt="Image of reminder feature" src="/reminder-demo.png" maw="28rem" />
-			<h1 id="table-interface">Table Interface</h1>
+
+			<TitleWithDivider
+				icon={BulletDropIcon}
+				divider={true}
+				iconSize={30}
+				iconColor="#12e773"
+			>
+				Table Interface
+			</TitleWithDivider>
 			<ul>
 				<li>
 					After signing in, you will be greeted with a data table which has the standard

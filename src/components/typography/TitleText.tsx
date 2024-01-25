@@ -1,8 +1,6 @@
 import { Title, type TitleProps } from "@mantine/core"
 import classes from "./TitleText.module.css"
 
-
-
 export const TitleText = ({
 	children,
 	order = 2,
