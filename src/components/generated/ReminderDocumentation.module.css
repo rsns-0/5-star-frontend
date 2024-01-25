@@ -1,0 +1,6 @@
+.div li {
+	display: flex;
+	gap: 1rem;
+	border: 1px solid rgb(42, 42, 42);
+	padding: 20px;
+}

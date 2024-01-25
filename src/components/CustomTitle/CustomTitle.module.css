@@ -1,0 +1,12 @@
+.titleContainer {
+	align-items: center;
+	display: flex;
+}
+
+.div h1 {
+	font-size: 1.7rem;
+}
+.icon {
+	margin-top: 2.3rem;
+	margin-right: 10px;
+}
