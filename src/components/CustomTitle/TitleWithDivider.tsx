@@ -1,5 +1,5 @@
 import { Divider, Title } from "@mantine/core"
-import styles from "./titleWithDivider.module.css"
+import styles from "./TitleWithDivider.module.css"
 import React from "react"
 
 type TitleWithDividerProps = {
