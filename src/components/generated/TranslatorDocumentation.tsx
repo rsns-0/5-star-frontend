@@ -1,5 +1,5 @@
 import { PiCaretCircleDoubleRightFill } from "react-icons/pi"
-import CustomTitle from "../CustomTitle/CustomTitle"
+import TitleWithDivider from "../CustomTitle/TitleWithDivider"
 
 export const TranslatorDocumentation = () => {
 	const BulletDropIcon = <PiCaretCircleDoubleRightFill />
@@ -9,9 +9,9 @@ export const TranslatorDocumentation = () => {
 				To use the translator, simply react in the message you want to translate with the
 				flag_emoji of the language you want to be translated to.
 			</p>
-			<CustomTitle icon={BulletDropIcon} iconSize={20} order={3} iconColor="#006b3f">
+			<TitleWithDivider icon={BulletDropIcon} iconSize={20} order={3} iconColor="#006b3f">
 				Process
-			</CustomTitle>
+			</TitleWithDivider>
 			<ul>
 				<li>Right click on the message</li>
 				<li>

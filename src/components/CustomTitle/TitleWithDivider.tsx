@@ -1,8 +1,8 @@
 import { Divider, Title } from "@mantine/core"
-import styles from "./CustomTitle.module.css"
+import styles from "./titleWithDivider.module.css"
 import React from "react"
 
-type CustomTitleProps = {
+type TitleWithDividerProps = {
 	children: React.ReactNode
 	icon?: JSX.Element
 	divider?: boolean
@@ -11,14 +11,14 @@ type CustomTitleProps = {
 	iconColor?: string // needs better color type
 }
 
-const CustomTitle = ({
+const TitleWithDivider = ({
 	children,
 	icon,
 	divider = false,
 	order = 1,
 	iconSize,
 	iconColor,
-}: CustomTitleProps) => {
+}: TitleWithDividerProps) => {
 	return (
 		<div className={styles.div}>
 			<div className={styles.titleContainer}>
@@ -36,4 +36,4 @@ const CustomTitle = ({
 	)
 }
 
-export default CustomTitle
+export default TitleWithDivider
