@@ -7,18 +7,21 @@ import {
 	reminderIdSchema,
 } from "../../../models/validationSchemas"
 import { insertReminder } from "../../queries/insertReminder"
+import { db2 } from "../../db2"
 
 export const DEFAULT_SELECT = {
 	id: true,
 	reminder_message: true,
 	time: true,
 	channel_id: true,
+
 	discord_channels: {
 		select: {
 			id: true,
 			name: true,
 			discord_guilds: {
 				select: {
+					id: true,
 					name: true,
 				},
 			},
@@ -50,12 +53,28 @@ const get = createTRPCRouter({
 			})
 		}),
 	getAllReminders: reminderRLSProcedure.query(async ({ ctx }) => {
-		return await ctx.db.reminders.findMany({
-			select: DEFAULT_SELECT,
-			where: {
-				user_id: ctx.session.user.id,
-			},
-		})
+		return await db2
+			.selectFrom("reminders")
+			.where("user_id", "=", ctx.userDiscordProviderId)
+			.innerJoin("discord_channels", "discord_channels.id", "reminders.channel_id")
+			.innerJoin("discord_guilds", "discord_guilds.id", "discord_channels.discord_guild_id")
+			.select([
+				"reminders.id",
+				"reminders.reminder_message",
+				"reminders.time",
+				"discord_channels.id as channel_id",
+				"discord_channels.name as channel_name",
+				"discord_guild_id as guild_id",
+				"discord_guilds.name as guild_name",
+			])
+			.orderBy([
+				"time desc",
+				"discord_guilds.name",
+				"discord_channels.name",
+				"reminders.reminder_message",
+			])
+			.limit(10_000)
+			.execute()
 	}),
 })
 
@@ -117,8 +136,6 @@ const post = createTRPCRouter({
 			}
 		),
 })
-
-
 
 export const reminderRouter = createTRPCRouter({
 	get,
