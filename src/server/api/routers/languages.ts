@@ -5,7 +5,7 @@ import { getCountryPrimaryLanguageData } from "../../queries/getCountryPrimaryLa
 
 export const languagesRouter = createTRPCRouter({
 	getSupportedLanguages: publicProcedure.query(async (): Promise<SupportedLanguageData[]> => {
-		return db2
+		return await db2
 			.selectFrom("flag_language_materialized")
 			.select([
 				"id",

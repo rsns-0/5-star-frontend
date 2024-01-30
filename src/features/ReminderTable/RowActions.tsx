@@ -2,7 +2,7 @@ import { type ICellRendererParams } from "ag-grid-community"
 import { type ReminderData } from "../../types/types"
 import { EditButton } from "../../components/buttons/EditButton"
 import { DeleteButton } from "../../components/buttons/DeleteButton"
-import { useDeleteItem, useOpenReminderTableEditModal } from "../../hooks/reminderTable"
+import { useTableActions } from "../../hooks/reminderTable"
 import { observer } from "mobx-react"
 
 const RowActionsRenderer = ({ data }: ICellRendererParams<ReminderData, string>) => {
@@ -10,20 +10,19 @@ const RowActionsRenderer = ({ data }: ICellRendererParams<ReminderData, string>)
 		return
 	}
 
-	return <RowActionsImpl data={data} />
+	return <_RowActions data={data} />
 }
 
-const RowActionsImpl = ({ data }: { data: ReminderData }) => {
-	const openEditModal = useOpenReminderTableEditModal(data)
-	const handleDelete = useDeleteItem(data.id)
+const _RowActions = observer(({ data }: { data: ReminderData }) => {
+	const { openEditModal, deleteItem } = useTableActions(data)
 
 	return (
 		<>
 			<EditButton data-testid={`${data.id}-edit`} onClick={openEditModal} />
-			<DeleteButton data-testid={`${data.id}-delete`} onClick={handleDelete} />
+			<DeleteButton data-testid={`${data.id}-delete`} onClick={deleteItem} />
 		</>
 	)
-}
+})
 
 
 export const RowActions = observer(RowActionsRenderer)

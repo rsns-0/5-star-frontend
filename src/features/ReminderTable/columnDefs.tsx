@@ -6,13 +6,13 @@ import styles from "./ReminderTable.module.css"
 export const columnDefs: ColDef<ReminderColDef>[] = [
 	{ field: "id", headerName: "ID" },
 	{
-		field: "discord_channels.discord_guilds.name",
+		field: "guild_name",
 		headerName: "Server Name",
 		headerTooltip:
 			"The name of the discord guild/server which this reminder will be located within.",
 	},
 	{
-		field: "discord_channels.name",
+		field: "channel_name",
 		headerName: "Channel Name",
 		headerTooltip: "The channel within the server which this reminder will be located within",
 	},

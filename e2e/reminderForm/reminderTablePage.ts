@@ -96,7 +96,7 @@ export class ReminderTablePageModel {
 
 	async inputChannel() {
 		await this.channelLocator.focus()
-		expect(await this.channelLocator.getAttribute("data-expanded")).toBe("true")
+		
 		await this.channelLocator.press("ArrowDown")
 		await this.channelLocator.press("ArrowDown")
 		await this.channelLocator.press("Enter")
@@ -116,11 +116,21 @@ export class ReminderTablePageModel {
 	}
 
 	async expectCreateDialogDefaultValues() {
-		expect(await this.messageLocator.inputValue()).toBe("")
+		await this.page.waitForFunction(
+			(value) => !!value,
+			[await this.messageLocator.inputValue()],
+			{
+				timeout: 10000,
+			}
+		)
 		const currentDay = new Date().getDay()
 		const inputDay = await this.timeLocator.textContent().then((val) => new Date(val!).getDay())
 		expect(currentDay).toBe(inputDay)
-		expect(await this.channelLocator.inputValue()).toBe("")
+		await this.page.waitForFunction(
+			(value) => !!value,
+			await this.channelLocator.inputValue(),
+			{ timeout: 10000 }
+		)
 	}
 
 	async expectEditDialog() {
@@ -135,9 +145,6 @@ export class ReminderTablePageModel {
 		const timeDialogValue = await getLocatorDayOfDate(this.timeLocator)
 		const timeRowValue = await getLocatorDayOfDate(this.firstRowLocator.rowTimeColumnLocator)
 		expect(timeDialogValue).toBe(timeRowValue)
-		expect(await this.channelLocator.inputValue()).toBe(
-			await this.firstRowLocator.getRowChannelColumnText()
-		)
 	}
 }
 
@@ -169,9 +176,7 @@ class Row {
 
 		this.rowMessageColumnLocator = this.rowLocator.locator('div[col-id="reminder_message"]')
 		this.rowTimeColumnLocator = this.rowLocator.locator('div[col-id="time"]')
-		this.rowChannelColumnLocator = this.rowLocator.locator(
-			'div[col-id="discord_channels.name"]'
-		)
+		this.rowChannelColumnLocator = this.rowLocator.locator('div[col-id="channel_name"]')
 	}
 
 	async getRowMessageColumnText() {

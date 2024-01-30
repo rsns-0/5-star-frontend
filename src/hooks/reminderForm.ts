@@ -1,18 +1,13 @@
-import { type ReminderCreateFormData, remindersFormSchema } from "../models/validationSchemas"
+import { remindersFormSchema, type ReminderFormData } from "../models/validationSchemas"
 import { createDefaultReminderFieldValues } from "../lib/createDefaultReminderFieldValues"
 import { createFormContext, zodResolver } from "@mantine/form"
 
 export const [_ReminderFormProviderImpl, useFormContext, useForm] =
-	createFormContext<ReminderCreateFormData>()
-
-export const reminderFormConfigs = {
-	resolver: zodResolver(remindersFormSchema),
-	defaultValues: createDefaultReminderFieldValues(),
-}
+	createFormContext<ReminderFormData>()
 
 export const useReminderForm = ({
-	resolver = reminderFormConfigs.resolver,
-	defaultValues = reminderFormConfigs.defaultValues,
+	resolver = zodResolver(remindersFormSchema),
+	defaultValues = createDefaultReminderFieldValues(),
 } = {}) => {
 	return useForm({
 		validate: resolver,
@@ -23,7 +18,3 @@ export const useReminderForm = ({
 export const useReminderFormContext = () => {
 	return useFormContext()
 }
-
-// export const useReminderFormController = (props: UseControllerProps<ReminderCreateFormData>) => {
-// 	return useController(props)
-// }

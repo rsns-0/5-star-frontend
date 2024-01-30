@@ -9,4 +9,5 @@ export const db2 = new Kysely<DB>({
 			connectionString: env.DATABASE_URL,
 		}),
 	}),
+	log: ["query", "error"],
 })

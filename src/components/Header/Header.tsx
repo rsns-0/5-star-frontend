@@ -1,8 +1,8 @@
 import { defaultLinks } from "../../resources/links"
-import { Group, Loader } from "@mantine/core"
+import { Group } from "@mantine/core"
 
 import classes from "./Header.module.css"
-import InviteDiscordButton from "../InviteDiscordButton/InviteDiscordButton"
+
 import { observer } from "mobx-react"
 
 import NavbarControls from "../Navbar/NavbarControls"
@@ -25,7 +25,6 @@ export const Header = observer(({ links = defaultLinks }: HeaderProps) => {
 				<Group>
 					<Group ml={50} gap={7} className={classes.links} visibleFrom="sm">
 						{items}
-						<InviteDiscordButton />
 						<SignInOrOutButton />
 					</Group>
 				</Group>
