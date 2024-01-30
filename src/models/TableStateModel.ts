@@ -5,7 +5,7 @@ export class TableStateModel {
 	private formItemId: null | number = null
 
 	constructor() {
-		makeAutoObservable(this) //private variables fine with makeAutoObservable https://github.com/mobxjs/mobx/discussions/2490
+		makeAutoObservable(this)
 	}
 
 	get isOpen() {
