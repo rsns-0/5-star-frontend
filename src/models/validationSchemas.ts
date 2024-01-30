@@ -24,15 +24,18 @@ export const remindersFormSchema = z.object({
 		return val
 	}),
 	channel_id: z.string().min(1, "Must select a channel.").max(500, "Channel ID was too large."),
+	guild_id: z.string().min(1, "Must select a guild.").max(500, "Guild ID was too large."),
 })
 
-export const remindersServerUpdateSchema = remindersFormSchema.extend({
+export type ReminderFormData = z.infer<typeof remindersFormSchema>
+
+export const remindersServerUpdateSchema = remindersFormSchema.omit({ guild_id: true }).extend({
 	id: reminderIdSchema,
 })
 
 export type ReminderUpdateFormData = z.infer<typeof remindersServerUpdateSchema>
 
-export const remindersServerCreateSchema = remindersFormSchema
+export const remindersServerCreateSchema = remindersFormSchema.omit({ guild_id: true })
 
 export type ReminderCreateFormData = z.infer<typeof remindersServerCreateSchema>
 
