@@ -82,6 +82,17 @@ const patch = createTRPCRouter({
 	updateReminder: reminderRLSProcedure
 		.input(remindersServerUpdateSchema)
 		.mutation(async ({ ctx, input: { id, reminder_message, time, channel_id } }) => {
+			const reminder = await ctx.db.reminders.findUnique({
+				select: DEFAULT_RETURN,
+				where: {
+					id,
+				},
+			})
+			if (!reminder) {
+				return new Error(
+					"The reminder you are trying to update does not exist. Did you try to update a reminder that was just sent to you?"
+				)
+			}
 			return await ctx.db.reminders.update({
 				select: DEFAULT_RETURN,
 				where: {
@@ -100,6 +111,17 @@ const deleteRouter = createTRPCRouter({
 	deleteReminder: reminderRLSProcedure
 		.input(reminderIdSchema)
 		.mutation(async ({ ctx, input }) => {
+			const reminder = await ctx.db.reminders.findUnique({
+				select: DEFAULT_RETURN,
+				where: {
+					id: input,
+				},
+			})
+			if (!reminder) {
+				return new Error(
+					"The reminder you are trying to delete does not exist. Did you try to delete a reminder that was just sent to you?"
+				)
+			}
 			return await ctx.db.reminders.delete({
 				select: DEFAULT_RETURN,
 				where: {
