@@ -15,9 +15,10 @@ import { useDebouncedValue } from "@mantine/hooks"
 
 import { ReminderTableModal } from "./ReminderTableModal"
 import { observer } from "mobx-react"
-import { useOpenReminderTableCreateModal } from "../../hooks/reminderTable"
+
 import { ExportDataButton, jsonDataProps } from "../../components/buttons/ExportDataButton"
 import { QuickFilterInput, useQuickFilterInput } from "../../components/input/QuickFilterInput"
+import { OpenNewButton } from "./OpenNewReminderButton"
 
 type ReminderTableProps = {
 	data: ReminderData[]
@@ -44,8 +45,6 @@ const _ReminderTable = ({ data }: ReminderTableProps) => {
 		autoSizeStaticColumns()
 	}, [autoSizeStaticColumns])
 
-	const openNew = useOpenReminderTableCreateModal()
-
 	return (
 		<>
 			<Center>
@@ -58,9 +57,7 @@ const _ReminderTable = ({ data }: ReminderTableProps) => {
 							</Button>
 						</Tooltip>
 						<Tooltip label="Creates a new reminder.">
-							<Button data-testid="create new" onClick={openNew}>
-								Create New
-							</Button>
+							<OpenNewButton />
 						</Tooltip>
 						<ExportDataButton data={data} {...jsonDataProps} />
 					</Group>
