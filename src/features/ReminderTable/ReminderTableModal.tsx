@@ -1,11 +1,10 @@
-import { Box, Group, Button, Modal, Select, Textarea, Stack } from "@mantine/core"
+import { Box, Group, Button, Modal, Textarea, Stack, NativeSelect } from "@mantine/core"
 
 import { TitleText } from "../../components/typography/TitleText"
 import { useReminderFormModal } from "../../hooks/reminderTable"
-import { useGetChannels } from "~/hooks/getChannels"
 import { DateTimePicker } from "@mantine/dates"
 import { observer } from "mobx-react"
-
+import { useChannels } from "../../hooks/getChannels"
 
 type ReminderTableModalProps = {
 	data?: { id?: number }
@@ -16,14 +15,24 @@ type ReminderTableModalProps = {
 }
 
 export const ReminderTableModal = observer(({ modalProps }: ReminderTableModalProps) => {
-	const { isOpen, close, title, register, onSubmit } = useReminderFormModal()
-	const channels = useGetChannels()
+	const { isOpen, close, title, register, onSubmit, values, setFieldValue } =
+		useReminderFormModal()
+	const { guilds, getChannels } = useChannels()
+
+	const channelsData = getChannels(values.guild_id)
+
+	const { onChange, ...rest } = register("guild_id")
+
+	const onChangeGuild = (value: string) => {
+		onChange(value)
+		setFieldValue("channel_id", channelsData[0]?.value ?? "")
+	}
 
 	return (
 		<>
 			<Modal
 				closeButtonProps={{ "aria-label": "Close modal" }}
-				title={<TitleText>{title}</TitleText>}
+				title={<TitleText fz={"xl"}>{title}</TitleText>}
 				size={"md"}
 				opened={isOpen}
 				onClose={close}
@@ -35,7 +44,7 @@ export const ReminderTableModal = observer(({ modalProps }: ReminderTableModalPr
 						<Textarea
 							data-testid="reminder_message"
 							label="Message"
-							placeholder='Write your message here. Defaults to "PING!" if left blank.'
+							placeholder='Write your message here. Defaults to "Ping!" if left blank.'
 							{...register("reminder_message")}
 						/>
 						<DateTimePicker
@@ -45,14 +54,19 @@ export const ReminderTableModal = observer(({ modalProps }: ReminderTableModalPr
 							placeholder="Select a time."
 							{...register("time")}
 						/>
-						<Select
+						<NativeSelect
+							data-testid="guild_id"
+							data={guilds}
+							label="Guild"
+							placeholder="Select a guild."
+							onChange={(s) => onChangeGuild(s.target.value)}
+							{...rest}
+						/>
+						<NativeSelect
 							data-testid="channel_id"
-							data={channels}
+							data={channelsData}
 							label="Channel"
 							placeholder="Select a channel."
-							searchable
-							allowDeselect={false}
-							checkIconPosition="right"
 							{...register("channel_id")}
 						/>
 						<Group justify="flex-end" mt="md">

@@ -4,10 +4,16 @@ import { useReminderFormContext } from "./reminderForm"
 import { tableStateModel } from "../models/TableStateModel"
 import { notifications } from "@mantine/notifications"
 import { useCreateReminder, useDeleteReminder, useUpdateReminder } from "./reminderCRUD"
-
+import { useChannels } from "./getChannels"
 
 export const useReminderFormModal = () => {
-	const { getInputProps, errors, onSubmit: handleSubmit } = useReminderFormContext()
+	const {
+		getInputProps,
+		errors,
+		onSubmit: handleSubmit,
+		values,
+		setFieldValue,
+	} = useReminderFormContext()
 
 	const { mutate: updateMutation } = useUpdateReminder()
 
@@ -21,7 +27,7 @@ export const useReminderFormModal = () => {
 		close()
 		createMutation(data)
 		notifications.show({
-			message: `Reminder ${data.channel_id} ${data.reminder_message} created`,
+			message: `Reminder ${data.reminder_message} created`,
 		})
 	})
 
@@ -32,7 +38,7 @@ export const useReminderFormModal = () => {
 		}
 		updateMutation({ ...data, id })
 		notifications.show({
-			message: `Reminder ${id} ${data.reminder_message} updated`,
+			message: `Reminder ${data.reminder_message} updated`,
 		})
 		close()
 	})
@@ -40,10 +46,8 @@ export const useReminderFormModal = () => {
 	const onSubmit = tableStateModel.isEditing ? update : create
 
 	const register = (name: GetFunctionArgument<typeof getInputProps>) => {
-		const props = getInputProps(name)
-
 		return {
-			...props,
+			...getInputProps(name),
 			error: errors[name],
 		}
 	}
@@ -54,9 +58,10 @@ export const useReminderFormModal = () => {
 		close,
 		onSubmit,
 		title: tableStateModel.title,
+		values,
+		setFieldValue,
 	}
 }
-
 
 export function useOpenReminderTableEditModal(data: ReminderData) {
 	const { reset, setValues } = useReminderFormContext()
@@ -71,12 +76,21 @@ export function useOpenReminderTableEditModal(data: ReminderData) {
 }
 
 export function useOpenReminderTableCreateModal() {
-	const { reset } = useReminderFormContext()
+	const { setValues, reset } = useReminderFormContext()
+
+	const { getChannels, guilds } = useChannels()
 
 	const openCreateModal = useCallback(() => {
-		tableStateModel.openCreate()
 		reset()
-	}, [reset])
+		const guild_id = guilds[0]?.value ?? ""
+		const channel_id = getChannels(guild_id)[0]?.value
+		setValues({
+			guild_id,
+			channel_id,
+			time: new Date(),
+		})
+		tableStateModel.openCreate()
+	}, [setValues, getChannels, guilds, reset])
 	return openCreateModal
 }
 
@@ -91,3 +105,25 @@ export function useDeleteItem(id: number) {
 	}, [id, mutate])
 }
 
+export function useTableActions(data: ReminderData) {
+	const { reset, setValues } = useReminderFormContext()
+	const { mutate } = useDeleteReminder()
+
+	const openEditModal = useCallback(() => {
+		tableStateModel.openEdit(data.id)
+		reset()
+		setValues(data)
+	}, [reset, setValues, data])
+
+	const deleteItem = useCallback(() => {
+		mutate(data.id)
+		notifications.show({
+			message: `Reminder ${data.id} deleted`,
+		})
+	}, [data.id, mutate])
+
+	return {
+		openEditModal,
+		deleteItem,
+	}
+}
