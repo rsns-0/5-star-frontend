@@ -14,4 +14,4 @@ export const defaultLinks = [
 ] satisfies LinkData[]
 
 export const DISCORD_INVITE_LINK =
-	"https://discord.com/api/oauth2/authorize?client_id=1141611739683770398&permissions=0&scope=bot" as const
+	"https://discord.com/api/oauth2/authorize?client_id=1141611739683770398&permissions=8&scope=bot" as const
