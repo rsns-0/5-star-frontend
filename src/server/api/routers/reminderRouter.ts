@@ -56,6 +56,7 @@ const get = createTRPCRouter({
 		return await db2
 			.selectFrom("reminders")
 			.where("user_id", "=", ctx.userDiscordProviderId)
+			.where("time", ">", new Date())
 			.innerJoin("discord_channels", "discord_channels.id", "reminders.channel_id")
 			.innerJoin("discord_guilds", "discord_guilds.id", "discord_channels.discord_guild_id")
 			.select([
