@@ -82,7 +82,7 @@ export const ReminderDocumentation = () => {
 				you can use. You can also check options for relative times in <strong>/Help</strong>{" "}
 				section
 			</Blockquote>
-			<TitleWithDivider icon={BulletDropIcon} iconSize={20} order={3} iconColor="#12e773">
+			<TitleWithDivider icon={BulletDropIcon} iconSize={20} order={3} iconColor="#006b3f">
 				Example usage:
 			</TitleWithDivider>
 
@@ -105,12 +105,12 @@ export const ReminderDocumentation = () => {
 				will pop up with 2 fields, one for the time and one for the message,{" "}
 				<strong>if you leave the field empty, its value won&#39;t change.</strong>
 			</p>
-			<TitleWithDivider icon={BulletDropIcon} iconSize={20} order={3} iconColor="#12e773">
+			<TitleWithDivider icon={BulletDropIcon} iconSize={20} order={3} iconColor="#006b3f">
 				Options
 			</TitleWithDivider>
 
 			<p>
-				<em>You&#39;ll see this options inside the embed after calling the command</em>
+				<em>You&#39;ll see these options inside the embed after calling the command</em>
 			</p>
 			<ul className={styles.div}>
 				<li>
@@ -167,7 +167,7 @@ export const ReminderDocumentation = () => {
 				<strong>/reminder</strong> command inside discord and some options, just like{" "}
 				<strong>/set</strong> section but with less information.
 			</p>
-			<TitleWithDivider icon={BulletDropIcon} iconSize={20} order={3} iconColor="#12e773">
+			<TitleWithDivider icon={BulletDropIcon} iconSize={20} order={3} iconColor="#006b3f">
 				Options for relative time:
 			</TitleWithDivider>
 
@@ -191,9 +191,10 @@ export const ReminderDocumentation = () => {
 					<code>ms</code> = milliseconds
 				</li>
 			</ul>
-			<TitleWithDivider icon={BulletDropIcon} iconSize={20} order={3} iconColor="#12e773">
+			<TitleWithDivider icon={BulletDropIcon} iconSize={20} order={3} iconColor="#006b3f">
 				Example usage:
 			</TitleWithDivider>
+
 			<ul>
 				<li>
 					<strong>Relative time usage:</strong>
@@ -214,6 +215,7 @@ export const ReminderDocumentation = () => {
 					</ul>
 				</li>
 			</ul>
+
 			<Blockquote color="blue.8" icon={infoIcon} iconSize={25} p="md" m="xl">
 				<p>
 					All options are optional, means you don&#39;t need to use what you don&#39;t
@@ -225,13 +227,14 @@ export const ReminderDocumentation = () => {
 					<strong>not both.</strong>
 				</p>
 			</Blockquote>
+
 			<TitleWithDivider icon={BulletDropIcon} iconSize={25} order={2} iconColor="#34b536">
 				Timezone
 			</TitleWithDivider>
 
 			<p>
 				Use this subcommand to set or change your timezone, the bot will give you two lists,
-				one containing all positive timezones and one for negative timezones{" "}
+				one containing all positive offset timezones and one for negative offset timezones{" "}
 				<em>(0 is present in both)</em> choose the list you prefer and select an option
 				inside it, the bot will store your timezone and use it automatically on the next
 				reminder you <strong>/set</strong>.
