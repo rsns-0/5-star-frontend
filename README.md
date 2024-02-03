@@ -3,7 +3,7 @@
 Web server for the 5-stars project.
 
 # Project architecture
-See (readme in backend repo)[https://github.com/rsns-0/5-stars]
+See (https://github.com/rsns-0/5-stars)[readme in backend repo]
 
 # Features
   - Serves aggregated country/language data to data table frontend
