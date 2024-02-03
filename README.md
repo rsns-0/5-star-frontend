@@ -3,7 +3,7 @@
 Web server for the 5-stars project.
 
 # Project architecture
-https://excalidraw.com/#json=tffz_3ZE5uTafwcyWyT6m,aLvwWggkfsSxTNs_KGRGPA
+See (readme in backend repo)[https://github.com/rsns-0/5-stars]
 
 # Features
   - Serves aggregated country/language data to data table frontend
