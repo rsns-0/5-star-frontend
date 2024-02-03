@@ -1,5 +1,3 @@
-# 5-Stars
-
 Web server for the 5-stars project.
 
 # Project architecture
