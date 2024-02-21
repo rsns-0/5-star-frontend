@@ -38,7 +38,9 @@ export const ButtonWithModal = ({
 				centered={false}
 				closeButtonProps={{
 					"aria-label": "Close modal",
-					style: { border: "1px solid white" },
+					style: { border: "1px solid black" },
+					bg: "red",
+					c: "white",
 				}}
 				title={<TitleComponent title={title} />}
 				size={"xl"}
