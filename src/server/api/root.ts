@@ -7,7 +7,8 @@ import { reminderRouter } from "./routers/reminderRouter"
 import { getServerAuthSession } from "../auth"
 import { type GetServerSidePropsContext } from "next"
 import { db } from "../db"
-
+import { histogramRouter } from "./routers/histogramRouter"
+import { baseRouter } from "./routers/base"
 
 /**
  * This is the primary router for your server.
@@ -20,6 +21,8 @@ export const appRouter = createTRPCRouter({
 	languages: languagesRouter,
 	discordRouter: discordRouter,
 	reminderRouter: reminderRouter,
+	histogramRouter: histogramRouter,
+	baseRouter: baseRouter,
 })
 
 export const createAppRouterFromRequestContext = (ctx: GetServerSidePropsContext) => {
