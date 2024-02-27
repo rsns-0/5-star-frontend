@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { Completediscord_flag_emojis, relateddiscord_flag_emojisSchema, CompleteIBANCountryCodeData, relatedIBANCountryCodeDataSchema, CompleteNewCiaLanguageData, relatedNewCiaLanguageDataSchema, Completeresolve_tie_data, relatedresolve_tie_dataSchema, Completerest_countries_api_data_names, relatedrest_countries_api_data_namesSchema, CompleteWikiData, relatedWikiDataSchema, CompleteWikiIsoData, relatedWikiIsoDataSchema, Completelanguages, relatedlanguagesSchema, Completecountry_emoji, relatedcountry_emojiSchema } from "./index"
+import { Completecountry_emoji, relatedcountry_emojiSchema, Completediscord_flag_emojis, relateddiscord_flag_emojisSchema, CompleteIBANCountryCodeData, relatedIBANCountryCodeDataSchema, CompleteNewCiaLanguageData, relatedNewCiaLanguageDataSchema, Completeresolve_tie_data, relatedresolve_tie_dataSchema, Completerest_countries_api_data_names, relatedrest_countries_api_data_namesSchema, CompleteWikiData, relatedWikiDataSchema, CompleteWikiIsoData, relatedWikiIsoDataSchema, Completelanguages, relatedlanguagesSchema } from "./index"
 
 // Helper schema for JSON fields
 type Literal = boolean | number | string
@@ -47,6 +47,7 @@ export const rest_countries_api_new_dataSchema = z.object({
 })
 
 export interface Completerest_countries_api_new_data extends z.infer<typeof rest_countries_api_new_dataSchema> {
+  country_emoji: Completecountry_emoji[]
   discord_flag_emojis?: Completediscord_flag_emojis | null
   IBANCountryCodeData: CompleteIBANCountryCodeData[]
   NewCiaLanguageData: CompleteNewCiaLanguageData[]
@@ -55,7 +56,6 @@ export interface Completerest_countries_api_new_data extends z.infer<typeof rest
   WikiData: CompleteWikiData[]
   WikiIsoData?: CompleteWikiIsoData | null
   languages: Completelanguages[]
-  country_emoji: Completecountry_emoji[]
 }
 
 /**
@@ -64,6 +64,7 @@ export interface Completerest_countries_api_new_data extends z.infer<typeof rest
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
 export const relatedrest_countries_api_new_dataSchema: z.ZodSchema<Completerest_countries_api_new_data> = z.lazy(() => rest_countries_api_new_dataSchema.extend({
+  country_emoji: relatedcountry_emojiSchema.array(),
   discord_flag_emojis: relateddiscord_flag_emojisSchema.nullish(),
   IBANCountryCodeData: relatedIBANCountryCodeDataSchema.array(),
   NewCiaLanguageData: relatedNewCiaLanguageDataSchema.array(),
@@ -72,5 +73,4 @@ export const relatedrest_countries_api_new_dataSchema: z.ZodSchema<Completerest_
   WikiData: relatedWikiDataSchema.array(),
   WikiIsoData: relatedWikiIsoDataSchema.nullish(),
   languages: relatedlanguagesSchema.array(),
-  country_emoji: relatedcountry_emojiSchema.array(),
 }))

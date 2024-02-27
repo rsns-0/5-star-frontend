@@ -1,19 +1,11 @@
-SELECT
-  rrcwiwn.id,
-  rrcwiwn.type,
-  rrcwiwn.iso2,
-  rrcwiwn.name,
-  (0) :: bigint AS row_number
-FROM
-  (
-    SELECT
-      rcand.id,
-      'country' :: text AS TYPE,
-      rcand.cca3 AS iso2,
-      unnest(
-        ARRAY [rcadn.official, rcadn.common, rcand.name, c.name, wid.name, c.local_name, ncld.country, wd.country_or_region]
-      ) AS name
-    FROM
+WITH all_data AS (
+  SELECT
+    rcand.id,
+    rcand.cca3 AS iso2,
+    cj.name,
+    cj.source
+  FROM
+    (
       (
         (
           (
@@ -37,9 +29,35 @@ FROM
         )
         LEFT JOIN new_cia_language_data ncld ON ((rcand.id = ncld.rest_countries_api_new_data_id))
       )
-  ) rrcwiwn
-WHERE
-  (
-    (rrcwiwn.name IS NOT NULL)
-    AND (rrcwiwn.name <> '' :: text)
-  );
+      CROSS JOIN LATERAL (
+        SELECT
+          unnest(
+            ARRAY [rcadn.official, rcadn.common, rcand.name, c.name, wid.name, c.local_name, ncld.country, wd.country_or_region]
+          ) AS name,
+          unnest(
+            ARRAY ['rest_countries_api_data_names.official'::text, 'rest_countries_api_data_names.common'::text, 'rest_countries_api_new_data.name'::text, 'countries.name'::text, 'wiki_iso_data.name'::text, 'countries.local_name'::text, 'new_cia_language_data.country'::text, 'wiki_data.country_or_region'::text]
+          ) AS source
+      ) cj
+    )
+),
+filter_null_or_blank AS (
+  SELECT
+    all_data.id,
+    all_data.iso2,
+    all_data.name,
+    all_data.source
+  FROM
+    all_data
+  WHERE
+    (
+      (all_data.name IS NOT NULL)
+      AND (all_data.name <> '' :: text)
+    )
+)
+SELECT
+  filter_null_or_blank.id,
+  filter_null_or_blank.iso2,
+  filter_null_or_blank.name,
+  filter_null_or_blank.source
+FROM
+  filter_null_or_blank;

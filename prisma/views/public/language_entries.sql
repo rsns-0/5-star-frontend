@@ -1,70 +1,81 @@
-WITH rest_countries_json_languages AS (
-  SELECT
-    l.name,
-    l.iso_639_2 AS iso2,
-    l.id
-  FROM
-    (
-      "_languagesTorest_countries_api_new_data" ltcand
-      JOIN languages l ON ((ltcand."A" = l.id))
-    )
-),
-language_entries1 AS (
-  SELECT
-    lrcln.id,
-    lrcln.type,
-    lrcln.iso2,
-    lrcln.name
-  FROM
-    (
-      SELECT
-        l.id,
-        'language' :: text AS TYPE,
-        l.iso_639_2 AS iso2,
-        unnest(
-          string_to_array(
-            unnest(
-              ARRAY [l.name, cim.english_name_of_language, lim.language, ncld.primary_language, wld.name]
-            ),
-            ';' :: text
-          )
-        ) AS name
-      FROM
+SELECT
+  combined_tables.id,
+  combined_tables.iso2,
+  combined_tables.name,
+  combined_tables.source
+FROM
+  (
+    SELECT
+      languages.id,
+      languages.iso_639_2 AS iso2,
+      unnested.name,
+      unnested.source
+    FROM
+      (
         (
           (
             (
               (
-                languages l
-                LEFT JOIN congress_iso_mappings cim ON ((l.id = cim.languages_id))
+                languages
+                LEFT JOIN congress_iso_mappings ON (
+                  (
+                    languages.id = congress_iso_mappings.languages_id
+                  )
+                )
               )
-              LEFT JOIN lingohub_iso_mappings lim ON ((l.id = lim.languages_id))
+              LEFT JOIN lingohub_iso_mappings ON (
+                (
+                  languages.id = lingohub_iso_mappings.languages_id
+                )
+              )
             )
-            LEFT JOIN new_cia_language_data ncld ON ((l.id = ncld.languages_id))
+            LEFT JOIN new_cia_language_data ON (
+              (
+                languages.id = new_cia_language_data.languages_id
+              )
+            )
           )
-          LEFT JOIN wals_language_data wld ON ((l.id = wld.languages_id))
+          LEFT JOIN wals_language_data ON ((languages.id = wals_language_data.languages_id))
         )
-    ) lrcln
-  WHERE
-    (
-      (lrcln.name IS NOT NULL)
-      AND (lrcln.name <> '' :: text)
-    )
-)
-SELECT
-  language_entries1.id,
-  language_entries1.type,
-  language_entries1.iso2,
-  language_entries1.name,
-  (0) :: bigint AS row_number
-FROM
-  language_entries1
+        LEFT JOIN LATERAL (
+          SELECT
+            unnest(
+              string_to_array(
+                unnest(
+                  ARRAY [languages.name, congress_iso_mappings.english_name_of_language, lingohub_iso_mappings.language, new_cia_language_data.primary_language, wals_language_data.name]
+                ),
+                ';' :: text
+              )
+            ) AS name,
+            unnest(
+              ARRAY ['languages'::text, 'congress_iso_mappings.english_name_of_language'::text, 'lingohub_iso_mappings.language'::text, 'new_cia_language_data.primary_language'::text, 'wals_language_data.name'::text]
+            ) AS source
+        ) unnested ON (TRUE)
+      )
+  ) combined_tables
+WHERE
+  (
+    (combined_tables.name IS NOT NULL)
+    AND (combined_tables.name <> '' :: text)
+  )
 UNION
 ALL
 SELECT
-  r.id,
-  'language' :: text AS TYPE,
-  r.iso2,
-  r.name,
-  (0) :: bigint AS row_number
+  languages.id,
+  languages.iso_639_2 AS iso2,
+  languages.name,
+  '_languagesTorest_countries_api_new_data.name' :: text AS source
 FROM
-  rest_countries_json_languages r;
+  (
+    "_languagesTorest_countries_api_new_data"
+    JOIN languages ON (
+      (
+        "_languagesTorest_countries_api_new_data"."A" = languages.id
+      )
+    )
+  )
+WHERE
+  (
+    (languages.name IS NOT NULL)
+    AND (languages.name <> '' :: text)
+  );
