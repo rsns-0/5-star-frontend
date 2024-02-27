@@ -3,6 +3,6 @@ import { env } from "../../../env.mjs"
 
 export const baseRouter = createTRPCRouter({
 	getOpenApiSchema: publicProcedure.query(async () => {
-		return await fetch(`${env.NEXTAUTH_URL}/api/openapi.json`).then((s) => s.json())
+		return await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/openapi.json`).then((s) => s.json())
 	}),
 })
