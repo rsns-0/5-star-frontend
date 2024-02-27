@@ -3,6 +3,7 @@ import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
 
 import { api } from "~/utils/api"
+import { Analytics } from "@vercel/analytics/react"
 
 import "~/styles/globals.css"
 import "@mantine/core/styles.css"
@@ -14,10 +15,7 @@ import { Navbar } from "../components/Navbar/Navbar"
 import { defaultLinks } from "../resources/links"
 import { Header } from "../components/Header/Header"
 
-
-
 import { Notifications } from "@mantine/notifications"
-
 
 const MyApp: AppType<{ session: Session | null }> = ({
 	Component,
@@ -33,13 +31,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
 				/>
 				<title>5 Stars</title>
 			</Head>
+			<Analytics />
 
 			<SessionProvider session={session}>
 				<AppProvider>
 					<Notifications />
 					<Navbar links={defaultLinks} />
 					<Header links={defaultLinks} />
-
 					<Component {...pageProps} />
 				</AppProvider>
 			</SessionProvider>
