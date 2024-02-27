@@ -16,6 +16,7 @@ import { defaultLinks } from "../resources/links"
 import { Header } from "../components/Header/Header"
 
 import { Notifications } from "@mantine/notifications"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const MyApp: AppType<{ session: Session | null }> = ({
 	Component,
@@ -32,6 +33,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 				<title>5 Stars</title>
 			</Head>
 			<Analytics />
+			<SpeedInsights />
 
 			<SessionProvider session={session}>
 				<AppProvider>
