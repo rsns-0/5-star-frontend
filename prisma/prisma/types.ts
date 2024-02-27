@@ -72,10 +72,27 @@ export type country_emoji = {
 }
 export type country_entries = {
 	id: number
-	type: string
 	iso2: string
 	name: string
-	row_number: string
+	source: string
+}
+export type country_histogram = {
+	id: number
+	entries: unknown
+	sample_size: string
+	cluster_max: string
+	cluster_min: string
+	cluster_avg: string
+	cluster_stddev: string
+	cluster_range: string
+	cluster_count: string
+	mode_count: string
+	mode_score: string
+	similarity_max: number
+	similarity_min: number
+	similarity_avg: number
+	similarity_stddev: number
+	similarity_range: number
 }
 export type country_primary_languages = {
 	country_id: number
@@ -99,6 +116,21 @@ export type deep_l_supported_languages = {
 	name: string
 	abbreviation: string
 	languages_id: string | null
+}
+export type deleted_discord_user_to_guilds = {
+	id: Generated<number>
+	created_at: Generated<Timestamp>
+	discord_user_id: string
+	discord_guild_id: string
+}
+export type deleted_webhooks = {
+	db_id: Generated<number>
+	id: string | null
+	created_at: Generated<Timestamp | null>
+	name: string | null
+	url: string | null
+	discord_channel_id: string | null
+	token: string | null
 }
 export type discord_channels = {
 	id: string
@@ -139,46 +171,46 @@ export type discord_user = {
 	timezone_id: string | null
 }
 export type flag_language = {
-	id: number
+	id: string
 	flag_key: string
 	flag_emoji: string
 	country_name: string
 	primary_language: string
-	primary_language_id: number
+	primary_language_id: string
 	cca2: string
 	cca3: string
 	iso1: string | null
 	iso2: string
 	iso2b: string | null
 	is_supported_by_deep_l: boolean
-	country_name_weight: number
-	language_name_weight: number
+	country_name_weight: string
+	language_name_weight: string
 	primary_language_weight: number
 }
 export type flag_language_materialized = {
-	id: number
+	id: string
 	flag_key: string
 	flag_emoji: string
 	country_name: string
 	primary_language: string
-	primary_language_id: number
+	primary_language_id: string
 	cca2: string
 	cca3: string
 	iso1: string | null
 	iso2: string
 	iso2b: string | null
 	is_supported_by_deep_l: boolean
-	country_name_weight: number
-	language_name_weight: number
+	country_name_weight: string
+	language_name_weight: string
 	primary_language_weight: number
 }
 export type full_country_primary_languages = {
 	country_id: number
 	country_name: string
 	primary_language: string
-	primary_language_id: number
-	country_name_weight: number
-	language_name_weight: number
+	primary_language_id: string
+	country_name_weight: string
+	language_name_weight: string
 	primary_language_weight: number
 	cca2: string
 	cca3: string
@@ -190,9 +222,9 @@ export type full_country_primary_languages_materialized = {
 	country_id: number
 	country_name: string
 	primary_language: string
-	primary_language_id: number
-	country_name_weight: number
-	language_name_weight: number
+	primary_language_id: string
+	country_name_weight: string
+	language_name_weight: string
 	primary_language_weight: number
 	cca2: string
 	cca3: string
@@ -224,15 +256,32 @@ export type language_and_country_representations = {
 }
 export type language_entries = {
 	id: string
-	type: string
 	iso2: string
 	name: string
-	row_number: string
+	source: string
 }
 export type language_entries_per_country = {
 	id: number
 	entries: unknown | null
 	name: string | null
+}
+export type language_histogram = {
+	id: number
+	entries: unknown
+	sample_size: string
+	cluster_max: string
+	cluster_min: string
+	cluster_avg: string
+	cluster_stddev: string
+	cluster_range: string
+	cluster_count: string
+	mode_count: string
+	mode_score: string
+	similarity_max: number
+	similarity_min: number
+	similarity_avg: number
+	similarity_stddev: number
+	similarity_range: number
 }
 export type languages = {
 	id: Generated<string>
@@ -474,9 +523,12 @@ export type DB = {
 	country_aggregated: country_aggregated
 	country_emoji: country_emoji
 	country_entries: country_entries
+	country_histogram: country_histogram
 	country_primary_languages: country_primary_languages
 	country_primary_languages_resolved_ties: country_primary_languages_resolved_ties
 	deep_l_supported_languages: deep_l_supported_languages
+	deleted_discord_user_to_guilds: deleted_discord_user_to_guilds
+	deleted_webhooks: deleted_webhooks
 	discord_channels: discord_channels
 	discord_flag_emojis: discord_flag_emojis
 	discord_guilds: discord_guilds
@@ -491,6 +543,7 @@ export type DB = {
 	language_and_country_representations: language_and_country_representations
 	language_entries: language_entries
 	language_entries_per_country: language_entries_per_country
+	language_histogram: language_histogram
 	languages: languages
 	lingohub_iso_mappings: LingoHubIsoMappings
 	logs: logs
