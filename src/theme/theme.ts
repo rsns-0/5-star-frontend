@@ -30,7 +30,7 @@ export const theme = createTheme({
 			defaultProps: { ...defaultTextColor },
 		}),
 		Title: Title.extend({
-			defaultProps: { ...defaultTextColor },
+			defaultProps: { ...defaultTextColor, fw: "bold" },
 		}),
 	},
 })

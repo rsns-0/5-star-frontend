@@ -1,6 +1,6 @@
 
 .navbar {
-  position:absolute;
+  position:fixed;
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
   height: 100em; 
   max-height:"100%";
