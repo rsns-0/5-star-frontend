@@ -1,9 +1,16 @@
-import { Button, type ButtonProps, Modal, type ModalBaseProps } from "@mantine/core"
+import {
+	Button,
+	type ButtonProps,
+	Modal,
+	type ModalBaseProps,
+	useMantineTheme,
+	type ModalProps,
+} from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
 import { type ReactNode } from "react"
 import { TitleText } from "../typography/TitleText"
 
-type ModalProps = {
+type ModalWithButtonProps = {
 	children: ReactNode
 	buttonText: string
 	buttonProps?: ButtonProps & { onClick?: React.MouseEventHandler<HTMLButtonElement> }
@@ -18,50 +25,51 @@ export const ButtonWithModal = ({
 	buttonProps,
 	modalProps,
 	title,
-}: ModalProps) => {
+}: ModalWithButtonProps) => {
 	const [opened, { close, open }] = useDisclosure(false)
+
+	const onClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+		buttonProps?.onClick?.(e)
+		open()
+	}
 
 	return (
 		<>
-			<Button
-				fullWidth={false}
-				{...buttonProps}
-				onClick={(e) => {
-					buttonProps?.onClick?.(e)
-					open()
-				}}
-			>
+			<Button fullWidth={false} {...buttonProps} onClick={onClick}>
 				{buttonText}
 			</Button>
 
-			<Modal
-				centered={false}
-				closeButtonProps={{
-					"aria-label": "Close modal",
-					style: { border: "1px solid black" },
-					bg: "red",
-					c: "white",
-				}}
-				title={<TitleComponent title={title} />}
-				size={"xl"}
-				padding="xl"
-				opened={opened}
-				styles={{
-					title: { width: "100%", textAlign: "center" },
-				}}
-				onClose={close}
-				{...modalProps}
-			>
+			<ArticleModal title={title} opened={opened} onClose={close} {...modalProps}>
 				{children}
-			</Modal>
+			</ArticleModal>
 		</>
 	)
 }
 
-const TitleComponent = ({ title }: { title: ReactNode }) => {
+function ArticleModal({ title, ...modalProps }: ModalProps) {
+	const { colors } = useMantineTheme()
+
 	return (
-		<>
-			<TitleText>{title}</TitleText>
-		</>
+		<Modal
+			centered={false}
+			closeButtonProps={{
+				"aria-label": "Close modal",
+				style: { border: "1px solid gray" },
+				bg: "red",
+				c: "white",
+			}}
+			title={<TitleText>{title}</TitleText>}
+			size={"xl"}
+			padding="xl"
+			styles={{
+				title: {
+					width: "100%",
+					textAlign: "center",
+				},
+				header: { borderBottom: "1px solid gray", background: colors.gray[9] },
+				body: { marginTop: "2rem", marginBottom: "2rem" },
+			}}
+			{...modalProps}
+		/>
 	)
 }
