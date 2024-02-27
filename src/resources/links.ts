@@ -1,4 +1,5 @@
 export const DeepLLink = `https://www.deepl.com/en/docs-api`
+export const openApiSchemaLink = "api/openapi.json"
 
 export type LinkData = {
 	label: string
@@ -10,6 +11,7 @@ export const defaultLinks = [
 	// { label: "Developers", link: "/developers" },
 	{ label: "Supported Languages", link: "/languages" },
 	{ label: "Reminder Table", link: "/reminder-table" },
+	{ label: "Data API", link: "/data-api" },
 	{ label: "Github", link: "https://github.com/rsns-0/5-star-frontend" },
 ] satisfies LinkData[]
 

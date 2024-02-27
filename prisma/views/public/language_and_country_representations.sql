@@ -1,7 +1,7 @@
 WITH unioned AS (
   SELECT
     le.id,
-    le.type,
+    'language' :: text AS TYPE,
     le.iso2,
     le.name
   FROM
@@ -10,7 +10,7 @@ WITH unioned AS (
   ALL
   SELECT
     ce.id,
-    ce.type,
+    'country' :: text AS TYPE,
     ce.iso2,
     ce.name
   FROM
