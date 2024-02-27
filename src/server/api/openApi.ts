@@ -6,5 +6,5 @@ import { env } from "../../env.mjs"
 export const openApiDocument = generateOpenApiDocument(appRouter, {
 	title: "OpenAPI Spec",
 	version: "1.0.0",
-	baseUrl: `${env.NEXTAUTH_URL}/api`,
+	baseUrl: `${env.NEXT_PUBLIC_APP_URL}/api`,
 })
