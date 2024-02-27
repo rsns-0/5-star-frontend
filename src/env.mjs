@@ -1,7 +1,7 @@
 import { createEnv } from "@t3-oss/env-nextjs"
-
+import { config } from "dotenv"
 import { z } from "zod"
-
+config()
 const minStringSchema = z.string().min(1)
 export const env = createEnv({
 	/**
