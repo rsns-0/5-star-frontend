@@ -721,6 +721,25 @@ view language_histogram {
   similarity_range  Float
 }
 
+view language_histogram_materialized {
+  id                Int   @id
+  entries           Json
+  sample_size       Decimal  @db.Decimal
+  cluster_max       BigInt
+  cluster_min       BigInt
+  cluster_avg       Decimal @db.Decimal
+  cluster_stddev    Decimal @db.Decimal
+  cluster_range     BigInt
+  cluster_count     BigInt
+  mode_count        BigInt
+  mode_score        Decimal @db.Decimal
+  similarity_max    Float
+  similarity_min    Float
+  similarity_avg    Float
+  similarity_stddev Float
+  similarity_range  Float
+}
+
 
 /// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 view flag_key_to_deep_l_iso_code {
@@ -732,6 +751,25 @@ view flag_key_to_deep_l_iso_code {
 
 /// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 view country_histogram {
+  id                Int   @id
+  entries           Json
+  sample_size       Decimal  @db.Decimal
+  cluster_max       BigInt
+  cluster_min       BigInt
+  cluster_avg       Decimal @db.Decimal
+  cluster_stddev    Decimal @db.Decimal
+  cluster_range     BigInt
+  cluster_count     BigInt
+  mode_count        BigInt
+  mode_score        Decimal @db.Decimal
+  similarity_max    Float
+  similarity_min    Float
+  similarity_avg    Float
+  similarity_stddev Float
+  similarity_range  Float
+}
+
+view country_histogram_materialized {
   id                Int   @id
   entries           Json
   sample_size       Decimal  @db.Decimal

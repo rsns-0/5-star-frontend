@@ -94,6 +94,24 @@ export type country_histogram = {
 	similarity_stddev: number
 	similarity_range: number
 }
+export type country_histogram_materialized = {
+	id: number
+	entries: unknown
+	sample_size: string
+	cluster_max: string
+	cluster_min: string
+	cluster_avg: string
+	cluster_stddev: string
+	cluster_range: string
+	cluster_count: string
+	mode_count: string
+	mode_score: string
+	similarity_max: number
+	similarity_min: number
+	similarity_avg: number
+	similarity_stddev: number
+	similarity_range: number
+}
 export type country_primary_languages = {
 	country_id: number
 	country_name: string | null
@@ -266,6 +284,24 @@ export type language_entries_per_country = {
 	name: string | null
 }
 export type language_histogram = {
+	id: number
+	entries: unknown
+	sample_size: string
+	cluster_max: string
+	cluster_min: string
+	cluster_avg: string
+	cluster_stddev: string
+	cluster_range: string
+	cluster_count: string
+	mode_count: string
+	mode_score: string
+	similarity_max: number
+	similarity_min: number
+	similarity_avg: number
+	similarity_stddev: number
+	similarity_range: number
+}
+export type language_histogram_materialized = {
 	id: number
 	entries: unknown
 	sample_size: string
@@ -524,6 +560,7 @@ export type DB = {
 	country_emoji: country_emoji
 	country_entries: country_entries
 	country_histogram: country_histogram
+	country_histogram_materialized: country_histogram_materialized
 	country_primary_languages: country_primary_languages
 	country_primary_languages_resolved_ties: country_primary_languages_resolved_ties
 	deep_l_supported_languages: deep_l_supported_languages
@@ -544,6 +581,7 @@ export type DB = {
 	language_entries: language_entries
 	language_entries_per_country: language_entries_per_country
 	language_histogram: language_histogram
+	language_histogram_materialized: language_histogram_materialized
 	languages: languages
 	lingohub_iso_mappings: LingoHubIsoMappings
 	logs: logs
