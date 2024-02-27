@@ -52,7 +52,7 @@ export const env = createEnv({
 		TEST_USER: process.env.TEST_USER,
 		DATABASE_URL: process.env.DATABASE_URL,
 		NODE_ENV: process.env.NODE_ENV,
-		NEXT_PUBLIC_APP_URL: process.env.APP_URL,
+		NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
 		NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
 		NEXTAUTH_URL: process.env.NEXTAUTH_URL,
 		DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
