@@ -1,11 +1,14 @@
 import Script from "next/script"
 import React, { createContext, useContext, useState } from "react"
 import { useRef, useEffect } from "react"
-import type Twemoji from "twemoji"
+
+interface Twemoji {
+	parse: (text: string) => string
+}
 
 declare global {
 	interface Window {
-		twemoji: typeof Twemoji | undefined
+		twemoji: Twemoji | undefined
 	}
 }
 
