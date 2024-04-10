@@ -64,7 +64,6 @@
     "superjson": "^1.13.1",
     "transaction-exception": "^1.1.0",
     "trpc-openapi": "^1.2.0",
-    "twemoji": "^14.0.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {
