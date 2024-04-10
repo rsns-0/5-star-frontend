@@ -4,7 +4,7 @@
     
 	
     @media (max-width: rem(750)) {
-        width:150vw;
+        width:100vw;
         height:160vw;
     }
 }
