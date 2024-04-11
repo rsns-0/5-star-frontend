@@ -25,8 +25,8 @@ export const Header = observer(({ links = defaultLinks }: HeaderProps) => {
 				<Group>
 					<Group ml={50} gap={7} className={classes.links} visibleFrom="md">
 						{items}
-						<SignInOrOutButton />
 					</Group>
+					<SignInOrOutButton />
 				</Group>
 			</div>
 		</header>
