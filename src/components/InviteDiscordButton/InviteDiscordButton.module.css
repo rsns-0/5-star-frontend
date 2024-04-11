@@ -28,3 +28,7 @@
 	width: 20px;
 	height: 25px;
 }
+
+.text {
+	text-decoration-line:none;
+}
