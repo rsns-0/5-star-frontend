@@ -23,7 +23,7 @@ export const Header = observer(({ links = defaultLinks }: HeaderProps) => {
 			<div className={classes.inner}>
 				<NavbarControls />
 				<Group>
-					<Group ml={50} gap={7} className={classes.links} visibleFrom="sm">
+					<Group ml={50} gap={7} className={classes.links} visibleFrom="md">
 						{items}
 						<SignInOrOutButton />
 					</Group>
