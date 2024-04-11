@@ -10,6 +10,32 @@ import { ButtonWithModal } from "../components/containers/ButtonWithModal"
 import { TranslatorDocumentation } from "~/components/generated/TranslatorDocumentation"
 import { ReminderDocumentation } from "~/components/generated/ReminderDocumentation"
 
+const TranslatorButton = () => (
+	<ButtonWithModal title="Translator" buttonText="Learn More">
+		<Stack gap="1rem">
+			<Box component="section">
+				<Text>
+					<TranslatorDocumentation />
+					Details on what languages are mapped to each country can be found at{" "}
+					<Link href="/languages">this link</Link>.
+				</Text>
+			</Box>
+			<Box component="section" />
+			<Image alt="Image of translation feature" src="/translate-demo.png" maw="28rem" />
+		</Stack>
+	</ButtonWithModal>
+)
+
+const ReminderButton = () => (
+	<ButtonWithModal title="Reminders" buttonText="Learn More" modalProps={{ size: "80vw" }}>
+		<Stack mr="xs">
+			<Text>
+				<ReminderDocumentation />
+			</Text>
+		</Stack>
+	</ButtonWithModal>
+)
+
 export default function Home() {
 	return (
 		<>
@@ -28,42 +54,14 @@ export default function Home() {
 						description="React to any message with a country flag and the message will be translated to the language of that country."
 						icon={IconWorld}
 					>
-						<ButtonWithModal title="Translator" buttonText="Learn More">
-							<Stack gap="1rem">
-								<Box component="section">
-									<Text>
-										<TranslatorDocumentation />
-										Details on what languages are mapped to each country can be
-										found at <Link href="/languages">this link</Link>.
-									</Text>
-								</Box>
-								<Box component="section" />
-								<Image
-									alt="Image of translation feature"
-									src="/translate-demo.png"
-									maw="28rem"
-								/>
-							</Stack>
-						</ButtonWithModal>
+						<TranslatorButton />
 					</FeatureItem>
 					<FeatureItem
 						title="Reminders"
 						description="Set reminders through the discord interface or through our feature-packed table in the web browser."
 						icon={IconCalendarCheck}
 					>
-						<Box mt="lg">
-							<ButtonWithModal
-								title="Reminders"
-								buttonText="Learn More"
-								modalProps={{ size: "80vw" }}
-							>
-								<Stack mr="xs">
-									<Text>
-										<ReminderDocumentation />
-									</Text>
-								</Stack>
-							</ButtonWithModal>
-						</Box>
+						<ReminderButton />
 					</FeatureItem>
 				</FeatureGrid>
 			</Stack>

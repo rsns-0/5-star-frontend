@@ -52,7 +52,9 @@ export const FeatureItem = ({
 			<Box>
 				<Text fz="sm">{description}</Text>
 			</Box>
-			<Group justify="end">{children}</Group>
+			<Group justify="end" mt="lg">
+				{children}
+			</Group>
 		</Card>
 	)
 }
